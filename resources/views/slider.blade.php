@@ -70,6 +70,11 @@
         text-align: center;
         width: 100%;
         color: white;
+        text-shadow: 
+        -1px -1px 0 #000,  
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
         z-index: 1;
       }
       .slider-content__context-desc {
@@ -137,7 +142,6 @@
         background: rgba(255, 255, 255, 1) !important;
       }
     </style>
-    <title>Document</title>
   </head>
   <body>
     <div class="slider">
@@ -193,6 +197,9 @@
         },
         {
           imageURL: "slider3.jpg",
+        },
+        {
+          imageURL: "slider4.jpg",
         },
       ];
       sliderImage(0, data, 5000);
