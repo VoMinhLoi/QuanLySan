@@ -641,7 +641,7 @@
 
             }
             * {
-                /* outline: 1px solid red; */
+                box-sizing: border-box;
             }
         </style>
         <!-- Styles -->

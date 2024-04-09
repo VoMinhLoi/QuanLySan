@@ -136,7 +136,7 @@
             display: block;
             font-size: 14px;
             line-height: 18px;
-            color: var(--text-color);
+            color: black;
             margin-bottom: 4px;
             font-weight: 400;
         }
@@ -154,7 +154,7 @@
 
         .footer-notify__link {
             text-decoration: none;
-            color: var(--text-color);
+            color: red;
         }
     </style>
     {{-- Responsive --}}
