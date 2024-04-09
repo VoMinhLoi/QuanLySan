@@ -651,10 +651,10 @@
     </head>
     <body>
         <div class="grid">
-            @include('header')
+            @include('Components.header')
             @include('slider')
             @include('container')
-            @include('footer')
+            @include('Components.footer')
         </div>
     </body>
 </html>
