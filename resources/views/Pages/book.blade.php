@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     @include('Components.grid_system')
+    @include('Components.variable')
 </head>
 <body>
     <div class="grid">

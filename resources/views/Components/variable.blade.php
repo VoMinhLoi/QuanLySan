@@ -1,18 +1,12 @@
 <style>
     * {
         --primary-color: #306FBE;
+        --primary-color-hover: #7fb0ec;
     }
-    @keyframes fadeIn {
-        from{
-            opacity: 0;
-        }
-        to{
-            opacity: 1;
-        }
+    .display-none {
+        display: none !important;
     }
-    @keyframes slideUp {
-        to{
-            transform: translateY(0%);
-        }
+    .display-block {
+        display: block !important;
     }
 </style>
