@@ -7,7 +7,7 @@
 <body>
     <div class="grid">
         @include('Components.header')
-        @include('Book.container')
+        @include('book_container')
         @include('Components.footer')
     </div>
 </body>
