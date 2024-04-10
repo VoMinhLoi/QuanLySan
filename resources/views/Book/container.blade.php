@@ -5,15 +5,6 @@
     .container {
         margin: 90px 0 40px;
     }
-    .breadcrumb__heading {
-        height: 40px;
-        line-height: 40px;
-        font-weight: bold;
-        color:var(--primary-color);
-        border-bottom: 4px solid var(--primary-color);
-        width: fit-content;
-        font-size: 18px;
-    }
     .content {
         margin: 24px 0px 0px;
     }
@@ -267,9 +258,10 @@
 </style>
 <div class="container">
     <div class="grid wide">
-        <div class="breadcrumb">
-            <h1 class="breadcrumb__heading">Đặt sân</h1>
-        </div>
+        @include('Components.breadcrumb')
+        <script>
+            breadCrumbHeading.innerText = 'Đặt sân'
+        </script>
         <div class="row content">
             <div class="col l-3">
                 <div class="choose">
@@ -479,8 +471,6 @@
     </div>
 </div>
 <script>
-    var $ = document.querySelector.bind(document);
-    var $$ = document.querySelectorAll.bind(document);
     var gridButton = $(".sorting-view__item-grid");
     var listButton = $(".sorting-view__item-list");
 
