@@ -5,7 +5,7 @@
             display: flex;
             height: 90px;
             justify-content: space-between;
-            background-image: linear-gradient(0deg,#306FBE,#4f8edc);
+            background-image: linear-gradient(0deg,var(--primary-color),#4f8edc);
             color: white;
             align-items: center;
             padding: 0 30px;
@@ -36,7 +36,7 @@
 
         .header-navigation-item__link:hover {
             background-color: white;
-            color: #306FBE;
+            color: var(--primary-color);
         }
         .header-private {
             display: flex;
@@ -168,8 +168,8 @@
     <header class="header">
         <a href="#" class="header-logo"><img class="header-logo__image" src="assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="logo trường đại học thể dục thể thao"></a>
         <ul class="header-navigation">
-            <li class="header-navigation-item"><a href="#" class="header-navigation-item__link">Trang chủ</a></li>
-            <li class="header-navigation-item"><a href="#" class="header-navigation-item__link">Đặt sân</a></li>
+            <li class="header-navigation-item"><a href="/" class="header-navigation-item__link">Trang chủ</a></li>
+            <li class="header-navigation-item"><a href="/datsan" class="header-navigation-item__link">Đặt sân</a></li>
             <li class="header-navigation-item"><a href="#" class="header-navigation-item__link">Liên hệ</a></li>
             <li class="header-navigation-item"><a href="#" class="header-navigation-item__link">Chính sách</a></li>
             <li class="header-navigation-item"><a href="#" class="header-navigation-item__link">Đăng nhập</a></li>

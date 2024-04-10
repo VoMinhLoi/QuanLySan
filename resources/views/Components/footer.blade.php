@@ -1,6 +1,6 @@
 <style>
     .footer {
-        background-image: linear-gradient(0deg,#306FBE,#4f8edc);
+        background-image: linear-gradient(0deg,var(--primary-color),#4f8edc);
         color: white;
         justify-content: space-around;
         padding: 30px;
