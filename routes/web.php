@@ -18,4 +18,5 @@ Route::get('/', function () {
 });
 
 
-Route::get('/datsan', [App\Http\Controllers\User\BookController::class, 'index'])->name('user.index');
+Route::get('/datsan', [App\Http\Controllers\User\BookController::class, 'index']);
+Route::get('/dieukhoanchinhsach', [App\Http\Controllers\User\PoliciesAndTermsController::class, 'index']);

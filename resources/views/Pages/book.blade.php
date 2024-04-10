@@ -5,12 +5,6 @@
     @include('Components.variable')
     {{-- CSS container --}}
     <style>
-        * {
-            box-sizing: border-box;
-        }
-        .container {
-            margin: 90px 0 40px;
-        }
         .content {
             margin: 24px 0px 0px;
         }
@@ -283,8 +277,8 @@
                                 <select class="choose__filter-index-category">
                                     <option data-value="1" class="option selected">Tất cả loại sân</option>
                                     <option data-value="2" class="option">Bóng chuyền</option>
-                                    <option data-value="3" class="option">Bóng đá</option>
                                     <option data-value="4" class="option">Bóng chuyền cát</option>
+                                    <option data-value="3" class="option">Bóng đá</option>
                                     <option data-value="4" class="option">Bóng rỗ</option>
                                 </select>
                             </div>
