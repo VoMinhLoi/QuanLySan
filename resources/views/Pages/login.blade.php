@@ -1,6 +1,18 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <style>
+          * {
+          padding: 0;
+          margin: 0;
+          box-sizing: border-box;
+          }
+          html {
+          color: #333;
+          font-size: 62.5%;
+          font-family: "Open Sans", sans-serif;
+          }
+    </style>
     @include('Library.grid_system')
     @include('Library.variable')
     @include('Library.validator')

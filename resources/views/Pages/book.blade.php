@@ -524,6 +524,9 @@
             }
         </script>
         @include('Components.footer')
+
     </div>
+    @include('Elements.dialog')
+
 </body>
 </html>
