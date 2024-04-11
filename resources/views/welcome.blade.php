@@ -7,8 +7,8 @@
     <body>
         <div class="grid">
             @include('Components.header')
-            @include('slider')
-            @include('container')
+            @include('Components.slider')
+            @include('welcome_container')
             @include('Components.footer')
         </div>
     </body>
