@@ -19,4 +19,5 @@ Route::get('/', function () {
 
 
 Route::get('/datsan', [App\Http\Controllers\User\BookController::class, 'index']);
+Route::get('/lienhe', [App\Http\Controllers\User\ContactController::class, 'index']);
 Route::get('/dieukhoanchinhsach', [App\Http\Controllers\User\PoliciesAndTermsController::class, 'index']);
