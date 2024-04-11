@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('Components.grid_system')
-    @include('Components.variable')
+    @include('Library.grid_system')
+    @include('Library.variable')
     {{-- CSS container --}}
     <style>
         .content {

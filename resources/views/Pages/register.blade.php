@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en">
   <head>
-    @include('Components.grid_system')
-    @include('Components.variable')
-    @include('Components.validator')
+    @include('Library.grid_system')
+    @include('Library.variable')
+    @include('Library.validator')
   </head>
   <body>
     <div class="main">

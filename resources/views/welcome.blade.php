@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
-        @include('Components.grid_system')
-        @include('Components.variable')
+        @include('Library.grid_system')
+        @include('Library.variable')
     </head>
     <body>
         <div class="grid">

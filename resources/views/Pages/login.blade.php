@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en">
   <head>
-    @include('Components.grid_system')
-    @include('Components.variable')
-    @include('Components.validator')
+    @include('Library.grid_system')
+    @include('Library.variable')
+    @include('Library.validator')
   </head>
   <body>
     <div class="main">
@@ -44,18 +44,10 @@
     Validator({
       form: "#form-1",
       rules: [
-        Validator.isRequired("#fullname"),
         Validator.isRequired("#email"),
         Validator.isEmail("#email"),
         Validator.isRequired("#password"),
-        Validator.isRequired('input[name="gender"]', "Vui lòng chọn giới tính"),
-        Validator.isRequired("#avatar", "Vui lòng chọn ảnh đại diện"),
         Validator.minLength("#password", 1),
-        Validator.isRequired("#password_confirmation"),
-        Validator.isConfirm(
-          "#password_confirmation",
-          "Mật khẩu không trùng khớp"
-        ),
       ],
       errorSelector: ".form-message",
       buttonSubmitSelector: ".form-submit",
