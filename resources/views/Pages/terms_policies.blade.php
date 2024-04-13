@@ -32,9 +32,9 @@
                     <div class="col l-12 m-12 c-12">
                         <div class="content">
                             <div class="content__heading">1. Điều khoản sử dụng & Chính sách quyền riêng tư</div>
-                            <div class="content__description">Tại Website Đại Dương, chúng tôi cam kết tôn trọng và bảo vệ quyền riêng tư của tất cả những người sử dụng dịch vụ của chúng tôi. Đó là lý do tại sao chúng tôi phát triển Điều khoản sử dụng và Chính sách quyền riêng tư này.
+                            <div class="content__description">Tại Website đặt sân Đại học Thể Dục Thể Thao Đà Nẵng, chúng tôi cam kết tôn trọng và bảo vệ quyền riêng tư của tất cả những người sử dụng dịch vụ của chúng tôi. Đó là lý do tại sao chúng tôi phát triển Điều khoản sử dụng và Chính sách quyền riêng tư này.
 
-                                Điều khoản sử dụng và Chính sách quyền riêng tư sau đây giải thích các cách khác nhau mà chúng tôi thu thập thông tin và dữ liệu cá nhân về người dùng của mình, giải thích thời điểm và lý do chúng tôi sẽ chia sẻ dữ liệu cá nhân cũng như nêu chi tiết các quyền và lựa chọn mà bạn sở hữu đối với đến dữ liệu cá nhân của mình. Bằng cách sử dụng website Đại Dương, bạn đã xác nhận rằng bạn đồng ý với các điều khoản của chính sách này.
+                                Điều khoản sử dụng và Chính sách quyền riêng tư sau đây giải thích các cách khác nhau mà chúng tôi thu thập thông tin và dữ liệu cá nhân về người dùng của mình, giải thích thời điểm và lý do chúng tôi sẽ chia sẻ dữ liệu cá nhân cũng như nêu chi tiết các quyền và lựa chọn mà bạn sở hữu đối với đến dữ liệu cá nhân của mình. Bằng cách sử dụng website đặt sân Đại học Thể Dục Thể Thao Đà Nẵng, bạn đã xác nhận rằng bạn đồng ý với các điều khoản của chính sách này.
                                 
                                 Website của chúng tôi có thể chứa các liên kết đến các trang web khác do các tổ chức khác điều hành có điều khoản sử dụng và chính sách quyền riêng tư của riêng họ. Vui lòng đảm bảo bạn đọc kỹ các điều khoản, điều kiện và chính sách quyền riêng tư trước khi cung cấp bất kỳ dữ liệu cá nhân nào trên trang web vì chúng tôi không chấp nhận bất kỳ trách nhiệm hoặc nghĩa vụ pháp lý nào đối với trang web của các tổ chức khác.
                                 
@@ -100,11 +100,11 @@
                     <div class="col l-12 m-12 c-12">
                         <div class="content">
                             <div class="content__heading">7. Hướng dẫn đặt lịch sử dụng dịch vụ</div>
-                            <div class="content__description">Để sử dụng đầy các dịch vụ của sân bóng Đại Dương, các bạn cần đăng ký/ đăng nhập.
+                            <div class="content__description">Để sử dụng đầy các dịch vụ của sân bóng đặt sân Đại học Thể Dục Thể Thao Đà Nẵng, các bạn cần đăng ký/ đăng nhập.
 
                                 Đối với việc đặt lịch sử dụng sân bóng. Quý khách hàng vui lòng chọn thời gian muốn sử dụng, chu kỳ thuê (giờ/tuần/tháng) sau đó chọn các sân rảnh để tiếp hành đặt lịch sử dụng .
                                 
-                                Vì lý do đảm bảo tài sản cho sân bóng, dịch vụ thuê dụng củ chỉ được sử dụng kèm với dịch vụ thuê sân. Chỉ thuê dụng cụ khi sử dụng sân ở các cơ sở thuộc sân bóng Đại Dương.
+                                Vì lý do đảm bảo tài sản cho sân bóng, dịch vụ thuê dụng củ chỉ được sử dụng kèm với dịch vụ thuê sân. Chỉ thuê dụng cụ khi sử dụng sân ở các cơ sở thuộc sân bóng đặt sân Đại học Thể Dục Thể Thao Đà Nẵng.
                                 
                                 Việc đặt sử dụng dịch vụ có thể thực hiện trực tiếp ở website cũng như đặt trực tiếp. Đối với việc đặt lịch qua website. Quý khách hàng vui lòng đặt sân trước 30 phút và đến check-in trước 10 phút đối với thời điểm sử dụng dịch vụ</div>
                         </div>

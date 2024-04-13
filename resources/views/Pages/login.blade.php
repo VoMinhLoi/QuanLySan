@@ -20,7 +20,7 @@
   <body>
     <div class="main">
       <form action="" method="POST" class="form" id="form-1">
-        <h3 class="heading">Thành viên đăng ký</h3>
+        <h3 class="heading">Đăng nhập</h3>
         <p class="desc">Cùng nhau tạo nên sân chơi lành mạnh ❤️</p>
 
         <div class="spacer"></div>
