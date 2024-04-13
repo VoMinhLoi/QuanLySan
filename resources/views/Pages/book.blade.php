@@ -257,12 +257,12 @@
         }
     </style>
 </head>
-<body>
+<body >
     <div class="grid">
         @include('Components.header')
         
         <div class="container">
-            <div class="grid wide">
+            <div class="grid wide" >
                 @include('Components.breadcrumb')
                 <script>
                     breadCrumbHeading.innerText = 'Đặt sân'
@@ -345,7 +345,7 @@
                                             <p class="image-status">Hoạt động</p>
                                             <div class="image-action">
                                                 <p class="image-action__item">Thêm vào túi</p>
-                                                <p class="image-action__item">Nâng</p>
+                                                <p class="image-action__item" onclick="showImproveDialog(this)">Nâng</p>
                                             </div>
                                         </div>
                                         <div class="fg-infor">
@@ -364,7 +364,7 @@
                                             <p class="image-status">Bảo trì</p>
                                             <div class="image-action">
                                                 <p class="image-action__item">Thêm vào túi</p>
-                                                <p class="image-action__item">Nâng</p>
+                                                <p class="image-action__item" onclick="showImproveDialog(this)">Nâng</p>
                                             </div>
                                         </div>
                                         <div class="fg-infor">
@@ -385,7 +385,7 @@
                                             <p class="image-status">Hoạt động</p>
                                             <div class="image-action">
                                                 <p class="image-action__item">Thêm vào túi</p>
-                                                <p class="image-action__item">Nâng</p>
+                                                <p class="image-action__item" onclick="showImproveDialog(this)">Nâng</p>
                                             </div>
                                         </div>
                                         <div class="fg-infor">
@@ -404,7 +404,7 @@
                                             <p class="image-status">Hoạt động</p>
                                             <div class="image-action">
                                                 <p class="image-action__item">Thêm vào túi</p>
-                                                <p class="image-action__item">Nâng</p>
+                                                <p class="image-action__item" onclick="showImproveDialog(this)">Nâng</p>
                                             </div>
                                         </div>
                                         <div class="fg-infor">
@@ -431,7 +431,7 @@
                                     <p class="fg-infor__description">Sân bóng nằm ở vị trí đầu tiên phía bên trái cổng ra vào. Thời gian đông khách thường vào khung giờ sau 18h.</p>
                                     <div class="fg-infor__action">
                                         <p class="fg-infor__action-item fg-infor__action-cart">Thêm vào túi</p>
-                                        <p class="fg-infor__action-item fg-infor__action-improve">Nâng</p>
+                                        <p class="fg-infor__action-item fg-infor__action-improve" onclick="showImproveDialog(this)">Nâng</p>
                                     </div>
                                 </div>
                             </div>
@@ -466,7 +466,7 @@
                                     <p class="fg-infor__description">Sân bóng nằm ở vị trí đầu tiên phía bên trái cổng ra vào. Thời gian đông khách thường vào khung giờ sau 18h.</p>
                                     <div class="fg-infor__action">
                                         <p class="fg-infor__action-item fg-infor__action-cart">Thêm vào túi</p>
-                                        <p class="fg-infor__action-item fg-infor__action-improve">Nâng</p>
+                                        <p class="fg-infor__action-item fg-infor__action-improve" onclick="showImproveDialog(this)">Nâng</p>
                                     </div>
                                 </div>
                             </div>
@@ -524,9 +524,18 @@
             }
         </script>
         @include('Components.footer')
-
     </div>
-    @include('Elements.dialog')
+    <div class="overlay" style="    width: 100%;    height: 100%;    position: absolute;    top: 0;    display: flex;    justify-content: center;">
+        @include('Elements.dialog')
+    </div>
 
+    
+    <script>
+        var form = $('.overlay');
+        form.classList.add('display-none');
+        function showImproveDialog(){
+            form.classList.toggle('display-none');
+        }
+    </script>
 </body>
 </html>

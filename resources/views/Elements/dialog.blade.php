@@ -1,19 +1,12 @@
 @include('Library.validator')
 <style>
-    .main {
-        position: absolute;
-        top:0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        height: 100vh;
-        background: transparent;
+    #form-calendar {
+      position: absolute;
     }
     .form-control {
         font-size: 1.0rem;
     }
 </style>
-<div class="main" >
     <form action="" method="POST" class="form" id="form-calendar" >
         {{-- <h3 class="heading">Thành viên đăng ký</h3> --}}
         <p class="desc">Chọn lịch trình phù hợp❤️</p>
@@ -116,9 +109,8 @@
             <span class="form-message"></span>
           </div>
         <button class="form-submit">Lưu</button>
-        <button class="form-submit">Đóng</button>
+        <p class="form-submit" onclick="showImproveDialog(this)">Đóng</p>
       </form>
-</div>
 <script>
     Validator({
         form: "#form-calendar",

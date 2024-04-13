@@ -3,6 +3,9 @@
         --primary-color: #306FBE;
         --primary-color-hover: #7fb0ec;
     }
+    body {
+        position: relative;
+    }
     .display-none {
         display: none !important;
     }

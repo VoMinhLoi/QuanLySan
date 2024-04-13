@@ -24,8 +24,11 @@
             height: 100%;
             line-height: 90px;
             justify-content: space-between;
+            align-items: center;
             padding: 0 100px;
         }
+
+
 
         .header-navigation-item__link {
             display: block;
@@ -34,10 +37,29 @@
             padding: 0 50px;
         }
 
-        .header-navigation-item__link:hover {
-            background-color: white;
-            color: var(--primary-color);
+        .header-navigation-item:hover .sub-nav{
+            display: block;
         }
+
+        .sub-nav {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            color: var(--primary-color);
+            background: white;
+            display: none;
+        }
+
+        .sub-nav__item-link {
+            display: block;
+            width: 172px;
+            padding: 0 10px;
+        }
+
+        .sub-nav__item-link:hover {
+            color: black;   
+        }
+
         .header-private {
             display: flex;
             position: relative;
@@ -50,8 +72,14 @@
         }
         .header-navigation-item {
             display: flex;
+            position: relative;
             align-items: center;
         }
+        .header-navigation-item:hover {
+            background-color: white;
+            color: var(--primary-color);
+        }
+
         .header-private-item {
             font-size: 24px;
             position: relative;
@@ -169,7 +197,13 @@
         <a href="#" class="header-logo"><img class="header-logo__image" src="assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="logo trường đại học thể dục thể thao"></a>
         <ul class="header-navigation">
             <li class="header-navigation-item"><a href="/" class="header-navigation-item__link">Trang chủ</a></li>
-            <li class="header-navigation-item"><a href="/datsan" class="header-navigation-item__link">Đặt sân</a></li>
+            <li class="header-navigation-item">
+                <p class="header-navigation-item__link">Dịch vụ</p>
+                <ul class="sub-nav">
+                    <li class="sub-nav__item"><a href="/datsan" class="sub-nav__item-link">Đặt sân</a></li>
+                    <li class="sub-nav__item"><a href="/datsan" class="sub-nav__item-link">Thuê dụng cụ</a></li>
+                </ul>
+            </li>
             <li class="header-navigation-item"><a href="/lienhe" class="header-navigation-item__link">Liên hệ</a></li>
             <li class="header-navigation-item"><a href="/dieukhoanchinhsach" class="header-navigation-item__link">Điều khoản & chính sách</a></li>
             <li class="header-navigation-item"><a href="/dangnhap" class="header-navigation-item__link">Đăng nhập</a></li>
