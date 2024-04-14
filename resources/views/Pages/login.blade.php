@@ -19,7 +19,8 @@
   </head>
   <body>
     <div class="main">
-      <form action="" method="POST" class="form" id="form-1">
+      <form action="{{ route('login') }}" method="POST" class="form" id="form-1">
+        @csrf
         <h3 class="heading">Đăng nhập</h3>
         <p class="desc">Cùng nhau tạo nên sân chơi lành mạnh ❤️</p>
 
@@ -28,7 +29,7 @@
           <label for="email" class="form-label">Email</label>
           <input
             id="email"
-            name="email"
+            name="taiKhoan"
             type="text"
             placeholder="VD: email@domain.com"
             class="form-control"
@@ -40,7 +41,7 @@
           <label for="password" class="form-label">Mật khẩu</label>
           <input
             id="password"
-            name="password"
+            name="matKhau"
             type="password"
             placeholder="Nhập mật khẩu"
             class="form-control"
@@ -59,15 +60,15 @@
         Validator.isRequired("#email"),
         Validator.isEmail("#email"),
         Validator.isRequired("#password"),
-        Validator.minLength("#password", 1),
+        Validator.minLength("#password", 7),
       ],
       errorSelector: ".form-message",
       buttonSubmitSelector: ".form-submit",
       // Muốn submit không theo API mặc định của trình duyệt
-      onSubmit: function (data) {
-        // fetch API
-        console.log(data);
-      },
+      // onSubmit: function (data) {
+      //   // fetch API
+      //   console.log(data);
+      // },
       formGroupSelector: ".form-group",
     });
   </script>
