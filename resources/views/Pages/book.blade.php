@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     @include('Library.grid_system')
+    @include('Library.responsive')
     @include('Library.variable')
     {{-- CSS container --}}
     <style>
@@ -335,26 +336,8 @@
                         </div>
                         <div class="grid-mode">
                             <div class="row">
-                                <div class="col l-6">
-                                    <div class="football-ground">
-                                        <div class="fg-image">
-                                            <div class="image-box">
-                                                <img class="image-box__item" src="assets/img/sanbongchuyen.jpg">
-                                                <img class="image-box__item image-box__item--hover"  src="assets/img/sanbongchuyen_hover.jpg">
-                                            </div>
-                                            <p class="image-status">Hoạt động</p>
-                                            <div class="image-action">
-                                                <p class="image-action__item">Thêm vào túi</p>
-                                                <p class="image-action__item" onclick="showImproveDialog(this)">Nâng</p>
-                                            </div>
-                                        </div>
-                                        <div class="fg-infor">
-                                            <a href="#" class="fg-infor__name">Sân bóng chuyền số 1</a>
-                                            <p class="fg-infor__price"><span>200.000</span>VNĐ/h</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col l-6">
+
+                                {{-- <div class="col l-6">
                                     <div class="football-ground football-ground--0">
                                         <div class="fg-image">
                                             <div class="image-box">
@@ -372,10 +355,10 @@
                                             <p class="fg-infor__price"><span>200.000</span>VNĐ/h</p>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="row">
-                                <div class="col l-6">
+                                {{-- <div class="col l-6">
                                     <div class="football-ground">
                                         <div class="fg-image">
                                             <div class="image-box">
@@ -412,12 +395,12 @@
                                             <p class="fg-infor__price"><span>200.000</span>VNĐ/h</p>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="list-mode">
                             <div class="football-ground row">
-                                <div class="fg-image col l-6">
+                                {{-- <div class="fg-image col l-6">
                                     <div class="image-box">
                                         <img class="image-box__item" src="assets/img/sanbongchuyen.jpg">
                                         <img class="image-box__item image-box__item--hover"  src="assets/img/sanbongchuyen_hover.jpg">
@@ -433,49 +416,87 @@
                                         <p class="fg-infor__action-item fg-infor__action-cart">Thêm vào túi</p>
                                         <p class="fg-infor__action-item fg-infor__action-improve" onclick="showImproveDialog(this)">Nâng</p>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="football-ground--0 row">
-                                <div class="fg-image col l-6">
-                                    <div class="image-box">
-                                        <img class="image-box__item" src="assets/img/sanbongchuyen.jpg">
-                                        <img class="image-box__item image-box__item--hover"  src="assets/img/sanbongchuyen_hover.jpg">
-                                    </div>
-                                    <p class="image-status">Bảo trì</p>
-                                    
-                                </div>
-                                <div class="fg-infor col l-6">
-                                    <a href="#" class="fg-infor__name">Sân bóng chuyền số 1</a>
-                                    <p class="fg-infor__price"><span>200.000</span>VNĐ/h</p>
-                                    <p class="fg-infor__description">Sân bóng nằm ở vị trí đầu tiên phía bên trái cổng ra vào. Thời gian đông khách thường vào khung giờ sau 18h.</p>
-                                    
-                                </div>
-                            </div>
-                            <div class="football-ground row">
-                                <div class="fg-image col l-6">
-                                    <div class="image-box">
-                                        <img class="image-box__item" src="assets/img/sanbongchuyen.jpg">
-                                        <img class="image-box__item image-box__item--hover"  src="assets/img/sanbongchuyen_hover.jpg">
-                                    </div>
-                                    <p class="image-status">Hoạt động</p>
-                                    
-                                </div>
-                                <div class="fg-infor col l-6">
-                                    <a href="#" class="fg-infor__name">Sân bóng chuyền số 1</a>
-                                    <p class="fg-infor__price"><span>200.000</span>VNĐ/h</p>
-                                    <p class="fg-infor__description">Sân bóng nằm ở vị trí đầu tiên phía bên trái cổng ra vào. Thời gian đông khách thường vào khung giờ sau 18h.</p>
-                                    <div class="fg-infor__action">
-                                        <p class="fg-infor__action-item fg-infor__action-cart">Thêm vào túi</p>
-                                        <p class="fg-infor__action-item fg-infor__action-improve" onclick="showImproveDialog(this)">Nâng</p>
-                                    </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        @include('Components.footer')
+    </div>
+    <div class="overlay" style="    width: 100%;    height: 100%;    position: absolute;    top: 0;    display: flex;    justify-content: center;">
+        @include('Elements.dialog')
+    </div>
         <script>
+            var urlApiSanBong = 'http://127.0.0.1:8000/api/sanbong'
+            var gridMode = $('.grid-mode .row')
+            // var data
+            start()
+            function start(){
+                showImproveDialog()
+                getSanBong(sanbongs => renderSanBong(sanbongs))
+            }
+
+            function showImproveDialog(){
+                var form = $('.overlay');
+                form.classList.toggle('display-none');
+            }
+
+            function getSanBong(callback){
+                fetch(urlApiSanBong)
+                    .then(response => response.json())
+                    .then(callback)
+            }
+
+            function renderSanBong(sanbongs){
+                sanbongs.forEach((sanbong)=>{
+                    if(sanbong.trangThai === 1)
+                        gridMode.innerHTML +=    `
+                                                <div class="col l-6">
+                                                    <div class="football-ground">
+                                                        <div class="fg-image">
+                                                            <div class="image-box">
+                                                                <img class="image-box__item" src="assets/img/${sanbong.hinhAnh}.jpg">
+                                                                <img class="image-box__item image-box__item--hover"  src="assets/img/${sanbong.hinhAnh}_hover.jpg">
+                                                            </div>
+                                                            <p class="image-status">Hoạt động</p>
+                                                            <div class="image-action">
+                                                                <p class="image-action__item">Thêm vào túi</p>
+                                                                <p class="image-action__item" onclick="showImproveDialog(this)">Nâng</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="fg-infor">
+                                                            <a href="#" class="fg-infor__name">${sanbong.tenSan}</a>
+                                                            <p class="fg-infor__price"><span>${sanbong.giaDichVu}</span>VNĐ/h</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                `
+                    else
+                        gridMode.innerHTML +=    `
+                                                <div class="col l-6">
+                                                    <div class="football-ground football-ground--0">
+                                                        <div class="fg-image">
+                                                            <div class="image-box">
+                                                                <img class="image-box__item" src="assets/img/${sanbong.hinhAnh}.jpg">
+                                                                <img class="image-box__item image-box__item--hover"  src="assets/img/${sanbong.hinhAnh}_hover.jpg">
+                                                            </div>
+                                                            <p class="image-status">Bảo trì</p>
+                                                            <div class="image-action">
+                                                                <p class="image-action__item">Thêm vào túi</p>
+                                                                <p class="image-action__item" onclick="showImproveDialog(this)">Nâng</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="fg-infor">
+                                                            <a href="#" class="fg-infor__name">${sanbong.tenSan}</a>
+                                                            <p class="fg-infor__price"><span>${sanbong.giaDichVu}</span>VNĐ/h</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                `
+                })
+            }
             var gridButton = $(".sorting-view__item-grid");
             var listButton = $(".sorting-view__item-list");
 
@@ -523,19 +544,5 @@
                 }
             }
         </script>
-        @include('Components.footer')
-    </div>
-    <div class="overlay" style="    width: 100%;    height: 100%;    position: absolute;    top: 0;    display: flex;    justify-content: center;">
-        @include('Elements.dialog')
-    </div>
-
-    
-    <script>
-        var form = $('.overlay');
-        form.classList.add('display-none');
-        function showImproveDialog(){
-            form.classList.toggle('display-none');
-        }
-    </script>
 </body>
 </html>
