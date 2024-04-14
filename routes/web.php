@@ -26,6 +26,7 @@ Route::get('/dieukhoanchinhsach', [App\Http\Controllers\User\PoliciesAndTermsCon
 Route::get('/dangky', [App\Http\Controllers\RegisterController::class, 'index']);
 Route::get('/dangnhap', [App\Http\Controllers\LoginController::class, 'index']);
 Route::post('/dangnhap', [App\Http\Controllers\LoginController::class, 'store'])->name('login');
+Route::get('/dangxuat', [App\Http\Controllers\LogoutController::class, 'index']);
 Route::group(['middleware' => 'userLogin'], function () {
     Route::get('/thuesan', [App\Http\Controllers\User\BookController::class, 'interface']);
 });

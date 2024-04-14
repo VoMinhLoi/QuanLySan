@@ -17,7 +17,7 @@ class LoginController extends Controller
         $credentials['taiKhoan'] = $request->taiKhoan;
         $credentials['password'] = $request->matKhau;
         if (Auth::attempt($credentials))
-            return redirect()->intended('/dashboard');
+            return redirect('/');
         else
             dd('thatbai');
     }

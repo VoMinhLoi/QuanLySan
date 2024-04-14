@@ -31,10 +31,18 @@
 
 
         .header-navigation-item__link {
-            display: block;
+            display: flex;
+            align-items: center;
             height: 80%;
             line-height: 72px;
             padding: 0 50px;
+        }
+
+        .header-navigation-item__link-img {
+            margin-left: 4px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
         }
 
         .header-navigation-item:hover .sub-nav{
@@ -205,7 +213,25 @@
             </li>
             <li class="header-navigation-item"><a href="/lienhe" class="header-navigation-item__link">Liên hệ</a></li>
             <li class="header-navigation-item"><a href="/dieukhoanchinhsach" class="header-navigation-item__link">Điều khoản & chính sách</a></li>
-            <li class="header-navigation-item"><a href="/dangnhap" class="header-navigation-item__link">Đăng nhập</a></li>
+            @if(Auth::check())
+                <li class="header-navigation-item">
+                    <p class="header-navigation-item__link">
+                        {{ Auth::user()->ho . ' '. Auth::user()->ten }}  
+                        @if(Auth::user()->hinhDaiDien == null)
+                            <i class="fa-solid fa-user" style="margin-left: 4px"></i>                            
+                        @else
+                            <img src="assets/img/{{ Auth::user()->hinhDaiDien }}" alt="avatar" class="header-navigation-item__link-img">
+                        @endif
+                    </p>
+                    <ul class="sub-nav">
+                        <li class="sub-nav__item"><a href="/hosocanhan" class="sub-nav__item-link">Hồ sơ cá nhân</a></li>
+                        <li class="sub-nav__item"><a href="#" class="sub-nav__item-link">Nạp tiền</a></li>
+                        <li class="sub-nav__item"><a href="/dangxuat" class="sub-nav__item-link">Đăng xuất</a></li>
+                    </ul>
+                </li>
+            @else
+                <li class="header-navigation-item"><a href="/dangnhap" class="header-navigation-item__link">Đăng nhập</a></li>
+            @endif
         </ul>
         <ul class="header-private">
             <label for="showMenuMobile" class="header-private-item header-private-item--bars">
