@@ -1,19 +1,30 @@
 @include('Library.validator')
 <style>
-    #form-calendar {
-      position: absolute;
+
+    .form-control, .form-label, .form-message {
+        font-size: 14px;
     }
-    .form-control {
-        font-size: 1.0rem;
+    .form-close {
+      position: absolute;
+      top: 0;
+      right: 0;
+      color: var(--primary-color);
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      cursor: pointer;
+    }
+    .form-close:hover {
+      color: red;
     }
 </style>
     <form action="" method="POST" class="form" id="form-calendar" >
         {{-- <h3 class="heading">Thành viên đăng ký</h3> --}}
-        <p class="desc">Chọn lịch trình phù hợp❤️</p>
+        <p class="desc" style="font-size: 14px;">Chọn lịch trình phù hợp❤️</p>
     
         <div class="spacer"></div>
         <div class="form-group">
-            <label for="password_confirmation" class="form-label"
+            <label for="password_confirmation" class="form-label" 
               >Chọn ngày</label
             >
             <div class="form-input">
@@ -26,7 +37,7 @@
                   value="2"
                   type="checkbox"
                 />
-                <label for="thu2" style="font-size: 1.2rem">Thứ 2</label>
+                <label for="thu2" style="font-size: 12px">Thứ 2</label>
               </div>
               <div class="form-input__value">
                 <input
@@ -37,7 +48,7 @@
                   value="3"
                   type="checkbox"
                 />
-                <label for="thu3" style="font-size: 1.2rem">Thứ 3</label>
+                <label for="thu3" style="font-size: 12px">Thứ 3</label>
               </div>
               <div class="form-input__value">
                 <input
@@ -48,7 +59,7 @@
                   value="4"
                   type="checkbox"
                 />
-                <label for="thu4" style="font-size: 1.2rem">Thứ 4</label>
+                <label for="thu4" style="font-size: 12px">Thứ 4</label>
               </div>
               <div class="form-input__value">
                 <input
@@ -59,7 +70,7 @@
                   value="5"
                   type="checkbox"
                 />
-                <label for="thu5" style="font-size: 1.2rem">Thứ 5</label>
+                <label for="thu5" style="font-size: 12px">Thứ 5</label>
               </div>
               <div class="form-input__value">
                 <input
@@ -70,7 +81,7 @@
                   value="6"
                   type="checkbox"
                 />
-                <label for="thu6" style="font-size: 1.2rem">Thứ 6</label>
+                <label for="thu6" style="font-size: 12px">Thứ 6</label>
               </div>
               <div class="form-input__value">
                 <input
@@ -81,7 +92,7 @@
                   value="7"
                   type="checkbox"
                 />
-                <label for="thu7" style="font-size: 1.2rem">Thứ 7</label>
+                <label for="thu7" style="font-size: 12px">Thứ 7</label>
               </div>
               <div class="form-input__value">
                 <input
@@ -92,13 +103,13 @@
                   value="8"
                   type="checkbox"
                 />
-                <label for="thu8" style="font-size: 1.2rem">Chủ nhật</label>
+                <label for="thu8" style="font-size: 12px">Chủ nhật</label>
               </div>
             </div>
             <span class="form-message"></span>
         </div>
         <div class="form-group">
-            <label for="email" class="form-label">Chọn chu kỳ</label>
+            <label for="email" class="form-label" style="font-size: 14px;">Chọn chu kỳ</label>
             <select name="ngay" id="ngay" class="form-control">
                 <option value="" >-- Chu kỳ --</option>
                 <option value="7" > 7 ngày </option>
@@ -109,7 +120,9 @@
             <span class="form-message"></span>
           </div>
         <button class="form-submit">Lưu</button>
-        <p class="form-submit" onclick="showImproveDialog(this)">Đóng</p>
+        <div class="form-close" onclick="showImproveDialog(this)">
+          <i class="fa-solid fa-xmark"></i>
+        </div>
       </form>
 <script>
     Validator({

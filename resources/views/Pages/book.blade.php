@@ -61,8 +61,8 @@
             color: black;
         }
         .sorting {
-            display: flex;
-            height: 50px;
+            display: flex !important;
+            min-height: 50px;
             line-height: 50px;
         }
     
@@ -102,7 +102,7 @@
         .filter-basic__fieldset-list {
             margin-left: 8px;
             border: 1px solid black;
-            height: 100%;
+            height: 50px;
             /* border-radius: 4px; */
         }
         .sorting-view__date {
@@ -255,7 +255,11 @@
         .fg-infor__action-item:hover {
             background: var(--primary-color);
             cursor: pointer;
+            align-items: flex-end;
         }
+    </style>
+    <style>
+
     </style>
 </head>
 <body >
@@ -269,7 +273,7 @@
                     breadCrumbHeading.innerText = 'Đặt sân'
                 </script>
                 <div class="row content">
-                    <div class="col l-3">
+                    <div class="col l-3 m-3 c-12">
                         <div class="choose">
                             <h2 class="choose__heading">Lọc theo loại sân</h2>
                             <div class="choose__filter">
@@ -298,9 +302,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col l-9">
+                    <div class="col l-9 m-9 c-12">
                         <div class="row">
-                            <div class="col l-6 sorting">
+                            <div class="col l-6 m-6 c-6 sorting">
                                 <ul class="sorting-view">
                                     <li class="sorting-view__item sorting-view__item-grid sorting-view__item--active">
                                         <i class="fa-solid fa-grip-vertical"></i>
@@ -309,10 +313,10 @@
                                         <i class="fa-solid fa-list"></i>
                                     </li>
                                 </ul>
-                                <h2 class="sorting-view__heading">15 Sân bóng cho quý khách chọn lựa</h2>
+                                <h2 class="sorting-view__heading">15 sân sẵn</h2>
                             </div>
-                            <div class="col l-6 sorting filter-basic">
-                                <label class="">Sắp xếp theo:</label>
+                            <div class="col l-6 m-6 c-6 sorting filter-basic">
+                                <label class="sorting-view__heading">Sắp xếp theo:</label>
                                 <select class="filter-basic__fieldset-list">
                                     <option data-value="1" class="option selected">Xếp theo tên: A-Z</option>
                                     <option data-value="2" class="option">Xếp theo tên: Z-A</option>
@@ -322,13 +326,13 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col l-6 sorting">
-                                <h2 class="sorting-view__heading">Chọn thời gian thuê: </h2>
+                            <div class="col l-6 m-6 c-6 sorting">
+                                <h2 class="sorting-view__heading">Lịch thuê: </h2>
                                 <div class="sorting-view">
                                     <input type="datetime-local" min="2024-04-10T02:02" class="sorting-view__date">
                                 </div>
                             </div>
-                            <div class="col l-6 sorting filter-basic">
+                            <div class="col l-6 m-6 c-6 sorting filter-basic">
                                 <label for="time">Thời gian thuê: </label>
                                 <input type="number" id="time" value="1" class="sorting__input-time">
                                 <p>Giờ</p>
@@ -425,13 +429,13 @@
         </div>
         @include('Components.footer')
     </div>
-    <div class="overlay" style="    width: 100%;    height: 100%;    position: absolute;    top: 0;    display: flex;    justify-content: center;">
+    <div class="overlay" style="    width: 100%;    height: 100%;    position: fixed; top: 20px;    display: flex;    justify-content: center; align-items: flex-end;">
         @include('Elements.dialog')
     </div>
         <script>
             var urlApiSanBong = 'http://127.0.0.1:8000/api/sanbong'
             var gridMode = $('.grid-mode .row')
-            // var data
+            var data //dùng data lưu lại dữ liệu để dùng chức năng lọc chỉ cần dùng dữ liệu này chứ không cần fetch nữa;
             start()
             function start(){
                 showImproveDialog()
@@ -453,7 +457,7 @@
                 sanbongs.forEach((sanbong)=>{
                     if(sanbong.trangThai === 1)
                         gridMode.innerHTML +=    `
-                                                <div class="col l-6">
+                                                <div class="col l-6 m-6 c-12">
                                                     <div class="football-ground">
                                                         <div class="fg-image">
                                                             <div class="image-box">
@@ -475,7 +479,7 @@
                                                 `
                     else
                         gridMode.innerHTML +=    `
-                                                <div class="col l-6">
+                                                <div class="col l-6 m-6 c-12">
                                                     <div class="football-ground football-ground--0">
                                                         <div class="fg-image">
                                                             <div class="image-box">

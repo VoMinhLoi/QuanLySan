@@ -52,10 +52,10 @@
         background: rgba(5, 58, 120, 0.755);
     }
 </style>
-<footer class="footer row no-gutters">
+<footer class="footer">
     <div class="grid wide">
-        <div class="row">
-            <div class="col l-4">
+        <div class="row no-gutters">
+            <div class="col l-4 m-4 c-12">
                 <div class="footer-contact">
                     <h4 class="footer-contact__heading">Thông tin</h4>
                     <ul class="footer-contact__list">
@@ -67,7 +67,7 @@
                 </div>
             </div>
     
-            <div class="col l-4">
+            <div class="col l-4 m-4 c-12">
                 <div class="footer-contact">
                     <h4 class="footer-contact__heading">Tài khoản</h4>
                     <ul class="footer-contact__list">
@@ -77,7 +77,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col l-4">
+            <div class="col l-4 m-4 c-12">
                 <div class="footer-contact">
                     <h4 class="footer-contact__heading">Theo dõi</h4>
                     <ul class="footer-contact__list footer-contact__list-social">

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     @include('Library.grid_system')
+    @include('Library.responsive')
     @include('Library.variable')
     {{-- CSS policies terms --}}
     <style>
@@ -28,7 +29,7 @@
                 <script>
                     breadCrumbHeading.innerText = 'Điều khoản và chính sách'
                 </script>
-                <div class="row">
+                <div class="row no-gutters">
                     <div class="col l-12 m-12 c-12">
                         <div class="content">
                             <div class="content__heading">1. Điều khoản sử dụng & Chính sách quyền riêng tư</div>

@@ -38,7 +38,8 @@
         }
 
         .header-navigation-item:hover .sub-nav{
-            display: block;
+            transform: perspective(600px) rotateX(0);
+            opacity: 1;
         }
 
         .sub-nav {
@@ -47,7 +48,11 @@
             left: 0;
             color: var(--primary-color);
             background: white;
-            display: none;
+            box-shadow: 0 0 1px black;
+            transform: perspective(600px) rotateX(-90deg);
+            transform-origin: top;
+            opacity: 0;
+            transition: all ease 0.3s;
         }
 
         .sub-nav__item-link {
@@ -63,7 +68,7 @@
         .header-private {
             display: flex;
             position: relative;
-            width: 80px;
+            width: 110px;
         }
 
 
@@ -82,6 +87,7 @@
 
         .header-private-item {
             font-size: 24px;
+            cursor: pointer;
             position: relative;
         }
         .header-private-item__quantity {
@@ -185,14 +191,7 @@
             color: red;
         }
     </style>
-    {{-- Responsive --}}
-    <style>
-        @media screen and (max-width: 739px) {
-            .header-navigation {
-                display: none;
-            }
-        }
-    </style>
+
     <header class="header">
         <a href="#" class="header-logo"><img class="header-logo__image" src="assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="logo trường đại học thể dục thể thao"></a>
         <ul class="header-navigation">
@@ -209,6 +208,9 @@
             <li class="header-navigation-item"><a href="/dangnhap" class="header-navigation-item__link">Đăng nhập</a></li>
         </ul>
         <ul class="header-private">
+            <label for="showMenuMobile" class="header-private-item header-private-item--bars">
+                <i class="fa-solid fa-bars"></i>
+            </label>
             <label for="showNotification" class="header-private-item">
                 <i class="fa-solid fa-bell"></i>
                 <span class="header-private-item__quantity">11</span>
@@ -267,5 +269,23 @@
                     <a href="#" class="footer-notify__link">Xem tất cả</a>
                 </div>
             </div>
+        </ul>
+        <input type="checkbox" id='showMenuMobile' hidden>
+        <label for="showMenuMobile" class="over-lay"></label>
+        <ul class="menu-mobile">
+            <label for="showMenuMobile" class="menu-mobile-item"><i class="fa-solid fa-xmark menu-mobile-item__link--close"></i></label>
+            <li class="menu-mobile-item"><a href="/lienhe" class="menu-mobile-item__link--menu"  style="border-bottom: 1px solid rgba(0, 0, 0, 0.3); text-align:center">Menu</a></li>
+            <li class="menu-mobile-item"><a href="/" class="menu-mobile-item__link">Trang chủ</a></li>
+            <li class="menu-mobile-item">
+                <a href="/datsan" class="menu-mobile-item__link">Đặt sân</a>
+                {{-- <p class="menu-mobile-item__link">Dịch vụ</p>
+                <ul class="sub-nav">
+                    <li class="sub-nav__item"><a href="/datsan" class="sub-nav__item-link">Đặt sân</a></li>
+                    <li class="sub-nav__item"><a href="/datsan" class="sub-nav__item-link">Thuê dụng cụ</a></li>
+                </ul> --}}
+            </li>
+            <li class="menu-mobile-item"><a href="/lienhe" class="menu-mobile-item__link">Liên hệ</a></li>
+            <li class="menu-mobile-item"><a href="/dieukhoanchinhsach" class="menu-mobile-item__link">Điều khoản & chính sách</a></li>
+            <li class="menu-mobile-item"><a href="/dangnhap" class="menu-mobile-item__link">Đăng nhập</a></li>
         </ul>
     </header>

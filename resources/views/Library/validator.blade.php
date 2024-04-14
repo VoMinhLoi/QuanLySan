@@ -15,6 +15,7 @@
     margin: 24px;
     align-self: center;
     box-shadow: 0 2px 5px 0 rgba(51, 62, 73, 0.1);
+    position: relative;
     }
     .form .heading {
     font-size: 2rem;

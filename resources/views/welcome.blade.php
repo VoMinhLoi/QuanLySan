@@ -2,6 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         @include('Library.grid_system')
+        @include('Library.responsive')
         @include('Library.variable')
     </head>
     <body>

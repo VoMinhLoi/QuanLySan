@@ -97,7 +97,7 @@
 </style>
 <div class="container">
     <div class="grid wide">
-        <div class="row">
+        <div class="row no-gutters">
             <div class="new">
                 <div class="new-extension col l-5">
                     <img src="assets/img/news.png" alt="news" class="new-extension__img">
@@ -117,7 +117,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row no-gutters">
             <div class="new">
                 <div class="new-extension col l-5">
                     <img src="assets/img/news.png" alt="news" class="new-extension__img">
@@ -137,7 +137,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row no-gutters">
             <div class="new">
                 <div class="new-extension col l-5">
                     <img src="assets/img/news.png" alt="news" class="new-extension__img">

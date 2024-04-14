@@ -91,22 +91,7 @@
     transition: all linear 0.3s;
     }
 
-    @keyframes slideInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(calc(100% + 32px));
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-    }
 
-    @keyframes fadeOut {
-    to {
-        opacity: 0;
-    }
-    }
 
     .toast--success {
     border-color: #47d864;
