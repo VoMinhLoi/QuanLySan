@@ -199,8 +199,8 @@
             <li class="header-navigation-item">
                 <p class="header-navigation-item__link">Dịch vụ</p>
                 <ul class="sub-nav">
-                    <li class="sub-nav__item"><a href="/datsan" class="sub-nav__item-link">Đặt sân</a></li>
-                    <li class="sub-nav__item"><a href="/datsan" class="sub-nav__item-link">Thuê dụng cụ</a></li>
+                    <li class="sub-nav__item"><a href="/sanbong" class="sub-nav__item-link">Đặt sân</a></li>
+                    <li class="sub-nav__item"><a href="/sanbong" class="sub-nav__item-link">Thuê dụng cụ</a></li>
                 </ul>
             </li>
             <li class="header-navigation-item"><a href="/lienhe" class="header-navigation-item__link">Liên hệ</a></li>
@@ -215,7 +215,7 @@
                 <i class="fa-solid fa-bell"></i>
                 <span class="header-private-item__quantity">11</span>
             </label>
-            <a href="#" class="header-private-item">
+            <a href="/thuesan" class="header-private-item">
                 <i class="fa-solid fa-volleyball"></i>
                 <span class="header-private-item__quantity">11</span>
             </a>
@@ -277,11 +277,11 @@
             <li class="menu-mobile-item"><a href="/lienhe" class="menu-mobile-item__link--menu"  style="border-bottom: 1px solid rgba(0, 0, 0, 0.3); text-align:center">Menu</a></li>
             <li class="menu-mobile-item"><a href="/" class="menu-mobile-item__link">Trang chủ</a></li>
             <li class="menu-mobile-item">
-                <a href="/datsan" class="menu-mobile-item__link">Đặt sân</a>
+                <a href="/sanbong" class="menu-mobile-item__link">Đặt sân</a>
                 {{-- <p class="menu-mobile-item__link">Dịch vụ</p>
                 <ul class="sub-nav">
-                    <li class="sub-nav__item"><a href="/datsan" class="sub-nav__item-link">Đặt sân</a></li>
-                    <li class="sub-nav__item"><a href="/datsan" class="sub-nav__item-link">Thuê dụng cụ</a></li>
+                    <li class="sub-nav__item"><a href="/sanbong" class="sub-nav__item-link">Đặt sân</a></li>
+                    <li class="sub-nav__item"><a href="/sanbong" class="sub-nav__item-link">Thuê dụng cụ</a></li>
                 </ul> --}}
             </li>
             <li class="menu-mobile-item"><a href="/lienhe" class="menu-mobile-item__link">Liên hệ</a></li>

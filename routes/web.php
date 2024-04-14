@@ -18,8 +18,10 @@ Route::get('/', function () {
 });
 
 
-Route::get('/datsan', [App\Http\Controllers\User\BookController::class, 'index']);
+Route::get('/sanbong', [App\Http\Controllers\SanBongController::class, 'interface']);
 Route::get('/lienhe', [App\Http\Controllers\User\ContactController::class, 'index']);
 Route::get('/dieukhoanchinhsach', [App\Http\Controllers\User\PoliciesAndTermsController::class, 'index']);
 Route::get('/dangnhap', [App\Http\Controllers\LoginController::class, 'index']);
 Route::get('/dangky', [App\Http\Controllers\RegisterController::class, 'index']);
+
+Route::get('/thuesan', [App\Http\Controllers\User\BookController::class, 'interface']);

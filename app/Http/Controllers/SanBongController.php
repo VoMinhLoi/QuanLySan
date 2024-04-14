@@ -13,6 +13,11 @@ class SanBongController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function interface()
+    {
+        return view('Pages.book');
+    }
+
     public function index()
     {
         try {

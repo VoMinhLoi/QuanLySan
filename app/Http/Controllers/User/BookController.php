@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
@@ -12,9 +10,14 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function interface()
+    {
+        return view('Pages.cart');
+    }
+
     public function index()
     {
-        return view('Pages.book');
+        //
     }
 
     /**
