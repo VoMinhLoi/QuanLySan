@@ -16,6 +16,8 @@
     @include('Library.grid_system')
     @include('Library.variable')
     @include('Library.validator')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   </head>
   <body>
     <div class="main">
@@ -52,25 +54,32 @@
         <a class="form-submit" href="/dangky">Đăng ký</a>
       </form>
     </div>
-    @include('Elements.toast')
+    <script>
+      Validator({
+        form: "#form-1",
+        rules: [
+          Validator.isRequired("#email"),
+          Validator.isEmail("#email"),
+          Validator.isRequired("#password"),
+          Validator.minLength("#password", 7),
+        ],
+        errorSelector: ".form-message",
+        buttonSubmitSelector: ".form-submit",
+        // Muốn submit không theo API mặc định của trình duyệt
+        // onSubmit: function (data) {
+        //   // fetch API
+        //   console.log(data);
+        // },
+        formGroupSelector: ".form-group",
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    @if ($errors->any())
+      @foreach ($errors->all() as $error)
+          <script>toastr.error("{{ $error }}")</script>
+      @endforeach
+    @endif
   </body>
-  <script>
-    Validator({
-      form: "#form-1",
-      rules: [
-        Validator.isRequired("#email"),
-        Validator.isEmail("#email"),
-        Validator.isRequired("#password"),
-        Validator.minLength("#password", 7),
-      ],
-      errorSelector: ".form-message",
-      buttonSubmitSelector: ".form-submit",
-      // Muốn submit không theo API mặc định của trình duyệt
-      // onSubmit: function (data) {
-      //   // fetch API
-      //   console.log(data);
-      // },
-      formGroupSelector: ".form-group",
-    });
-  </script>
+
 </html>

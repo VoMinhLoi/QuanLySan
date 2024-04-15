@@ -19,6 +19,6 @@ class LoginController extends Controller
         if (Auth::attempt($credentials))
             return redirect('/');
         else
-            dd('thatbai');
+            return redirect()->back()->withErrors('Tài khoản, mật khẩu không chính xác.');
     }
 }
