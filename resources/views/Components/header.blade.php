@@ -312,6 +312,30 @@
             </li>
             <li class="menu-mobile-item"><a href="/lienhe" class="menu-mobile-item__link">Liên hệ</a></li>
             <li class="menu-mobile-item"><a href="/dieukhoanchinhsach" class="menu-mobile-item__link">Điều khoản & chính sách</a></li>
-            <li class="menu-mobile-item"><a href="/dangnhap" class="menu-mobile-item__link">Đăng nhập</a></li>
+            @if(Auth::check())
+                <li class="menu-mobile-item menu-mobile-item--has-sub-nav">
+                    <p class="menu-mobile-item__link--has-sub-nav">
+                        <span>{{ Auth::user()->ho . ' '. Auth::user()->ten }}</span>  
+                        <i class="fa-solid fa-arrow-down"></i>
+                    </p>
+                    <ul class="menu-mobile-sub-nav">
+                        <li class="menu-mobile-sub-nav__item"><a href="/hosocanhan" class="menu-mobile-sub-nav__item-link">Hồ sơ cá nhân</a></li>
+                        <li class="menu-mobile-sub-nav__item"><a href="#" class="menu-mobile-sub-nav__item-link">Nạp tiền</a></li>
+                        <li class="menu-mobile-sub-nav__item"><a href="/dangxuat" class="menu-mobile-sub-nav__item-link">Đăng xuất</a></li>
+                    </ul>
+                </li>
+            @else
+                <li class="menu-mobile-item"><a href="/dangnhap" class="menu-mobile-item__link">Đăng nhập</a></li>
+            @endif
+
         </ul>
     </header>
+    <script>
+        var menuUser = $('.menu-mobile-item--has-sub-nav')
+        var subMenu = menuUser.querySelector('.menu-mobile-sub-nav')
+        var arrow = menuUser.querySelector('.fa-arrow-down')
+        menuUser.onclick = () => {
+            subMenu.classList.toggle('animationOverFlow');
+            arrow.classList.toggle('rotate90')
+        }
+    </script>

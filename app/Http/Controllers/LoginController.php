@@ -20,7 +20,7 @@ class LoginController extends Controller
         $credentials['taiKhoan'] = $request->taiKhoan;
         $credentials['password'] = $request->matKhau;
         if (Auth::attempt($credentials))
-            return redirect('/');
+            return redirect('/sanbong');
         else
             return redirect()->back()->withErrors('Tài khoản, mật khẩu không chính xác.');
     }
