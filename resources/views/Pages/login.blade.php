@@ -52,6 +52,7 @@
         <a class="form-submit" href="/dangky">Đăng ký</a>
       </form>
     </div>
+    @include('Elements.toast')
   </body>
   <script>
     Validator({

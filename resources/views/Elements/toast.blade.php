@@ -213,10 +213,10 @@
 </script>
 <div id="toast"></div>
 
-<div>
+{{-- <div>
   <div onclick="showSuccessToast();" class="btn btn--success">Show success toast</div>
   <div onclick="showErrorToast();" class="btn btn--danger">Show error toast</div>
-</div>
+</div> --}}
 <script>
   function showSuccessToast() {
     toast({

@@ -20,11 +20,27 @@ class User extends Authenticatable
     protected $table = 'nguoidung';
     protected $primaryKey = "maNguoiDung";
     public $incrementing = false;
-    // protected $fillable = [
-    //     'name',
-    //     'email',
-    //     'password',
-    // ];
+    // public $timestamps = false;
+    protected $fillable = [
+        'ho',
+        'ten',
+        'ngaySinh',
+        'password',
+        'gioiTinh',
+        'cccd',
+        'diaChi',
+        'SDT',
+        'taiKhoan',
+        'password',
+        'soDuTaiKhoan',
+        'trangThai',
+        'google_id',
+        'google_token',
+        'maXN',
+        'maPX',
+        'maQuyen',
+        'hinhDaiDien'
+    ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -43,5 +59,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
 }
