@@ -176,8 +176,9 @@
           .then(data => {
               if(data.error)
                 toastr.error(data.error)
-              else
-              toastr.success(data.success) // Dữ liệu JSON trả về từ function store
+              else{
+                window.location.href = "/dangnhap"; 
+              }// Dữ liệu JSON trả về từ function store
           })
           .catch(error => {
               console.error('Error:', error);
