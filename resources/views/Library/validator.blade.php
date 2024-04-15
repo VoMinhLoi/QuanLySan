@@ -113,6 +113,19 @@
     .spacer {
     margin-top: 36px;
     }
+
+    .form-submit-google {
+        display: flex;
+        border: 1px solid #737070;
+        border-radius: 4px;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 16px;
+        font-size: 14px; 
+    }
+    .form-submit-google:hover {
+        border-color: black;
+    }
 </style>
 <script>
     var $ = document.querySelector.bind(document);

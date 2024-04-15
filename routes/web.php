@@ -30,3 +30,5 @@ Route::get('/dangxuat', [App\Http\Controllers\LogoutController::class, 'index'])
 Route::group(['middleware' => 'userLogin'], function () {
     Route::get('/thuesan', [App\Http\Controllers\User\BookController::class, 'interface']);
 });
+Route::get('/auth/google', [App\Http\Controllers\LoginController::class, 'redirectToGoogle']);
+Route::get('/auth/google/callback', [App\Http\Controllers\LoginController::class, 'handleGoogleCallback']);
