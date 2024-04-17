@@ -36,7 +36,7 @@
           <label for="surname" class="form-label">Họ</label>
           <input
             id="surname"
-            name="surname"
+            name="ho"
             type="text"
             placeholder="VD: Sơn Đặng"
             class="form-control"
@@ -47,7 +47,7 @@
           <label for="name" class="form-label">Tên</label>
           <input
             id="name"
-            name="name"
+            name="ten"
             type="text"
             placeholder="VD: Sơn Đặng"
             class="form-control"
@@ -93,7 +93,7 @@
           <label for="email" class="form-label">Email</label>
           <input
             id="email"
-            name="email"
+            name="taiKhoan"
             type="text"
             placeholder="VD: email@domain.com"
             class="form-control"
@@ -163,9 +163,9 @@
         onSubmit: function (data) {
           var urlApiUser = 'http://127.0.0.1:8000/api/user'
           var formData = new URLSearchParams();
-          formData.append('surname', data.surname);
-          formData.append('name', data.name);
-          formData.append('email', data.email);
+          formData.append('ho', data.ho);
+          formData.append('ten', data.ten);
+          formData.append('taiKhoan', data.taiKhoan);
           formData.append('password', data.password);
           fetch(urlApiUser, {
               method: "POST",
