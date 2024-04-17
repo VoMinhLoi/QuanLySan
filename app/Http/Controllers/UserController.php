@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -78,7 +79,22 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $credentials['ho'] = $request->ho;
+        $credentials['ten'] = $request->ten;
+        if (!empty($request->ngaySinh)) {
+            $ngaySinhFormatted = Carbon::createFromFormat('d-m-Y', $request->ngaySinh)->format('Y-m-d');
+            $credentials['ngaySinh'] = $ngaySinhFormatted;
+        }
+        $credentials['cccd'] = $request->cccd;
+        $credentials['SDT'] = $request->SDT;
+        $credentials['maPX'] = $request->maPX;
+        $credentials['diaChi'] = $request->diaChi;
+
+        $userIsUpdated = User::where('maNguoiDung', $id)->first()->update($credentials);
+        if ($userIsUpdated)
+            return response()->json(['success' => 'Cập nhật thông tin thành công']);
+        else
+            return response()->json(['error' => 'Cập nhật thông tin thất bại']);
     }
 
     /**

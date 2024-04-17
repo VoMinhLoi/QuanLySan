@@ -36,7 +36,10 @@ Route::get('/quenmatkhau', [LoginController::class, 'formForgot']);
 Route::post('/quenmatkhau', [LoginController::class, 'forgot'])->name('user.forgot');
 Route::get('/cailaimatkhau/{token}', [LoginController::class, 'formResetPassword']);
 Route::post('/cailaimatkhau', [LoginController::class, 'resetPassword'])->name('user.resetPassword');
-Route::get('/dangxuat', [LogoutController::class, 'index']);
+
+
 Route::group(['middleware' => 'userLogin'], function () {
     Route::get('/thuesan', [BookController::class, 'interface']);
+    Route::get('/hosocanhan', [LoginController::class, 'formProfile']);
+    Route::get('/dangxuat', [LogoutController::class, 'index']);
 });

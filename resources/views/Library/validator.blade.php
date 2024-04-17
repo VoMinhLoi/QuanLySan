@@ -18,14 +18,14 @@
     position: relative;
     }
     .form .heading {
-    font-size: 2rem;
+    font-size: 20px;
     }
     .form .desc {
     text-align: center;
     color: #636d77;
-    font-size: 1.6rem;
+    font-size: 16px;
     font-weight: lighter;
-    line-height: 2.4rem;
+    line-height: 24px;
     margin-top: 16px;
     font-weight: 300;
     }
@@ -44,8 +44,8 @@
     .form-label {
     font-weight: 700;
     padding-bottom: 6px;
-    line-height: 1.8rem;
-    font-size: 1.4rem;
+    line-height: 18px;
+    font-size: 14px;
     }
 
     .form-control {
@@ -54,7 +54,7 @@
     border: 1px solid #b3b3b3;
     border-radius: 3px;
     outline: none;
-    font-size: 1.4rem;
+    font-size: 14px;
     }
 
     .form-control:hover {
@@ -83,8 +83,8 @@
     }
 
     .form-message {
-    font-size: 1.2rem;
-    line-height: 1.6rem;
+    font-size: 12px;
+    line-height: 16px;
     padding: 4px 0 0;
     }
 

@@ -118,4 +118,8 @@ class LoginController extends Controller
         //chuyển hướng đến trang login
         return redirect()->to(route("formLogin"))->with("json_message", "Mật khẩu đã được cài lại");
     }
+    public function formProfile()
+    {
+        return view('Pages.profile');
+    }
 }

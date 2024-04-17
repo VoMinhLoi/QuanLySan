@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\SanBongController;
+use App\Http\Controllers\TinhThanhController;
+use App\Http\Controllers\QuanHuyenController;
+use App\Http\Controllers\PhuongXaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,3 +24,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::apiResource('sanbong', SanBongController::class);
 Route::apiResource('user', UserController::class);
+Route::apiResource('tinhthanh', TinhThanhController::class);
+Route::apiResource('quanhuyen', QuanHuyenController::class);
+Route::apiResource('phuongxa', PhuongXaController::class);
