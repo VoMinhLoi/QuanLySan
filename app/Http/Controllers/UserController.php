@@ -34,11 +34,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
         try {
-            $credentials['ho'] = $request->surname;
-            $credentials['ten'] = $request->name;
-            $credentials['taiKhoan'] = $request->email;
+            $credentials['ho'] = $request->ho;
+            $credentials['ten'] = $request->ten;
+            $credentials['taiKhoan'] = $request->taiKhoan;
             $credentials['password'] = bcrypt($request->password);
             // Cách 1 đơn giản, đẩy thẳng vào cơ sở dữ liệu
             // $newUser = DB::table('nguoidung')->insert(
@@ -89,8 +88,20 @@ class UserController extends Controller
         $credentials['SDT'] = $request->SDT;
         $credentials['maPX'] = $request->maPX;
         $credentials['diaChi'] = $request->diaChi;
+        // if ($request->hasFile('hinhDaiDien')) {
+        //     $imageSRC = $request->file('hinhDaiDien');
+        //     $imageName = $imageSRC->getClientOriginalName();
+        //     try {
+        //         // $imageSRC->storeAs('public/assets/img', $imageName);
+        //         $imageSRC->move(public_path('assets/img'), $imageName);
+        //         $credentials['hinhDaiDien'] = $imageName;
+        //     } catch (\Exception $e) {
+        //         dd($e->getMessage());
+        //     }
+        // }
 
-        $userIsUpdated = User::where('maNguoiDung', $id)->first()->update($credentials);
+        $userIsUpdated = User::where('maNguoiDung', $id)->first();
+        $userIsUpdated->update($credentials);
         if ($userIsUpdated)
             return response()->json(['success' => 'Cập nhật thông tin thành công']);
         else

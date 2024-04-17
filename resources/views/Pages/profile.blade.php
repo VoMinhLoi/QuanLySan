@@ -194,7 +194,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="" class="form-label">Tỉnh thành</label>
+                                        <label for="maTT" class="form-label">Tỉnh thành</label>
                                         <select class="form-control" id="maTT">
                                             @php
                                                 if(Auth::user()->maPX){
@@ -216,7 +216,7 @@
                                     <span class="form-message"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="" class="form-label">Quận huyện</label>
+                                        <label for="maQH" class="form-label">Quận huyện</label>
                                         <select class="form-control" id="maQH">
                                             @php
                                                 if(Auth::user()->maPX){
@@ -236,7 +236,7 @@
                                     <span class="form-message"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="" class="form-label">Phường xã</label>
+                                        <label for="maPX" class="form-label">Phường xã</label>
                                         <select name="maPX" class="form-control" id="maPX">
                                             @php
                                                 if(Auth::user()->maPX){
@@ -291,7 +291,27 @@
               // Muốn submit không theo API mặc định của trình duyệt
               onSubmit: function (data) {
                 if(data.hinhDaiDien[0]){
-                    
+                    var formData = new FormData()
+                    formData.append('ho', data.ho)
+                    formData.append('ten', data.ten)
+                    formData.append('ngaySinh', data.ngaySinh)
+                    formData.append('gioiTinh', data.gioiTinh)
+                    formData.append('cccd', data.cccd)
+                    formData.append('diaChi', data.diaChi)
+                    formData.append('SDT', data.SDT)
+                    formData.append('maPX', data.maPX)
+                    formData.append('hinhDaiDien', data.hinhDaiDien)
+                    fetch(apiUser+'/{{ Auth::user()->maNguoiDung }}',{
+                        method: 'PUT',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.error)
+                            toastr.error(data.error)
+                        else
+                            toastr.success(data.success)
+                    })
                 }
                 else{
                     UpdateNoImage(data)

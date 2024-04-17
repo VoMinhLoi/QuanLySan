@@ -48,7 +48,7 @@
         .menu-mobile-item__link--menu {
             display: block;
         }
-        .menu-mobile-item__link--menu, .menu-mobile-item__link,.menu-mobile-item__link--has-sub-nav, .menu-mobile-sub-nav__item {
+        .menu-mobile-item__link--menu, .menu-mobile-item__link,.menu-mobile-item__link--has-sub-nav, .menu-mobile-sub-nav__item-link {
             padding: 16px 30px;
         }
         .menu-mobile-item__link, .menu-mobile-item__link--has-sub-nav {
@@ -78,11 +78,12 @@
                 opacity: 1;
             }
         }
-        .menu-mobile-sub-nav__item {
+        .menu-mobile-sub-nav__item-link {
+            display: block;
             background: white;
             color: var(--primary-color);
         }
-        .menu-mobile-sub-nav__item:hover {
+        .menu-mobile-sub-nav__item-link:hover {
             color: red;
         }
         @media screen and (max-width: 1367px) {
