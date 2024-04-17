@@ -124,6 +124,10 @@
             .sorting-view__heading {
                 display: none;
             }
+            
+            .fullname {
+                display: none;
+            }
         }
         .animationOverFlow {
             animation: OverFlow 0.2s linear 0s forwards;
