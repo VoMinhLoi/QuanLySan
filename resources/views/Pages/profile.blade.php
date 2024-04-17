@@ -111,14 +111,14 @@
                     <div class="row no-gutters content">
                         <div class="col l-3 m-3 c-12">
                             <ul class="side-bar">
-                                <li class="side-bar__item"><a href="#" class="side-bar__item-link side-bar__item-link--active">Thông tin cá nhân</a></li>
-                                <li class="side-bar__item"><a href="#" class="side-bar__item-link">Đổi mật khẩu</a></li>
+                                <li class="side-bar__item"><p class="side-bar__item-link-infor side-bar__item-link side-bar__item-link--active">Thông tin cá nhân</p></li>
+                                <li class="side-bar__item"><p class="side-bar__item-link-password side-bar__item-link">Đổi mật khẩu</p></li>
                                 <li class="side-bar__item"><a href="/dangxuat" class="side-bar__item-link">Đăng xuất</a></li>
                             </ul>
                         </div>
                         <div class="col l-9 m-9 c-12">
-                            <div class="main">
-                                <form action="" method="POST" class="form" id="form-1">
+                            <div class="main" id="main">
+                                <form method="POST" class="form" id="form-infor">
                                     <h3 class="heading"> Thông tin cá nhân</h3>
                             
                                     <div class="spacer"></div>
@@ -277,11 +277,11 @@
             </div>
             @include('Components.footer')
         </div>
-        {{-- Validator --}}
+        {{-- Validator form information --}}
         <script>
             var apiUser = "http://127.0.0.1:8000/api/user"
             Validator({
-              form: "#form-1",
+              form: "#form-infor",
               rules: [
                 Validator.minLength("#cccd", 12, 'Yêu cầu căn cước công dân nhập 12 kí tự'),
                 Validator.minLength("#SDT",10, 'Yêu cầu số điện thoại từ 10 - 11 số'),
@@ -337,6 +337,7 @@
                 })
             }
         </script>
+        {{-- Danh sách tỉnh, quận, phường --}}
         <script>
             var apiProvince = 'http://127.0.0.1:8000/api/tinhthanh'
             var apiDistrict = 'http://127.0.0.1:8000/api/quanhuyen'
@@ -410,6 +411,93 @@
                     wardList.appendChild(option)
                 })
             }
+        </script>
+        {{-- Chuyển đổi menu --}}
+        <script>
+            var main = $('#main')
+            var formInformation = $('#form-infor')
+            var formChangePassword = document.createElement("form");
+            formChangePassword.innerHTML = `
+                                        <h3 class="heading">Đổi mật khẩu</h3>
+                                        <div class="spacer"></div>
+                                        <div class="form-group">
+                                        <label for="oldPassword" class="form-label">Mật khẩu cũ</label>
+                                        <input
+                                            id="oldPassword"
+                                            name="oldPassword"
+                                            type="password"
+                                            class="form-control"
+                                        />
+                                        <span class="form-message"></span>
+                                        </div>
+        
+                                        <div class="form-group">
+                                            <label for="password" class="form-label">Mật khẩu mới</label>
+                                            <input
+                                            id="password"
+                                            name="password"
+                                            type="password"
+                                            class="form-control"
+                                            />
+                                            <span class="form-message"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password_confirmation" class="form-label">Nhập lại mật khẩu</label>
+                                            <input
+                                            id="password_confirmation"
+                                            name="password_confirmation"
+                                            type="password"
+                                            class="form-control"
+                                            />
+                                            <span class="form-message"></span>
+                                        </div>
+                                        <button class="form-submit">Lưu</button>
+                                `;
+            formChangePassword.setAttribute("id", "form-change-password")
+            formChangePassword.setAttribute("class", "form")
+            formChangePassword.classList.add('display-none')
+            main.append(formChangePassword)
+            var passwordButton = $('.side-bar__item-link-password')
+            passwordButton.onclick = function()  {
+                tabIsActive()
+                passwordButton.classList.add('side-bar__item-link--active')
+                main.innerHTML = ""
+                main.append(formChangePassword)
+                formChangePassword.classList.remove('display-none')
+            }
+            var inforButton = $('.side-bar__item-link-infor')
+            inforButton.onclick = function()  {
+                tabIsActive()
+                inforButton.classList.add('side-bar__item-link--active')
+                main.innerHTML = ""
+                main.append(formInformation)
+
+            }
+            function tabIsActive(){
+                var tabIsChoosed = $('.side-bar__item-link--active')
+                tabIsChoosed[0].classList.remove('side-bar__item-link--active')
+            }
+
+        </script>
+        <script>
+            Validator({
+                form: "#form-change-password",
+                rules: [
+                    Validator.isRequired("#oldPassword"),
+                    Validator.isRequired("#password"),
+                    Validator.minLength("#password", 7),
+                    Validator.isRequired("#password_confirmation"),
+                    Validator.isConfirm("#password_confirmation", "Mật khẩu không trùng khớp"),
+                ],
+                errorSelector: ".form-message",
+                buttonSubmitSelector: ".form-submit",
+                // Muốn submit không theo API mặc định của trình duyệt
+                onSubmit: function (data) {
+                    console.log(data)
+                    UpdateNoImage(data)
+                },
+                formGroupSelector: ".form-group",
+            })
         </script>
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

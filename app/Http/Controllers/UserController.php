@@ -7,6 +7,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -78,34 +79,35 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $credentials['ho'] = $request->ho;
-        $credentials['ten'] = $request->ten;
-        if (!empty($request->ngaySinh)) {
-            $ngaySinhFormatted = Carbon::createFromFormat('d-m-Y', $request->ngaySinh)->format('Y-m-d');
-            $credentials['ngaySinh'] = $ngaySinhFormatted;
-        }
-        $credentials['cccd'] = $request->cccd;
-        $credentials['SDT'] = $request->SDT;
-        $credentials['maPX'] = $request->maPX;
-        $credentials['diaChi'] = $request->diaChi;
-        // if ($request->hasFile('hinhDaiDien')) {
-        //     $imageSRC = $request->file('hinhDaiDien');
-        //     $imageName = $imageSRC->getClientOriginalName();
-        //     try {
-        //         // $imageSRC->storeAs('public/assets/img', $imageName);
-        //         $imageSRC->move(public_path('assets/img'), $imageName);
-        //         $credentials['hinhDaiDien'] = $imageName;
-        //     } catch (\Exception $e) {
-        //         dd($e->getMessage());
-        //     }
-        // }
-
         $userIsUpdated = User::where('maNguoiDung', $id)->first();
-        $userIsUpdated->update($credentials);
-        if ($userIsUpdated)
-            return response()->json(['success' => 'Cập nhật thông tin thành công']);
-        else
-            return response()->json(['error' => 'Cập nhật thông tin thất bại']);
+        // Usecase change password
+        if (!empty($request->oldPassword)) {
+            // Auth::user()->password không thể sử dụng vì trả về null
+            $userPassword = $userIsUpdated->password;
+            // return $userPassword;
+            if (password_verify($request->oldPassword, $userPassword)) {
+                $userIsUpdated->update(['password' => bcrypt($request->password)]);
+                return  response()->json(['success' => 'Đổi mật khẩu thành công']);
+            } else
+                return response()->json(['error' => 'Mật khẩu cũ không đúng']);
+        } else {
+            // Usecase update private information
+            $credentials['ho'] = $request->ho;
+            $credentials['ten'] = $request->ten;
+            if (!empty($request->ngaySinh)) {
+                $ngaySinhFormatted = Carbon::createFromFormat('d-m-Y', $request->ngaySinh)->format('Y-m-d');
+                $credentials['ngaySinh'] = $ngaySinhFormatted;
+            }
+            $credentials['cccd'] = $request->cccd;
+            $credentials['SDT'] = $request->SDT;
+            $credentials['maPX'] = $request->maPX;
+            $credentials['diaChi'] = $request->diaChi;
+            $userIsUpdated->update($credentials);
+            if ($userIsUpdated)
+                return response()->json(['success' => 'Cập nhật thông tin thành công']);
+            else
+                return response()->json(['error' => 'Cập nhật thông tin thất bại']);
+        }
     }
 
     /**
