@@ -32,10 +32,6 @@ class ThueSanController extends Controller
     public function store(Request $request)
     {
         $maNguoiDung = $request->maNguoiDung;
-        // if (Auth::check()) {
-        //     $maNguoiDung = Auth::user()->maNguoiDung;
-        //     return Auth::user()->maNguoiDung;
-        // }
         try {
             // Kiểm tra xem mã sân đã có trong túi của người dùng này chưa
             $sportFieldExist = ThueSan::where('maSan', $request->maSan)
