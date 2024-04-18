@@ -358,6 +358,7 @@
             var urlApiSanBong = 'http://127.0.0.1:8000/api/sanbong'
             var gridMode = $('.grid-mode .row')
             var listMode = $('.list-mode .row')
+            listMode.classList.add('display-none')
             var dataAllSanBong//Lưu dữ liệu ban đầu 
             var dataAllSanBongFollowFilter
             start()
@@ -429,7 +430,7 @@
                                                 </div>
                                                 `
                     }
-                    else
+                    else{
                         gridMode.innerHTML +=    `
                                                 <div class="col l-6 m-6 c-12">
                                                     <div class="football-ground football-ground--0">
@@ -451,6 +452,28 @@
                                                     </div>
                                                 </div>
                                                 `
+                        listMode.innerHTML +=   `
+                                                <div class="football-ground football-ground--0 row">
+                                                    <div class="fg-image col l-6">
+                                                        <div class="image-box">
+                                                            <img class="image-box__item" src="assets/img/${sanbong.hinhAnh}.jpg">
+                                                            <img class="image-box__item image-box__item--hover"  src="assets/img/${sanbong.hinhAnh}_hover.jpg">
+                                                        </div>
+                                                        <p class="image-status">Bảo trì</p>
+                                                        
+                                                    </div>
+                                                    <div class="fg-infor col l-6">
+                                                        <a href="#" class="fg-infor__name">${sanbong.tenSan}</a>
+                                                        <p class="fg-infor__price"><span>${formattedString}</span>/h</p>
+                                                        <p class="fg-infor__description">${sanbong.moTa}</p>
+                                                        <div class="fg-infor__action">
+                                                            <p class="fg-infor__action-item fg-infor__action-cart">Thêm vào túi</p>
+                                                            <p class="fg-infor__action-item fg-infor__action-improve" onclick="showImproveDialog(this)">Nâng</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                `
+                    }
                 })
             }
             var gridButton = $(".sorting-view__item-grid");
