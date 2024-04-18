@@ -46,6 +46,8 @@ class ThueSanController extends Controller
             $credentials['thoiGianBatDau'] = $request->thoiGianBatDau;
             $credentials['thoiGianKetThuc'] = $request->thoiGianKetThuc;
             $credentials['trangThai'] = $request->trangThai;
+            $credentials['thu'] = $request->thu;
+            $credentials['ngay'] = $request->ngay;
             $item = ThueSan::create($credentials);
             // return $item;
             if ($item)

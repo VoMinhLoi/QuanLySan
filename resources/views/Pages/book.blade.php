@@ -359,9 +359,10 @@
             listMode.classList.add('display-none')
             var dataAllSanBong//Lưu dữ liệu ban đầu 
             var dataAllSanBongFollowFilter
+            var form = $('.overlay');
             start()
             function start(){
-                showImproveDialog()
+                form.classList.toggle('display-none');
                 getSanBong(sanbongs => {
                     dataAllSanBong = sanbongs
                     dataAllSanBongFollowFilter = [...dataAllSanBong]
@@ -369,8 +370,8 @@
                 })
             }
 
-            function showImproveDialog(){
-                var form = $('.overlay');
+            function showImproveDialog(maSan){
+                form.dataset.key = maSan;
                 form.classList.toggle('display-none');
             }
 
@@ -396,7 +397,7 @@
                                                             <p class="image-status">Hoạt động</p>
                                                             <div class="image-action">
                                                                 <p class="image-action__item" onclick="addToBag('${sanbong.maSan}')">Thêm vào túi</p>
-                                                                <p class="image-action__item" onclick="showImproveDialog(this)">Nâng</p>
+                                                                <p class="image-action__item" onclick="showImproveDialog('${sanbong.maSan}')">Nâng</p>
                                                             </div>
                                                         </div>
                                                         <div class="fg-infor">
@@ -422,7 +423,7 @@
                                                         <p class="fg-infor__description">${sanbong.moTa}</p>
                                                         <div class="fg-infor__action">
                                                             <p class="fg-infor__action-item fg-infor__action-cart" onclick="addToBag('${sanbong.maSan}')">Thêm vào túi</p>
-                                                            <p class="fg-infor__action-item fg-infor__action-improve" onclick="showImproveDialog(this)">Nâng</p>
+                                                            <p class="fg-infor__action-item fg-infor__action-improve" onclick="showImproveDialog('${sanbong.maSan}')">Nâng</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -440,7 +441,7 @@
                                                             <p class="image-status">Bảo trì</p>
                                                             <div class="image-action">
                                                                 <p class="image-action__item" onclick="addToBag('${sanbong.maSan}')"">Thêm vào túi</p>
-                                                                <p class="image-action__item" onclick="showImproveDialog(this)">Nâng</p>
+                                                                <p class="image-action__item" onclick="showImproveDialog('${sanbong.maSan}')">Nâng</p>
                                                             </div>
                                                         </div>
                                                         <div class="fg-infor">
@@ -466,7 +467,7 @@
                                                         <p class="fg-infor__description">${sanbong.moTa}</p>
                                                         <div class="fg-infor__action">
                                                             <p class="fg-infor__action-item fg-infor__action-cart" onclick="addToBag('${sanbong.maSan}')">Thêm vào túi</p>
-                                                            <p class="fg-infor__action-item fg-infor__action-improve" onclick="showImproveDialog(this)">Nâng</p>
+                                                            <p class="fg-infor__action-item fg-infor__action-improve" onclick="showImproveDialog('${sanbong.maSan}')">Nâng</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -612,7 +613,7 @@
                     data["thoiGianBatDau"] = getTimeStart().toString(),
                     data["thoiGianKetThuc"] = getTimeEnd().toString(),
                     data["trangThai"] = 0,
-                    console.log(data)
+                    // console.log(data)
                     fetch(apiThueSan,{
                         method: 'POST', // hoặc 'POST' tùy thuộc vào yêu cầu của bạn
                         headers: {

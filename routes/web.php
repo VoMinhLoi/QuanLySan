@@ -22,7 +22,6 @@ Route::get('/', function () {
 });
 
 
-Route::get('/sanbong', [App\Http\Controllers\SanBongController::class, 'interface']);
 Route::get('/lienhe', [App\Http\Controllers\User\ContactController::class, 'index']);
 Route::get('/dieukhoanchinhsach', [App\Http\Controllers\User\PoliciesAndTermsController::class, 'index']);
 
@@ -39,6 +38,7 @@ Route::post('/cailaimatkhau', [LoginController::class, 'resetPassword'])->name('
 
 
 Route::group(['middleware' => 'userLogin'], function () {
+    Route::get('/sanbong', [App\Http\Controllers\SanBongController::class, 'interface']);
     Route::get('/thuesan', [BookController::class, 'interface']);
     Route::get('/hosocanhan', [LoginController::class, 'formProfile']);
     Route::get('/dangxuat', [LogoutController::class, 'index']);
