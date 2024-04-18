@@ -205,13 +205,7 @@
         .fg-infor__name:hover {
             color: var(--primary-color);
         }
-        .grid-mode {
-            /* display: none; */
-        }
         /* List mode */
-        .list-mode {
-            display: none;
-        }
         .list-mode .fg-infor {
             margin: 0;
         }
@@ -234,6 +228,11 @@
             color: #79808c;
             margin-bottom: 8px;
             text-align: justify;
+
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
         }
         .fg-infor__action {
             height: 54px;
@@ -275,14 +274,14 @@
                 <div class="row content">
                     <div class="col l-3 m-3 c-12">
                         <div class="choose">
-                            <h2 class="choose__heading">Lọc theo loại sân</h2>
+                            <h2 class="choose__heading" for="choose">Lọc theo loại sân</h2>
                             <div class="choose__filter">
                                 <label class="choose__filter-index" for="choose">Loại sân: 
                                 </label>
-                                <select class="choose__filter-index-category">
-                                    <option data-value="1" class="option selected">Tất cả loại sân</option>
-                                    <option data-value="2" class="option">Bóng chuyền</option>
-                                    <option data-value="4" class="option">Bóng chuyền cát</option>
+                                <select class="choose__filter-index-category" id="choose">
+                                    <option data-value="" class="option selected">Tất cả loại sân</option>
+                                    <option data-value="1" class="option">Bóng chuyền</option>
+                                    <option data-value="2" class="option">Bóng chuyền cát</option>
                                     <option data-value="3" class="option">Bóng đá</option>
                                     <option data-value="4" class="option">Bóng rỗ</option>
                                 </select>
@@ -313,15 +312,15 @@
                                         <i class="fa-solid fa-list"></i>
                                     </li>
                                 </ul>
-                                <h2 class="sorting-view__heading">15 sân sẵn</h2>
+                                <h2 class="sorting-view__heading sorting-view__heading-sport-field-quantity"></h2>
                             </div>
                             <div class="col l-6 m-6 c-6 sorting filter-basic">
                                 <label class="sorting-view__heading">Sắp xếp theo:</label>
                                 <select class="filter-basic__fieldset-list">
-                                    <option data-value="1" class="option selected">Xếp theo tên: A-Z</option>
-                                    <option data-value="2" class="option">Xếp theo tên: Z-A</option>
-                                    <option data-value="3" class="option">Xếp theo giá: thấp đến cao</option>
-                                    <option data-value="4" class="option">Xếp theo giá: cao đến thấp</option>
+                                    <option data-set="1" class="option selected">Xếp theo tên: A-Z</option>
+                                    <option data-set="2" class="option">Xếp theo tên: Z-A</option>
+                                    <option data-set="3" class="option">Xếp theo giá: thấp đến cao</option>
+                                    <option data-set="4" class="option">Xếp theo giá: cao đến thấp</option>
                                 </select>
                             </div>
                         </div>
@@ -340,87 +339,10 @@
                         </div>
                         <div class="grid-mode">
                             <div class="row">
-
-                                {{-- <div class="col l-6">
-                                    <div class="football-ground football-ground--0">
-                                        <div class="fg-image">
-                                            <div class="image-box">
-                                                <img class="image-box__item" src="assets/img/sanbongda.jpg">
-                                                <img class="image-box__item image-box__item--hover" src="assets/img/sanbongda_hover.jpg">
-                                            </div>
-                                            <p class="image-status">Bảo trì</p>
-                                            <div class="image-action">
-                                                <p class="image-action__item">Thêm vào túi</p>
-                                                <p class="image-action__item" onclick="showImproveDialog(this)">Nâng</p>
-                                            </div>
-                                        </div>
-                                        <div class="fg-infor">
-                                            <p class="fg-infor__name">Sân bóng chuyền số 1</p>
-                                            <p class="fg-infor__price"><span>200.000</span>VNĐ/h</p>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                            </div>
-                            <div class="row">
-                                {{-- <div class="col l-6">
-                                    <div class="football-ground">
-                                        <div class="fg-image">
-                                            <div class="image-box">
-                                                <img class="image-box__item" src="assets/img/sanbongchuyencat.jpg">
-                                                <img class="image-box__item image-box__item--hover"  src="assets/img/sanbongchuyencat_hover.jpg">
-                                            </div>
-                                            <p class="image-status">Hoạt động</p>
-                                            <div class="image-action">
-                                                <p class="image-action__item">Thêm vào túi</p>
-                                                <p class="image-action__item" onclick="showImproveDialog(this)">Nâng</p>
-                                            </div>
-                                        </div>
-                                        <div class="fg-infor">
-                                            <a href="#" class="fg-infor__name">Sân bóng chuyền số 1</a>
-                                            <p class="fg-infor__price"><span>200.000</span>VNĐ/h</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col l-6">
-                                    <div class="football-ground">
-                                        <div class="fg-image">
-                                            <div class="image-box">
-                                                <img class="image-box__item" src="assets/img/sanbongro.jpg">
-                                                <img class="image-box__item image-box__item--hover" src="assets/img/sanbongro_hover.jpg">
-                                            </div>
-                                            <p class="image-status">Hoạt động</p>
-                                            <div class="image-action">
-                                                <p class="image-action__item">Thêm vào túi</p>
-                                                <p class="image-action__item" onclick="showImproveDialog(this)">Nâng</p>
-                                            </div>
-                                        </div>
-                                        <div class="fg-infor">
-                                            <p class="fg-infor__name">Sân bóng chuyền số 1</p>
-                                            <p class="fg-infor__price"><span>200.000</span>VNĐ/h</p>
-                                        </div>
-                                    </div>
-                                </div> --}}
                             </div>
                         </div>
                         <div class="list-mode">
-                            <div class="football-ground row">
-                                {{-- <div class="fg-image col l-6">
-                                    <div class="image-box">
-                                        <img class="image-box__item" src="assets/img/sanbongchuyen.jpg">
-                                        <img class="image-box__item image-box__item--hover"  src="assets/img/sanbongchuyen_hover.jpg">
-                                    </div>
-                                    <p class="image-status">Hoạt động</p>
-                                    
-                                </div>
-                                <div class="fg-infor col l-6">
-                                    <a href="#" class="fg-infor__name">Sân bóng chuyền số 1</a>
-                                    <p class="fg-infor__price"><span>200.000</span>VNĐ/h</p>
-                                    <p class="fg-infor__description">Sân bóng nằm ở vị trí đầu tiên phía bên trái cổng ra vào. Thời gian đông khách thường vào khung giờ sau 18h.</p>
-                                    <div class="fg-infor__action">
-                                        <p class="fg-infor__action-item fg-infor__action-cart">Thêm vào túi</p>
-                                        <p class="fg-infor__action-item fg-infor__action-improve" onclick="showImproveDialog(this)">Nâng</p>
-                                    </div>
-                                </div> --}}
+                            <div class="row">
                             </div>
                         </div>
                     </div>
@@ -435,11 +357,17 @@
         <script>
             var urlApiSanBong = 'http://127.0.0.1:8000/api/sanbong'
             var gridMode = $('.grid-mode .row')
-            var data //dùng data lưu lại dữ liệu để dùng chức năng lọc chỉ cần dùng dữ liệu này chứ không cần fetch nữa;
+            var listMode = $('.list-mode .row')
+            var dataAllSanBong//Lưu dữ liệu ban đầu 
+            var dataAllSanBongFollowFilter
             start()
             function start(){
                 showImproveDialog()
-                getSanBong(sanbongs => renderSanBong(sanbongs))
+                getSanBong(sanbongs => {
+                    dataAllSanBong = sanbongs
+                    dataAllSanBongFollowFilter = [...dataAllSanBong]
+                    renderSanBong(dataAllSanBongFollowFilter)
+                })
             }
 
             function showImproveDialog(){
@@ -454,8 +382,10 @@
             }
 
             function renderSanBong(sanbongs){
+                sportsFieldQuantity.innerHTML = sanbongs.length + " sân thể thao"
                 sanbongs.forEach((sanbong)=>{
-                    if(sanbong.trangThai === 1)
+                    let formattedString = formatCurrency(sanbong.giaDichVu.toString())
+                    if(sanbong.trangThai === 1){
                         gridMode.innerHTML +=    `
                                                 <div class="col l-6 m-6 c-12">
                                                     <div class="football-ground">
@@ -472,11 +402,33 @@
                                                         </div>
                                                         <div class="fg-infor">
                                                             <a href="#" class="fg-infor__name">${sanbong.tenSan}</a>
-                                                            <p class="fg-infor__price"><span>${sanbong.giaDichVu}</span>VNĐ/h</p>
+                                                            <p class="fg-infor__price"><span>${formattedString}</span>/h</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 `
+                        listMode.innerHTML +=   `
+                                                <div class="football-ground row">
+                                                    <div class="fg-image col l-6">
+                                                        <div class="image-box">
+                                                            <img class="image-box__item" src="assets/img/${sanbong.hinhAnh}.jpg">
+                                                            <img class="image-box__item image-box__item--hover"  src="assets/img/${sanbong.hinhAnh}_hover.jpg">
+                                                        </div>
+                                                        <p class="image-status">Hoạt động</p>
+                                                        
+                                                    </div>
+                                                    <div class="fg-infor col l-6">
+                                                        <a href="#" class="fg-infor__name">${sanbong.tenSan}</a>
+                                                        <p class="fg-infor__price"><span>${formattedString}</span>/h</p>
+                                                        <p class="fg-infor__description">${sanbong.moTa}</p>
+                                                        <div class="fg-infor__action">
+                                                            <p class="fg-infor__action-item fg-infor__action-cart">Thêm vào túi</p>
+                                                            <p class="fg-infor__action-item fg-infor__action-improve" onclick="showImproveDialog(this)">Nâng</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                `
+                    }
                     else
                         gridMode.innerHTML +=    `
                                                 <div class="col l-6 m-6 c-12">
@@ -494,7 +446,7 @@
                                                         </div>
                                                         <div class="fg-infor">
                                                             <a href="#" class="fg-infor__name">${sanbong.tenSan}</a>
-                                                            <p class="fg-infor__price"><span>${sanbong.giaDichVu}</span>VNĐ/h</p>
+                                                            <p class="fg-infor__price"><span>${formattedString}</span>/h</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -507,45 +459,125 @@
             listButton.onclick = () => {
                 gridButton.classList.remove('sorting-view__item--active')
                 listButton.classList.add('sorting-view__item--active')
-                var gridMode = $('.grid-mode')
-                gridMode.classList.toggle('display-none')
-                var listMode = $('.list-mode')
-                listMode.classList.toggle('display-block')
+                gridMode.classList.add('display-none')
+                listMode.classList.remove('display-none')
             };
             gridButton.onclick = () => {
                 listButton.classList.remove('sorting-view__item--active')
                 gridButton.classList.add('sorting-view__item--active')
-                var gridMode = $('.grid-mode')
-                gridMode.classList.toggle('display-none')
-                var listMode = $('.list-mode')
-                listMode.classList.toggle('display-block')
+                gridMode.classList.remove('display-none')
+                listMode.classList.add('display-none')
 
             };
-            var rangePrice = $('.choose__filter-range');
-            var priceTo = $('.choose__filter-number-to');
-            var onePercentToPrice = 2.5;
-            rangePrice.onchange = function(){
-                console.log(rangePrice.value)
-                switch(rangePrice.value){
-                    case '0':
-                        priceTo.innerText = '';
+        </script>
+        {{-- Định dạng tiền bằng js --}}
+        <script>
+            function formatCurrency(input) {
+                return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(input);
+            }
+        </script>
+        {{-- Xử lý lọc theo sân bóng --}}
+        <script>
+            var categoryListView = $('.choose__filter-index-category')
+            var sportsFieldQuantity = $('.sorting-view__heading-sport-field-quantity')
+            categoryListView.onchange = ()=>{
+                gridMode.innerHTML = ""
+                listMode.innerHTML = ""
+                switch(categoryListView.value){
+                    case "Bóng chuyền":
+                        handleFilter(dataAllSanBongFollowFilter)
                         break;
-                    case '20':
-                        priceTo.innerText = '- 210.000';
+                    case "Bóng chuyền cát":
+                        handleFilter(dataAllSanBongFollowFilter)
                         break;
-                    case '40':
-                        priceTo.innerText = '- 220.000';
-                        break
-                    case '60':
-                        priceTo.innerText = '- 230.000';
-                        break
-                    case '80':
-                        priceTo.innerText = '- 240.000';
-                        break
-                    case '100':
-                        priceTo.innerText = '- 250.000';
-                        break
+                    case "Bóng đá":
+                        handleFilter(dataAllSanBongFollowFilter)
+                        break;
+                    case "Bóng rỗ":
+                        handleFilter(dataAllSanBongFollowFilter)
+                        break;
+                    default: 
+                        handleFilter(dataAllSanBongFollowFilter)
                 }
+            }
+            function handleFilter(datSanBong){
+                let price = parseInt(priceTo.innerHTML.replace(/[\s-]/g, ''), 10) * 1000
+                if(!price)
+                    price = 200000
+                datSanBong = dataAllSanBong.filter((sanbong)=>{
+                    if(categoryListView.value === "Tất cả loại sân")
+                        return sanbong.giaDichVu <= price
+                    return sanbong.loaiSan === categoryListView.value && sanbong.giaDichVu <= price
+                })
+                switch(filterAZHighLow){
+                    case "Xếp theo tên: A-Z":
+                        datSanBong.sort((a, b) => {
+                            return a.tenSan.localeCompare(b.tenSan);
+                        });
+                        break;
+                    case "Xếp theo tên: Z-A":
+                        datSanBong.sort((a, b) => {
+                            return b.tenSan.localeCompare(a.tenSan);
+                        });
+                        break;
+                    case "Xếp theo giá: thấp đến cao":
+                        datSanBong.sort((a, b) => {
+                            return a.giaDichVu - b.giaDichVu;
+                        });
+                        break;
+                    case "Xếp theo giá: cao đến thấp":
+                        datSanBong.sort((a, b) => {
+                            return b.giaDichVu - a.giaDichVu;
+                        });
+                        break;
+                }
+                renderSanBong(datSanBong)
+            }
+        </script>
+        {{-- Xử lý lọc theo giá --}}
+        <script>
+            var priceView = $(".choose__filter-range")
+            var priceTo = $('.choose__filter-number-to');
+            priceView.onchange = () => {
+                gridMode.innerHTML = ""
+                listMode.innerHTML = ""
+                let price = priceView.value
+                switch(price){
+                    case "0":
+                        priceTo.innerText = '';
+                        handleFilter(dataAllSanBongFollowFilter)
+                        break;
+                    case "20":
+                        priceTo.innerText = '- 210.000';
+                        handleFilter(dataAllSanBongFollowFilter)
+                        break;
+                    case "40":
+                        priceTo.innerText = '- 220.000';
+                        handleFilter(dataAllSanBongFollowFilter)
+                        break;
+                    case "60":
+                        priceTo.innerText = '- 230.000';
+                        handleFilter(dataAllSanBongFollowFilter)
+                        break;
+                    case "80":
+                        priceTo.innerText = '- 240.000';
+                        handleFilter(dataAllSanBongFollowFilter)
+                        break;
+                    default:
+                        priceTo.innerText = '- 250.000';
+                        handleFilter(dataAllSanBongFollowFilter)
+                }
+            }
+        </script>
+        {{-- Xử lý lọc theo A-Z, Z-A, giá từ cao tới thấp, từ thấp tới cao --}}
+        <script>
+            var normalFilterView = $('.filter-basic__fieldset-list')
+            var filterAZHighLow
+            normalFilterView.onchange = () => {
+                gridMode.innerHTML = ""
+                listMode.innerHTML = ""  
+                filterAZHighLow = normalFilterView.value;
+                handleFilter(dataAllSanBongFollowFilter)
             }
         </script>
 </body>
