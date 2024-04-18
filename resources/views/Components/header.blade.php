@@ -324,18 +324,19 @@
                         <li class="menu-mobile-sub-nav__item"><a href="/dangxuat" class="menu-mobile-sub-nav__item-link">Đăng xuất</a></li>
                     </ul>
                 </li>
+                <script>
+                    var menuUser = $('.menu-mobile-item--has-sub-nav')
+                    var subMenu = menuUser.querySelector('.menu-mobile-sub-nav')
+                    var arrow = menuUser.querySelector('.fa-arrow-down')
+                    menuUser.onclick = () => {
+                        subMenu.classList.toggle('animationOverFlow');
+                        arrow.classList.toggle('rotate90')
+                    }
+                </script>
             @else
                 <li class="menu-mobile-item"><a href="/dangnhap" class="menu-mobile-item__link">Đăng nhập</a></li>
             @endif
 
         </ul>
     </header>
-    <script>
-        var menuUser = $('.menu-mobile-item--has-sub-nav')
-        var subMenu = menuUser.querySelector('.menu-mobile-sub-nav')
-        var arrow = menuUser.querySelector('.fa-arrow-down')
-        menuUser.onclick = () => {
-            subMenu.classList.toggle('animationOverFlow');
-            arrow.classList.toggle('rotate90')
-        }
-    </script>
+    
