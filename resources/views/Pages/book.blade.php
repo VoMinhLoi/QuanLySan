@@ -257,9 +257,7 @@
             align-items: flex-end;
         }
     </style>
-    <style>
-
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body >
     <div class="grid">
@@ -397,7 +395,7 @@
                                                             </div>
                                                             <p class="image-status">Hoạt động</p>
                                                             <div class="image-action">
-                                                                <p class="image-action__item">Thêm vào túi</p>
+                                                                <p class="image-action__item" onclick="addToBag('${sanbong.maSan}')">Thêm vào túi</p>
                                                                 <p class="image-action__item" onclick="showImproveDialog(this)">Nâng</p>
                                                             </div>
                                                         </div>
@@ -423,7 +421,7 @@
                                                         <p class="fg-infor__price"><span>${formattedString}</span>/h</p>
                                                         <p class="fg-infor__description">${sanbong.moTa}</p>
                                                         <div class="fg-infor__action">
-                                                            <p class="fg-infor__action-item fg-infor__action-cart">Thêm vào túi</p>
+                                                            <p class="fg-infor__action-item fg-infor__action-cart" onclick="addToBag('${sanbong.maSan}')">Thêm vào túi</p>
                                                             <p class="fg-infor__action-item fg-infor__action-improve" onclick="showImproveDialog(this)">Nâng</p>
                                                         </div>
                                                     </div>
@@ -441,7 +439,7 @@
                                                             </div>
                                                             <p class="image-status">Bảo trì</p>
                                                             <div class="image-action">
-                                                                <p class="image-action__item">Thêm vào túi</p>
+                                                                <p class="image-action__item" onclick="addToBag('${sanbong.maSan}')"">Thêm vào túi</p>
                                                                 <p class="image-action__item" onclick="showImproveDialog(this)">Nâng</p>
                                                             </div>
                                                         </div>
@@ -467,7 +465,7 @@
                                                         <p class="fg-infor__price"><span>${formattedString}</span>/h</p>
                                                         <p class="fg-infor__description">${sanbong.moTa}</p>
                                                         <div class="fg-infor__action">
-                                                            <p class="fg-infor__action-item fg-infor__action-cart">Thêm vào túi</p>
+                                                            <p class="fg-infor__action-item fg-infor__action-cart" onclick="addToBag('${sanbong.maSan}')">Thêm vào túi</p>
                                                             <p class="fg-infor__action-item fg-infor__action-improve" onclick="showImproveDialog(this)">Nâng</p>
                                                         </div>
                                                     </div>
@@ -603,5 +601,83 @@
                 handleFilter(dataAllSanBongFollowFilter)
             }
         </script>
-</body>
+        <script>
+            function addToBag(maSan){
+                var data = {}
+                var apiThueSan = "http://127.0.0.1:8000/api/thuesan"
+                if (parseInt("{{ Auth::check() }}")) {
+                    data["maNguoiDung"] = "{{ Auth::user()->maNguoiDung }}",
+                    data["maSan"] = maSan,
+                    data["soLuong"] = 1,
+                    data["thoiGianBatDau"] = getTimeStart().toString(),
+                    data["thoiGianKetThuc"] = getTimeEnd().toString(),
+                    data["trangThai"] = 0,
+                    console.log(data)
+                    fetch(apiThueSan,{
+                        method: 'POST', // hoặc 'POST' tùy thuộc vào yêu cầu của bạn
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.error)
+                            toastr.error(data.error)
+                        else
+                            toastr.success(data.success)
+                    })
+                }
+                else{
+                    window.location.href = "/dangnhap"; 
+                }
+            }
+            function getTimeStart() {
+                const currentDate = new Date();
+
+                // Làm tròn lên giờ tiếp theo
+                currentDate.setHours(currentDate.getHours() + 1);
+                // Đặt phút và giây về 0
+                currentDate.setMinutes(0);
+                currentDate.setSeconds(0);
+
+                // Lấy thông tin ngày, tháng, năm, giờ, phút và giây từ đối tượng Date
+                const year = currentDate.getFullYear();
+                const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0, nên cộng thêm 1
+                const day = String(currentDate.getDate()).padStart(2, '0');
+                const hours = String(currentDate.getHours()).padStart(2, '0');
+                const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+                const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+
+                // Tạo chuỗi định dạng Y-m-d h-m-s
+                const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+                return formattedDate;
+            }
+            function getTimeEnd() {
+                const currentDate = new Date();
+
+                // Làm tròn lên giờ tiếp theo
+                currentDate.setHours(currentDate.getHours() + 2);
+                // Đặt phút và giây về 0
+                currentDate.setMinutes(0);
+                currentDate.setSeconds(0);
+
+                // Lấy thông tin ngày, tháng, năm, giờ, phút và giây từ đối tượng Date
+                const year = currentDate.getFullYear();
+                const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0, nên cộng thêm 1
+                const day = String(currentDate.getDate()).padStart(2, '0');
+                const hours = String(currentDate.getHours()).padStart(2, '0');
+                const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+                const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+
+                // Tạo chuỗi định dạng Y-m-d h-m-s
+                const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+                return formattedDate;
+            }
+        </script>
+    </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </html>
