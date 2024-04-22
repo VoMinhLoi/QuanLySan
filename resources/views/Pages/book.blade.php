@@ -461,9 +461,6 @@
                                                         <a href="#" class="fg-infor__name">${sanbong.tenSan}</a>
                                                         <p class="fg-infor__price"><span>${formattedString}</span>/h</p>
                                                         <p class="fg-infor__description">${sanbong.moTa}</p>
-                                                        <div class="fg-infor__action">
-                                                            <p class="fg-infor__action-item fg-infor__action-improve" onclick="showImproveDialog('${sanbong.maSan}')">Đặt sân</p>
-                                                        </div>
                                                     </div>
                                                 </div>
                                                 `
