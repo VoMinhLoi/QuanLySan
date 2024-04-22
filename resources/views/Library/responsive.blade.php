@@ -128,6 +128,9 @@
             .fullname {
                 display: none;
             }
+            .image-box {
+                /* height: unset; */
+            }
         }
         .animationOverFlow {
             animation: OverFlow 0.2s linear 0s forwards;

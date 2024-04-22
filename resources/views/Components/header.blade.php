@@ -205,11 +205,12 @@
         <ul class="header-navigation">
             <li class="header-navigation-item"><a href="/" class="header-navigation-item__link">Trang chủ</a></li>
             <li class="header-navigation-item">
-                <p class="header-navigation-item__link">Dịch vụ</p>
+                <a href="/sanbong" class="header-navigation-item__link">Đặt sân</a>
+                {{-- <p class="header-navigation-item__link">Dịch vụ</p>
                 <ul class="sub-nav">
                     <li class="sub-nav__item"><a href="/sanbong" class="sub-nav__item-link">Đặt sân</a></li>
                     <li class="sub-nav__item"><a href="/sanbong" class="sub-nav__item-link">Thuê dụng cụ</a></li>
-                </ul>
+                </ul> --}}
             </li>
             <li class="header-navigation-item"><a href="/lienhe" class="header-navigation-item__link">Liên hệ</a></li>
             <li class="header-navigation-item"><a href="/dieukhoanchinhsach" class="header-navigation-item__link">Điều khoản & chính sách</a></li>
@@ -238,13 +239,23 @@
                 <i class="fa-solid fa-bars"></i>
             </label>
             <label for="showNotification" class="header-private-item">
+
                 <i class="fa-solid fa-bell"></i>
-                <span class="header-private-item__quantity">11</span>
+                @if(Auth::check())
+                    <span class="header-private-item__quantity">0</span>
+                @endif
             </label>
-            <a href="/thuesan" class="header-private-item">
+            
+            {{-- <a href="/thuesan" class="header-private-item">
                 <i class="fa-solid fa-volleyball"></i>
-                <span class="header-private-item__quantity">11</span>
-            </a>
+                @if(Auth::check())
+                    @php
+                        $maNguoiDung = Auth::user()->maNguoiDung;
+                        $sportFieldQuantity = App\Models\ThueSan::where('maNguoiDung', $maNguoiDung)->count();
+                    @endphp
+                    <span class="header-private-item__quantity header-private-item__quantity--in-bag">{{ $sportFieldQuantity }}</span>
+                @endif
+            </a> --}}
             <input hidden type="checkbox" id="showNotification" >
             <div class="header__notify arrow">
                 <h3 class="header-notify-list__title">
@@ -339,4 +350,5 @@
 
         </ul>
     </header>
+    @include('Elements.buttontotop')
     

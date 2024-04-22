@@ -152,7 +152,7 @@
               ràng cho việc đó.
             </p>
             <div class="slider-content__context-book">
-              <a class="slider-content__context-book-link" href="#"
+              <a class="slider-content__context-book-link" href="/sanbong"
                 >Đặt sân ngay</a
               >
             </div>

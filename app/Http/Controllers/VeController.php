@@ -3,29 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\SanBong;
-use Illuminate\Contracts\Debug\ExceptionHandler;
+use App\Models\Ve;
+use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
-class SanBongController extends Controller
+class VeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function interface()
-    {
-        return view('Pages.book');
-    }
-
     public function index()
     {
-        try {
-            $sanbong = SanBong::all();
-            return $sanbong;
-        } catch (ExceptionHandler $e) {
-            return response()->json(['message' => 'Lỗi tải Category về.'], Response::HTTP_NOT_FOUND);
-        }
+        //
     }
 
     /**
@@ -41,7 +30,12 @@ class SanBongController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $ve = Ve::create($request->all());
+            return response()->json(['success' => 'Vé đã có trong túi và đợi hoàn tất thủ tục', 'idVe' => $ve->id]);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Đặt vé thất bại']);
+        }
     }
 
     /**
@@ -49,12 +43,7 @@ class SanBongController extends Controller
      */
     public function show(string $id)
     {
-        try {
-            $sanbong = SanBong::where('maSan', $id)->first();
-            return $sanbong;
-        } catch (ExceptionHandler $e) {
-            return response()->json(['message' => 'Không tìm thấy sân bóng.'], Response::HTTP_NOT_FOUND);
-        }
+        //
     }
 
     /**

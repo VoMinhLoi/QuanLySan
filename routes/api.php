@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\ChiTietThueSanController;
+use App\Http\Controllers\LichSuGiaoDichController;
 use App\Http\Controllers\SanBongController;
 use App\Http\Controllers\TinhThanhController;
 use App\Http\Controllers\QuanHuyenController;
 use App\Http\Controllers\PhuongXaController;
 use App\Http\Controllers\ThueSanController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,3 +32,6 @@ Route::apiResource('tinhthanh', TinhThanhController::class);
 Route::apiResource('quanhuyen', QuanHuyenController::class);
 Route::apiResource('phuongxa', PhuongXaController::class);
 Route::apiResource('thuesan', ThueSanController::class);
+Route::apiResource('ve', VeController::class);
+Route::apiResource('chitietthuesan', ChiTietThueSanController::class);
+Route::apiResource('lichsugiaodich', LichSuGiaoDichController::class);

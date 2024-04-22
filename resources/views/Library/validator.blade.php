@@ -193,7 +193,8 @@
         if (isValid) {
             // Trả về dữ liêu người dùng
             if (typeof option.onSubmit === "function") {
-            var enableInputs = form.querySelectorAll("[name]");
+            // var enableInputs = form.querySelectorAll("[name]");
+            var enableInputs = form.querySelectorAll("[name]:not([disabled])");
             var formValues = Array.from(enableInputs).reduce((values, input) => {
                 switch (input.type) {
                 case "radio":

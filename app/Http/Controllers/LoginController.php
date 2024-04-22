@@ -24,9 +24,11 @@ class LoginController extends Controller
     {
         $credentials['taiKhoan'] = $request->taiKhoan;
         $credentials['password'] = $request->matKhau;
-        if (Auth::attempt($credentials))
+        if (Auth::attempt($credentials)) {
+            $user = User::where('taiKhoan', $request->taiKhoan)->first();
+
             return redirect('/sanbong');
-        else
+        } else
             return redirect()->back()->withErrors('Tài khoản, mật khẩu không chính xác.');
     }
     public function redirectToGoogle()
@@ -39,25 +41,32 @@ class LoginController extends Controller
             $user = Socialite::driver('google')->user();
 
             $finduser = User::where('google_id', $user->id)->first();
-            // $finduser = User::where('google_id', $user->google_id)->first();
 
-            if ($finduser)
+            if ($finduser) {
+                // Đăng nhập người dùng đã tồn tại
+                $token = $finduser->createToken('authToken')->plainTextToken;
                 Auth::login($finduser);
-            else {
+            } else {
                 $oldUserHasEmailLikeGmail = User::where('taiKhoan', $user->email)->first();
                 if ($oldUserHasEmailLikeGmail) {
+                    // Cập nhật thông tin Google ID cho người dùng có email tương tự
                     $oldUserHasEmailLikeGmail->update(['google_id' => $user->id]);
+                    $token = $oldUserHasEmailLikeGmail->createToken('authToken')->plainTextToken;
                     Auth::login($oldUserHasEmailLikeGmail);
                 } else {
+                    // Tạo người dùng mới nếu không có người dùng nào tồn tại với email tương tự
                     $newUser = User::create([
                         'ten' => $user->name,
                         'taiKhoan' => $user->email,
                         'google_id' => $user->id,
-                        'password' => bcrypt('123456789')
+                        'password' => bcrypt('1234567')
                     ]);
+                    $token = $newUser->createToken('authToken')->plainTextToken;
                     Auth::login($newUser);
                 }
             }
+
+            // Tạo và lưu token vào cơ sở dữ liệu
         } catch (Exception $e) {
             dd($e->getMessage());
         }

@@ -19,8 +19,7 @@ class User extends Authenticatable
      */
     protected $table = 'nguoidung';
     protected $primaryKey = "maNguoiDung";
-    public $incrementing = false;
-    // public $timestamps = false;
+    public $incrementing = true;
     protected $fillable = [
         'ho',
         'ten',
@@ -59,6 +58,5 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
     ];
 }

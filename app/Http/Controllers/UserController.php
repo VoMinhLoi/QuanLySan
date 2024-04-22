@@ -51,6 +51,7 @@ class UserController extends Controller
             // );
             // Cách 2 phải tạo ra bảng ghi User xong đẩy vào cơ sở dữ liệu, phải bật thêm $fillable vs $timestamps
             $newUser = User::create($credentials);
+            // $token = $newUser->createToken('Token Name')->accessToken;
             if ($newUser)
                 return response()->json(['success' => 'Bạn đã đăng ký thành công']);
         } catch (Exception $e) {
@@ -63,7 +64,12 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $user = User::where('maNguoiDung', $id)->first();
+            return $user;
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Không tìm thấy người dùng.'], 404);
+        }
     }
 
     /**
@@ -80,6 +86,7 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         $userIsUpdated = User::where('maNguoiDung', $id)->first();
+        // return $userIsUpdated;
         // Usecase change password
         if (!empty($request->oldPassword)) {
             // Auth::user()->password không thể sử dụng vì trả về null

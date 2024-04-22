@@ -15,7 +15,14 @@ class ThueSanController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $maNguoiDung = auth()->user()->maNguoiDung;
+            $sportFieldQuantity = ThueSan::where('maNguoiDung', $maNguoiDung)->get();
+            return $sportFieldQuantity;
+        } catch (Exception $e) {
+            // Xử lý trường hợp người dùng chưa đăng nhập
+            return response()->json(['error' => 'Tải dữ liệu thất bại.'], 401);
+        }
     }
 
     /**
@@ -40,7 +47,6 @@ class ThueSanController extends Controller
             if (!empty($sportFieldExist))
                 return response()->json(['error' => 'Sân đã có trong túi']);
             $credentials['maNguoiDung'] = $maNguoiDung;
-
             $credentials['maSan'] = $request->maSan;
             $credentials['soLuong'] = $request->soLuong;
             $credentials['thoiGianBatDau'] = $request->thoiGianBatDau;
@@ -86,6 +92,13 @@ class ThueSanController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $sanBong = ThueSan::where('id', $id)->first();
+            $sanBong->delete();
+            return response()->json(['success' => 'Xóa thành công.'], 200);
+        } catch (Exception $e) {
+            // Xử lý trường hợp người dùng chưa đăng nhập
+            return response()->json(['error' => 'Xóa thất bại.'], 401);
+        }
     }
 }

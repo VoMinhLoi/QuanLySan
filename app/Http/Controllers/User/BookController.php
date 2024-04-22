@@ -12,7 +12,7 @@ class BookController extends Controller
      */
     public function interface()
     {
-        return view('Pages.cart');
+        return view('Pages.order');
     }
 
     public function index()

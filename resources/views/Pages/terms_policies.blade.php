@@ -103,7 +103,7 @@
                             <div class="content__heading">7. Hướng dẫn đặt lịch sử dụng dịch vụ</div>
                             <div class="content__description">Để sử dụng đầy các dịch vụ của sân bóng đặt sân Đại học Thể Dục Thể Thao Đà Nẵng, các bạn cần đăng ký/ đăng nhập.
 
-                                Đối với việc đặt lịch sử dụng sân bóng. Quý khách hàng vui lòng chọn thời gian muốn sử dụng, chu kỳ thuê (giờ/tuần/tháng) sau đó chọn các sân rảnh để tiếp hành đặt lịch sử dụng .
+                                Đối với việc đặt lịch sử dụng sân bóng. Quý khách hàng vui lòng chọn thời gian muốn sử dụng (ngày/giờ) sau đó chọn các sân rảnh để tiếp hành đặt lịch sử dụng .
                                 
                                 Vì lý do đảm bảo tài sản cho sân bóng, dịch vụ thuê dụng củ chỉ được sử dụng kèm với dịch vụ thuê sân. Chỉ thuê dụng cụ khi sử dụng sân ở các cơ sở thuộc sân bóng đặt sân Đại học Thể Dục Thể Thao Đà Nẵng.
                                 
@@ -114,18 +114,21 @@
                         <div class="content">
                             <div class="content__heading">8. Chính sách đặt sân</div>
                             <div class="content__description">Đối với dịch vụ thuê sân, chúng tôi sẽ hỗ trợ:
-
-                                1 Quả bóng bất kỳ
-                                5L nước lọc
-                                
-                                Đối với dịch vụ thuê sân liên tục (thuê sân theo tuần/tháng) nhằm mục đích tổ chức các sự kiện, giải đấu, v.v..:
-                                
-                                Đối với dịch vụ thuê theo tuần, quý khánh hàng sẽ được giảm giá 60%/dịch vụ.(Chỉ tính thời gian thuê 12h/ngày và khuyến mãi 10%)
-                                Đối với dịch vụ thuê theo tháng, quý khánh hàng sẽ được giảm giá 70%/dịch vụ.(Chỉ tính thời gian thuê 12h/ngày và khuyến mãi 20%)
-                                
-                                Đối với dịch vụ thuê thêm dụng cụ. Nếu dịch vụ của quý khách đặt có thể sẽ không có sẵn. Chúng tôi sẽ đền bù và hoàn tiền 100% cho quý khách:
-                                
-                                Quý khách vui lòng chọn đúng loại dịch vụ để tiết kiệm chi phí.</div>
+                                1 Quả bóng bất kỳ,
+                                5L nước lọc.
+                                Đối với dịch vụ thuê sân:
+                                <ul style="list-style: circle; margin-left: 50px">
+                                    <li>
+                                        Đủ 12 tiếng thì được giảm 20%
+                                    </li>
+                                    <li>
+                                        Đủ 24 tiếng thì được giảm 50%
+                                    </li>
+                                    <li>
+                                        Đủ 48 tiếng thì được giảm 70%
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div class="col l-12 m-12 c-12">

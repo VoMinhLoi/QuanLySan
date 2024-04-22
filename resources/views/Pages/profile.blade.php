@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         @include('Library.grid_system')
         @include('Library.responsive')
         @include('Library.variable')
@@ -279,6 +280,7 @@
         </div>
         {{-- Validator form information --}}
         <script>
+            var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var apiUser = "http://127.0.0.1:8000/api/user"
             Validator({
               form: "#form-infor",
@@ -321,6 +323,7 @@
               formGroupSelector: ".form-group",
             });
             function UpdateNoImage(data){
+                data["_token"] = csrfToken;
                 fetch(apiUser+'/{{ Auth::user()->maNguoiDung }}',{
                     method: 'PUT', // hoặc 'POST' tùy thuộc vào yêu cầu của bạn
                     headers: {
@@ -335,6 +338,7 @@
                     else
                         toastr.success(data.success)
                 })
+                .catch(response => console.log(response))
             }
         </script>
         {{-- Danh sách tỉnh, quận, phường --}}

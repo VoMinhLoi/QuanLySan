@@ -2,6 +2,7 @@
     * {
         --primary-color: #306FBE;
         --primary-color-hover: #7fb0ec;
+        scroll-behavior: smooth;
     }
     body {
         position: relative;
@@ -11,6 +12,9 @@
     }
     .display-block {
         display: block !important;
+    }
+    .opacity-0 {
+        opacity: 0;
     }
     .container {
             margin: 90px 0 40px;
