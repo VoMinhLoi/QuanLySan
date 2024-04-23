@@ -17,6 +17,8 @@ class Ve extends Model
         'tongTien',
         'daThanhToan',
         'trangThai',
+        'hoTen',
+
     ];
     protected $primaryKey = 'id';
 }
