@@ -275,6 +275,17 @@
         .sorting-view__search::placeholder{
             color: rgb(217, 217, 217)
         }
+        .button-search {
+            background: var(--primary-color);
+            color: white;
+            padding: 0px 20px;
+            cursor: pointer;
+            border: 1px solid black;
+        }
+        .button-search:hover{
+            background: white;
+            color: var(--primary-color);
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -318,19 +329,20 @@
                         </div>
                     </div>
                     <div class="col l-9 m-9 c-12">
-                        {{-- <div class="row sorting-search">
+                        <div class="row sorting-search">
                             <div class="col l-9 m-9 c-12 sorting" style="height: 100%; " >
                                 <h2 class="sorting-view__heading" style="display: block">Tìm kiếm sân: </h2>
                                 <div class="sorting-view" style="flex: 1">
-                                    <input type="text" class="sorting-view__search" id="name-search" style="" placeholder="Tên sân">
+                                    <input type="text" class="sorting-view__search" id="name-search" placeholder="Tên sân">
                                 </div>
+                                <button class="button-search"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
                             <div class="col l-3 m-3 c-0 sorting opacity-0">
-                                <label for="time">Thời gian thuê: </label>
+                                {{-- <label for="time">Thời gian thuê: </label>
                                 <input type="number" id="time" value="1" class="">
-                                <label for="time">Giờ</label>
+                                <label for="time">Giờ</label> --}}
                             </div>
-                        </div> --}}
+                        </div>
                         <div class="row">
                             <div class="col l-6 m-6 c-6 sorting ">
                                 <ul class="sorting-view">
@@ -517,12 +529,13 @@
             }
             function handleFilter(datSanBong){
                 let price = parseInt(priceTo.innerHTML.replace(/[\s-]/g, ''), 10) * 1000
+                let searchString = document.querySelector('#name-search').value.toLowerCase()
                 if(!price)
                     price = 200000
                 datSanBong = dataAllSanBong.filter((sanbong)=>{
                     if(categoryListView.value === "Tất cả loại sân")
-                        return sanbong.giaDichVu <= price
-                    return sanbong.loaiSan === categoryListView.value && sanbong.giaDichVu <= price
+                        return sanbong.giaDichVu <= price && sanbong.tenSan.toLowerCase().includes(searchString)
+                    return sanbong.loaiSan === categoryListView.value && sanbong.giaDichVu <= price && sanbong.tenSan.toLowerCase().includes(searchString)
                 })
                 switch(filterAZHighLow){
                     case "Xếp theo tên: A-Z":
@@ -677,6 +690,21 @@
                 const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
                 return formattedDate;
             }
+            var buttonSearchView = document.querySelector('.button-search')
+            buttonSearchView.onclick = () => {
+                gridMode.innerHTML = ""
+                listMode.innerHTML = ""
+                handleFilter(dataAllSanBongFollowFilter)
+            }
+            var inputSearchView = document.querySelector('#name-search')
+            inputSearchView.addEventListener("keypress", function(event) {
+                // Kiểm tra xem phím đã được nhấn có phải là phím Enter không (mã phím 13)
+                if (event.keyCode === 13) {
+                    gridMode.innerHTML = ""
+                    listMode.innerHTML = ""
+                    handleFilter(dataAllSanBongFollowFilter)
+                }
+            });
         </script>
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
