@@ -14,7 +14,12 @@ class VeController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $tickets = Ve::all();
+            return $tickets;
+        } catch (Exception $e) {
+            return response()->json('error', 'Tải vé không thành công');
+        }
     }
 
     /**
@@ -43,7 +48,12 @@ class VeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $ve = Ve::where('id', $id)->first();
+            return $ve;
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Không tìm thấy thông tin vé']);
+        }
     }
 
     /**

@@ -5,11 +5,91 @@
     @include('Library.grid_system')
     @include('Library.responsive')
     @include('Library.variable')
+    @include('Library.validator')
+    <style>
+        .image {
+            margin-top: 20px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        img.coverimage {
+            width: 100%;
+            object-fit: cover;
+            opacity: 0.5;
+        }
+        .avatar {
+            position: absolute;
+            width: 168px;
+            height: 168px;
+        }
+        
+        img.over-image {
+            border-radius: 50%;
+            border: 2px solid white;
+            object-fit: cover;
+            height: 100%;
+        }
+        .choose-avatar {
+            position: absolute;
+            bottom: 0px;
+            right: 20px;
+            color: white;
+            background: #3a3b3c;
+            height: 36px;
+            line-height: 36px;
+            width: 36px;
+            text-align: center;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .choose-avatar:hover {
+            background: #6c6c6c;
+        }
+        .fullname {
+            text-align: center;
+            color: black;
+        }
+        .content {
+            margin-top: 8px;
+        }
+        .side-bar__item-link {
+            
+            background: white;
+            color:  var(--primary-color);
+            padding: 12px 8px;
+            display: block;
+            cursor: pointer;
+            border: 1px solid;
+            border-radius: 8px; 
+        }
+        .side-bar__item + .side-bar__item {
+            margin-top: 8px;
+        }
+        .side-bar__item-link--active,.side-bar__item-link:hover {
+            
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .main {
+            background: white;
+            min-height: unset;
+            justify-content: flex-start;
+            flex-direction: column
+        }
+        .form {
+            box-shadow: unset;
+            width: 100%;
+        }
+    </style>
     {{-- CSS container --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        /* Định dạng nội dung của bảng */
-        .table_desc {
+                /* Định dạng nội dung của bảng */
+                .table_desc {
             margin: 12px 0;
         padding: 20px;
         border: 1px solid #ccc;
@@ -26,7 +106,7 @@
         .table_desc th,
         .table_desc td {
         padding: 8px;
-        text-align: left;
+        text-align: center;
         border-bottom: 1px solid #ddd;
         }
 
@@ -114,51 +194,72 @@
         }
 
         /* Định dạng nút thanh toán */
-        .checkout_btn {
+        .btn-golden {
         text-align: center;
+        margin: auto;
         }
 
-        .checkout_btn a {
-        text-decoration: none;
-        color: #fff;
-        background-color: #ffc107;
-        padding: 10px 20px;
-        border-radius: 5px;
+        .btn-golden {
+            margin-top: 12px; 
+            text-decoration: none;
+            color: #fff;
+            background-color: #ffc107;
+            padding: 10px 20px;
+            border-radius: 5px;
         }
 
-        .checkout_btn a:hover {
+        .btn-golden:hover {
         background-color: #ffca2c;
         }
-        .empty-cart-container {
+        .bound-pay {
+            color: red; /* Thiết lập màu chữ là đỏ */
+            /* display: flex;
+            flex-direction: column;
+            align-items: center; */
+        }
+
+        .bound-pay .form-message {
             text-align: center;
-            margin-bottom: 100px;
         }
 
-        .empty-cart-container .image {
-            margin-bottom: 20px;
+        .bound-pay .btn-recharge {
+            display: inline-block;
+            background: var(--primary-color);
+            width: fit-content;
+            padding: 8px 12px;
+            border-radius: 4px;
+            color: white; /* Thiết lập màu chữ là đỏ */
+            text-decoration: none; /* Loại bỏ gạch chân */
+            margin-top: 10px; /* Khoảng cách giữa các phần tử con */
         }
-
-        .empty-cart-container .title {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 10px;
+        th.product_quantity {
+            text-align: center;
         }
-
-        .empty-cart-container .sub-title {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 20px;
+        td .button-action {
+            padding: 8px 12px;
+            color: white;
+            border-radius: 4px;
+            text-align: center;
+            display: block;
         }
-
-        .empty-cart-container a {
-            text-decoration: none;
-            color: #007bff;
-            font-weight: bold;
+        .button-action + .button-action {
+            margin-top: 4px;
+        }
+        .button-action--delete {
+            background: red;
+        }
+        .button-action--infor {
+            background: var(--primary-color)
+        }
+        select.filter {
+            border: 1px solid black;
+            transform: translateX(-50%);
+            position: relative;
+            left: 50%;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body >
+<body>
     <div class="grid">
         @include('Components.header')
         
@@ -168,226 +269,257 @@
                 <script>
                     breadCrumbHeading.innerText = 'Túi'
                 </script>
-                <div class="row content">
+                <div class="row content no-gutters">
                     <div class="col l-12 m-12 c-12">
-                        @php
-                            $maNguoiDung = Auth::user()->maNguoiDung;
-                            $sportFieldQuantity = App\Models\ThueSan::where('maNguoiDung', $maNguoiDung)->count();
-                        @endphp
-                        @if($sportFieldQuantity == 0)
-                            <div class="empty-cart-container" style="margin-bottom: 100px;">
-                                <div class="image" style="text-align: center; width: 100px; height: 100px; margin: auto;">
-                                    <img class="img-fluid" src="assets/img/empty-cart.jpg"  alt="">
-                                </div>
-                                <h4 class="title">Túi trống</h4>
-                                <h6 class="sub-title">Không có vé sân nào trong túi</h6>
-                                <a href="/sanbong" class="">Quay trở lại đặt sân</a>
-                            </div>
-                        
-                        @else
-                            <div class="table_desc">
-                                <div class="table_page table-responsive">
-                                    <h3 class="m-5">Thuê sân</h3>
-                                    <table>
-                                        <thead>
-                                        <tr>
-                                            <th class="product_remove">Trạng thái</th>
-                                            <th class="product_thumb">Hình Ảnh</th>
-                                            <th class="product_name">Tên</th>
-                                            <th class="product-date">Thời gian nhận</th>
-                                            <th class="product_quantity">Thời gian trả</th>
-                                            <th class="product_quantity">Giá</th>
-                                            <th class="product_total">Tổng</th>
-                                            <th class="product_remove">#</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="cartUpdate">
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="coupon_code -aos-delay="400">
-                                <h3>Giá trị thanh toán</h3>
-                                <div class="coupon_inner">
-                                    <div class="cart_subtotal">
-                                        <p>Tổng tiền</p>
-                                        <p class="cart_amount" id="cartSub">0 VNĐ</p>
-                                    </div>
-                                    <div class="checkout_btn">
-                                        <a href="/checkout" class="btn btn-md btn-golden">Tiến hành thanh toán</a>
+                        <div class="main" id="main">
+                            <form method="POST" class="form" id="form-infor">
+                                <h3 class="heading"><strong>Các vé đã đặt</strong></h3>
+                                <select class="filter">
+                                    <option value="Tất cả các vé">Tất cả các vé</option>
+                                    <option value="Những vé chưa sử dụng">Những vé chưa sử dụng</option>
+                                    <option value="Những vé đã sử dụng">Những vé đã sử dụng</option>
+                                </select>
+                                <div class="table_desc">
+                                    <div class="table_page table-responsive">
+                                        <table>
+                                            <thead>
+                                            <tr>
+                                                {{-- <th class="product_remove">Trạng thái</th> --}}
+                                                <th class="product_thumb product_quantity">Hình Ảnh</th>
+                                                <th class="product_name product_quantity">Tên</th>
+                                                <th class="product-date product_quantity">Thời gian bắt đầu</th>
+                                                <th class="product_quantity">Thời gian trả</th>
+                                                <th class="product_quantity">Giá dịch vụ</th>
+                                                <th class="product_quantity" column="2">Hoạt động</th>
+                                                <th class="product_quantity" column="2">Ghi chú</th>
+                                                {{-- <th class="product_total">Tổng</th> --}}
+                                            </tr>
+                                            </thead>
+                                            <tbody id="cartUpdate">
+                                                
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
-                            </div>
-                        @endif
+                                <p class="">
+                                    <strong>Lưu ý: </strong>Hủy sân trước 4 tiếng hoàn lại 100% nhưng hủy sân sau 3 tiếng hoàn lại 50%. Sau 2 tiếng không thể hủy sân.
+                                </p>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         @include('Components.footer')
     </div>
-    
-    </body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-        var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        var apiThueSan = "http://127.0.0.1:8000/api/thuesan"
-        var borrowHour = 1
-        start()
-        function start(){
-            getThueSan(thueSans => {
-                renderCart(thueSans)
-            })
-        }
-        function getThueSan(callback){
-            fetch(apiThueSan)
-                .then(promise => promise.json())
-                .then(callback)
-            }
-        function renderCart(thueSans){
-            var tableBody = $('#cartUpdate')
-            var apiSanBong = "http://127.0.0.1:8000/api/sanbong"
-            thueSans.forEach((thueSan) => {
-                fetch(apiSanBong+"/"+thueSan.maSan)
+</body>
+<script>
+    var dataChiTietThueSan
+    var dataChiTietThueSanNgayChuaSuDungGlobal
+    var dataChiTietThueSanNgayDaSuDungGlobal
+    var maNguoiDung = parseInt("{{ Auth::user()->maNguoiDung }}")
+    // var myTicketsGlobal = []
+    var maVeOfmyTicketGlobal = []
+    start()
+    function start(){
+        getTickets()
+    }
+    function getTickets(){
+        fetch("http://127.0.0.1:8000/api/ve")
                     .then(response => response.json())
-                    .then(sanBong => {
-                        tableBody[0].innerHTML +=   `
-                                                <tr id="item-${thueSan.id}">
-                                                    <td class="product_remove"><input type="checkbox" class="checkboxselect"></td>
-                                                    <td class="product_thumb">
-                                                        <a><img src="assets/img/${sanBong.hinhAnh}.jpg" style="width: 100px; height: 66px; object-fit: cover;"></a>
-                                                    </td>
-                                                    <td class="product_name">
-                                                        <a href="/productDetails?id=">
-                                                            ${thueSan.thu ? `<p style="color:red">Thuê chu kì ${thueSan.ngay} ngày vào mỗi thứ ${formatThu(thueSan.thu)} <br> Bắt đầu từ: ${formatDate(thueSan.thoiGianBatDau)}</p>` : sanBong.tenSan}
-                                                        </a>
-                                                    </td>
-                                                    ${thueSan.thu ? `<td class="product-date">${formatHour(thueSan.thoiGianBatDau)}</td>` : `<td class="product-date">${thueSan.thoiGianBatDau}</td>`}
-                                                    ${thueSan.thu ? `<td class="product-date">${formatHour(thueSan.thoiGianKetThuc)}</td>` : `<td class="product-date">${thueSan.thoiGianKetThuc}</td>`}
-                                                    <td class="product_total">
-                                                        ${formatCurrency(sanBong.giaDichVu)}
-                                                    </td>
-                                                    <td class="product_total">
-                                                        ${thueSan.ngay ? calculatorMoney(thueSan.ngay,thueSan.thu,thueSan.thoiGianBatDau,thueSan.thoiGianKetThuc,sanBong.giaDichVu) : calculatorMoney(null,null,thueSan.thoiGianBatDau,thueSan.thoiGianKetThuc,sanBong.giaDichVu)}
-                                                    </td>
-                                                    <td class="product_remove">
-                                                        <a href="" class="a-disable" onclick="toggleSubRow(this, '', 'SB00001', '2024-04-15 16:00:00', '2024-04-15 17:00:00','')">
-                                                            <i class="fa fa-plus"></i>
-                                                        </a>
-                                                        <button href="" class="a-disable delCart" onclick="deleteOutBag(${thueSan.id})"><i class="fa-solid fa-trash"></i></button>
-                                                    </td>
-                                                </tr>
-                                            `;
+                    .then(data => {
+                        if(data.error)
+                            toastr.error(data.error)
+                        else{
+                            data = data.filter(ve => {
+                                return ve.maNguoiDung == maNguoiDung
+                            })
+                            // myTicketsGlobal = data
+                            data.forEach(ticket => {
+                                maVeOfmyTicketGlobal.push(ticket.id)
+                            });
+                            if(maVeOfmyTicketGlobal)
+                                getChiTietThueSan()
+
+                        }
                     })
-            })
-        }
-        function formatThu(thuArray) {
-            var template = thuArray.split(',');
-            var chuNhat;
-            if (template.includes("8")) // Sửa thành template.includes("8") để kiểm tra xem mảng có chứa số 8 hay không
-                chuNhat = "chủ nhật";
-
-            // Sử dụng phương thức filter() để lọc ra các số khác 8
-            var string = template.filter(thu => thu !== "8").join(', ');
-
-            if (chuNhat)
-                string += ', ' + chuNhat; // Thêm vào chuỗi nếu có chủ nhật
-
-            return string; // Trả về chuỗi sau khi đã được format
-        }
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            const day = date.getDate();
-            const month = date.getMonth() + borrowHour;
-            const year = date.getFullYear();
-            return `${day < 10 ? '0' + day : day}-${month < 10 ? '0' + month : month}-${year}`;
-        }
-        function formatHour(dateString) {
-            const date = new Date(dateString);
-            const hour = date.getHours();
-            return `${hour}:00:00`;
-        }
-        function calculatorMoney(ngay, thu, thoiGianBatDau, thoiGianKetThuc, giaDichVu){
-            var totalPrice
-            if(ngay){
-                var soNgay
-                var week
-                if(ngay == 28)
-                    week = 4
-                else
-                    if(ngay == 21)
-                        week = 3
-                    else
-                        if(ngay == 14)
-                            week = 2
-                        else
-                            week = 1
-                thu = thu.split(',').length
-                soNgay = week * thu 
-                borrowHour = tinhKhoangCach(thoiGianBatDau, thoiGianKetThuc)
-                hourToDate = borrowHour/24
-                borrowDateTotal = hourToDate + soNgay
-                dateToHour = borrowHour*soNgay
-
-                totalPrice = giaDichVu * dateToHour
-                if(borrowDateTotal >= 28)
-                    totalPrice *= 0.8
-                else
-                    if(borrowDateTotal >=21)
-                        totalPrice *= 0.6
-                    else
-                        if(borrowDateTotal >=14)
-                            totalPrice *= 0.6
-                        if(borrowDateTotal >=7)
-                            totalPrice *= 0.4
-            }
-            else {
-                hour = tinhKhoangCach(thoiGianBatDau, thoiGianKetThuc)
-                totalPrice = hour*giaDichVu
-            }
-            return formatCurrency(totalPrice)
-        }
-        function tinhKhoangCach(gioBatDau, gioKetThuc) {
-            // Chuyển đổi thời gian thành đối tượng Date
-            var batDau = new Date(gioBatDau);
-            var ketThuc = new Date(gioKetThuc);
-            
-            // Tính toán khoảng cách thời gian (tính bằng mili giây)
-            var khoangCachMiliseconds = ketThuc - batDau;
-            
-            // Chuyển đổi khoảng cách từ mili giây thành giờ
-            var khoangCachGio = khoangCachMiliseconds / (1000 * 60 * 60);
-            
-            return khoangCachGio;
-        }
-        
-
-        function parseCurrency(input) {
-            return parseFloat(input.replace(/[^\d]/g, ''));
-        }
-        function deleteOutBag(maBag){
-            if (confirm("Bạn có chắc chắn muốn xóa không?")) {
-                fetch(apiThueSan+"/"+maBag,{
-                    method: 'Delete',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': csrfToken
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if(data.error)
+    }
+    function getChiTietThueSan(){
+        fetch("http://127.0.0.1:8000/api/chitietthuesan")
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.error)
                         toastr.error(data.error)
-                    else
-                        toastr.success(data.success)
+                        else{
+
+                            data = data.filter(CTTS => {
+                                for (let i = 0; i < maVeOfmyTicketGlobal.length; i++) {
+                                    // console.log(maVeOfmyTicketGlobal[i]);
+                                    if (CTTS.maVe == maVeOfmyTicketGlobal[i]) {
+                                        return true;
+                                    }
+                                }
+                                return false;
+                            });
+                            data.sort(function(a, b) {
+                                // Chuyển đổi chuỗi thời gian bắt đầu thành đối tượng Date để so sánh
+                                var dateA = new Date(a.thoiGianBatDau);
+                                var dateB = new Date(b.thoiGianBatDau);
+                                return dateA - dateB;
+                            });
+                            dataChiTietThueSan = data
+
+                            handleRenderTicket(data)
+                        }
+                    })
+                }
+    let tableBody = document.querySelector('#cartUpdate')
+    function handleRenderTicket(dataCTTS){
+        let thoiGianHienTai = layThoiGianHienTai();
+        // console.log("Thời điểm hiện tại: "+ thoiGianHienTai)
+        dataCTTS.forEach(CTTS => {
+            fetch("http://127.0.0.1:8000/api/sanbong/"+CTTS.maSan)
+                .then(response => response.json())
+                .then(sanBong => {
+                    tableBody.innerHTML +=   `
+                                        <tr id="item-${CTTS.maCTTS}">
+                                            <td class="product_thumb">
+                                                <a><img src="assets/img/${sanBong.hinhAnh}.jpg" style="width: 100px; height: 66px; object-fit: cover;"></a>
+                                            </td>
+                                            <td class="product_name">
+                                                <a href="/productDetails?id=">
+                                                    ${sanBong.tenSan}
+                                                </a>
+                                            </td>
+                                            <td class="product-date">${formatDate(CTTS.thoiGianBatDau)}</td>
+                                            <td class="product-date">${formatDate(CTTS.thoiGianKetThuc)}</td>
+                                            <td class="product_total">
+                                                ${formatCurrency(sanBong.giaDichVu)}/h
+                                            </td>
+                                            <td style="flex-direction: column">
+                                                    ${tinhKhoangCach(thoiGianHienTai, CTTS.thoiGianBatDau)>=2?`<a class="button-action button-action--delete" onclick="${cancelCalendar(CTTS.maCTTS)}" >Hủy</a>`:``}
+                                                    <a class="button-action button-action--infor" href="/chitietthuesan/${CTTS.maCTTS}" >Chi tiết</a>
+                                            </td>
+                                            <td style="text-align: center">
+                                                <strong style="color:red">${isToday(CTTS.thoiGianBatDau)?'Hôm nay <br/>':''}</strong>
+                                                
+                                            </td>
+                                        </tr>
+                                    `;
+                    // console.log("Thời điểm bat dau: "+ CTTS.thoiGianBatDau)
+                    // console.log("Thời điểm hiện tại: "+ thoiGianHienTai)
+                    
                 })
-                var nameQuery = '#' + "item-" + maBag;
-                var sanBongRowView = $(nameQuery);
-                sanBongRowView.remove();
-            }
+        })
+    }
+
+    function formatDate(dateTimeString) {
+        // Chia chuỗi thành các phần
+        const parts = dateTimeString.split(' ');
+
+        // Lấy phần ngày, tháng, năm
+        const datePart = parts[0];
+        const [year, month, day] = datePart.split('-');
+
+        // Lấy phần giờ, phút, giây
+        const timePart = parts[1];
+        const [hours, minutes, seconds] = timePart.split(':');
+
+        // Định dạng lại thành "dd-mm-yyyy hh:mm:ss"
+        const formattedDate = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+        
+        return formattedDate;
+    }
+    function formatCurrency(input) {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(input);
+    }
+    function isToday(dateString) {
+        // Chuyển đổi chuỗi thời gian bắt đầu thành đối tượng Date
+        const startDate = new Date(dateString);
+
+        // Lấy ngày, tháng và năm hiện tại
+        const today = new Date();
+        const todayDate = today.getDate();
+        const todayMonth = today.getMonth() + 1; // Lưu ý: Tháng bắt đầu từ 0 (0 là tháng 1)
+        const todayYear = today.getFullYear();
+
+        // Lấy ngày, tháng và năm của thời gian bắt đầu
+        const startDateDate = startDate.getDate();
+        const startMonth = startDate.getMonth() + 1; // Lưu ý: Tháng bắt đầu từ 0 (0 là tháng 1)
+        const startYear = startDate.getFullYear();
+
+        // Kiểm tra xem thời gian bắt đầu có phải là ngày hôm nay không
+        return todayDate === startDateDate && todayMonth === startMonth && todayYear === startYear;
+    }
+    // ${tinhKhoangCach(thoiGianHienTai, CTTS.thoiGianBatDau)<=0?'Đã sử dụng':''}
+    function tinhKhoangCach(gioBatDau, gioKetThuc) {
+                // Chuyển đổi thời gian thành đối tượng Date
+                var batDau = new Date(gioBatDau);
+                var ketThuc = new Date(gioKetThuc);
+                
+                // Tính toán khoảng cách thời gian (tính bằng mili giây)
+                var khoangCachMiliseconds = ketThuc - batDau;
+                
+                // Chuyển đổi khoảng cách từ mili giây thành giờ
+                var khoangCachGio = khoangCachMiliseconds / (1000 * 60 * 60);
+                
+                return khoangCachGio;
+    }
+    function layThoiGianHienTai() {
+        var now = new Date();
+
+        // Lấy thông tin ngày, tháng, năm, giờ, phút, giây
+        var year = now.getFullYear();
+        var month = String(now.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+        var date = String(now.getDate()).padStart(2, '0');
+        var hours = String(now.getHours()).padStart(2, '0');
+        var minutes = String(now.getMinutes()).padStart(2, '0');
+        var seconds = String(now.getSeconds()).padStart(2, '0');
+
+        // Tạo chuỗi định dạng yyyy-mm-dd hh:mm:ss
+        var formattedTime = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
+
+        return formattedTime;
+    }
+    var filterView = document.querySelector('.filter')
+    filterView.onchange = ()=>{
+        handleFilter(filterView.value)
+    }
+    function handleFilter(value){
+        tableBody.innerHTML = ""
+        switch(value){
+            case "Tất cả các vé":
+                handleRenderTicket(dataChiTietThueSan)
+                break;
+            case "Những vé chưa sử dụng":
+                if(!dataChiTietThueSanNgayChuaSuDungGlobal)
+                    dataChiTietThueSanNgayChuaSuDungGlobal = dataChiTietThueSan.filter(function(item) {
+                        let ngayHienTai = new Date();
+                        let thoiGianBatDau = new Date(item.thoiGianBatDau);
+                        return thoiGianBatDau >= ngayHienTai;
+                    });
+                handleRenderTicket(dataChiTietThueSanNgayChuaSuDungGlobal)
+                break;
+            case "Những vé đã sử dụng":
+                if(!dataChiTietThueSanNgayDaSuDungGlobal)
+                    dataChiTietThueSanNgayDaSuDungGlobal = dataChiTietThueSan.filter(function(item) {
+                        let ngayHienTai = new Date();
+                        let thoiGianBatDau = new Date(item.thoiGianBatDau);
+                        return thoiGianBatDau < ngayHienTai;
+                    });
+                handleRenderTicket(dataChiTietThueSanNgayDaSuDungGlobal)
+                break;
         }
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+        
+        // console.log(dataChiTietThueSanNgayChuaSuDungGlobal, dataChiTietThueSanNgayDaSuDungGlobal, dataChiTietThueSan)
+    }
+    function cancelCalendar(value){
+        
+    }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </html>

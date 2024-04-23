@@ -4,8 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\ChiTietThueSan;
+use App\Models\SanBong;
+use App\Models\Ve;
+use DateTime;
+use DateTimeZone;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 
 class ChiTietThueSanController extends Controller
 {
@@ -57,7 +62,16 @@ class ChiTietThueSanController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $chiTietThueSan = ChiTietThueSan::where('maCTTS', $id)->first();
+            // return $chiTietThueSan;
+            if (!empty($chiTietThueSan))
+                return $chiTietThueSan;
+            else
+                return response()->json(['error' => 'Lỗi xem chi tiết']);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Lỗi xem chi tiết']);
+        }
     }
 
     /**
@@ -82,5 +96,39 @@ class ChiTietThueSanController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function formVe()
+    {
+        return view('Pages.cart');
+    }
+    public function formDetail($maCTTS)
+    {
+        $chiTietThueSan = ChiTietThueSan::where('maCTTS', $maCTTS)->first();
+        $ve = Ve::where('id', $chiTietThueSan->maVe)->first();
+        $sanBong = SanBong::where('maSan', $chiTietThueSan->maSan)->first();
+
+        // Tính biến đã sử dụng
+        $timezone = new DateTimeZone('Asia/Ho_Chi_Minh');
+        $batDau = new DateTime($chiTietThueSan->thoiGianBatDau, $timezone);
+        $hienTai = new DateTime('now', $timezone);
+        $khoangCach = $hienTai->diff($batDau); // This will give you the difference in days
+        $ngay = $khoangCach->days;
+        $gio = $khoangCach->h;
+        $phut = $khoangCach->i;
+        $giay = $khoangCach->s;
+
+        // Tính tổng số giây
+        $tongSoGiay = $ngay * 86400 + $gio * 3600 + $phut * 60 + $giay;
+        if ($khoangCach->invert === 1) {
+            $tongSoGiay *= -1;
+        }
+        if ($tongSoGiay < 0)
+            return view('Pages.detail', ['chiTietThueSan' => $chiTietThueSan, 've' => $ve, 'sanBong' => $sanBong, "daSuDung" => "Đã sử dụng"]);
+
+        return view('Pages.detail', [
+            'chiTietThueSan' => $chiTietThueSan,
+            've' => $ve,
+            'sanBong' => $sanBong,
+        ]);
     }
 }

@@ -8,6 +8,7 @@
         transition: all ease 0.3s;
         border: 1px solid #ccc;
         padding: 20px 24px;
+        flex-wrap: wrap;
     }
 
     .new-extension {
@@ -75,6 +76,7 @@
     .new-infor {
         margin: 20px 0px 0px;
         padding: 0px 20px;
+        transform: translateX(12px);
     }
     .new-infor__heading {
         font-weight: bold;
@@ -99,14 +101,14 @@
     <div class="grid wide">
         <div class="row no-gutters">
             <div class="new">
-                <div class="new-extension col l-5">
+                <div class="new-extension col l-5 m-5 c-12">
                     <img src="assets/img/news.png" alt="news" class="new-extension__img">
                     <button class="extra-extension__button">
                         Xem thêm
                     </button>
                     <div class="extra-extension__detail">Chi tiết</div>
                 </div>
-                <div class="new-infor col l-7">
+                <div class="new-infor col l-7 m-7 c-12">
                     <h2 class="new-infor__heading">Sân bóng đang được bảo trì</h2>
                     <p class="new-infor__date">20-03-2002 11PM</p>
                     <p class="new-infor__description">Được xây dựng để phục vụ nhu cầu chơi game, chính vì vậy các linh kiện để xây dựng nên bộ PC Gaming Asus phải đáp ứng được tối thiểu các tựa game phổ biến hiện nay.
@@ -119,14 +121,14 @@
         </div>
         <div class="row no-gutters">
             <div class="new">
-                <div class="new-extension col l-5">
+                <div class="new-extension col l-5 m-5 c-12">
                     <img src="assets/img/news.png" alt="news" class="new-extension__img">
                     <button class="extra-extension__button">
                         Xem thêm
                     </button>
                     <div class="extra-extension__detail">Chi tiết</div>
                 </div>
-                <div class="new-infor col l-7">
+                <div class="new-infor col l-7 m-7 c-12">
                     <h2 class="new-infor__heading">Sân bóng đang được bảo trì</h2>
                     <p class="new-infor__date">20-03-2002 11PM</p>
                     <p class="new-infor__description">Được xây dựng để phục vụ nhu cầu chơi game, chính vì vậy các linh kiện để xây dựng nên bộ PC Gaming Asus phải đáp ứng được tối thiểu các tựa game phổ biến hiện nay.
@@ -139,14 +141,14 @@
         </div>
         <div class="row no-gutters">
             <div class="new">
-                <div class="new-extension col l-5">
+                <div class="new-extension col l-5 m-5 c-12">
                     <img src="assets/img/news.png" alt="news" class="new-extension__img">
                     <button class="extra-extension__button">
                         Xem thêm
                     </button>
                     <div class="extra-extension__detail">Chi tiết</div>
                 </div>
-                <div class="new-infor col l-7">
+                <div class="new-infor col l-7 m-7 c-12">
                     <h2 class="new-infor__heading">Sân bóng đang được bảo trì</h2>
                     <p class="new-infor__date">20-03-2002 11PM</p>
                     <p class="new-infor__description">Được xây dựng để phục vụ nhu cầu chơi game, chính vì vậy các linh kiện để xây dựng nên bộ PC Gaming Asus phải đáp ứng được tối thiểu các tựa game phổ biến hiện nay.

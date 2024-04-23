@@ -136,10 +136,7 @@
                             <div class="content__heading">9. Chính sách hủy sân</div>
                             <div class="content__description">Chúng tôi có thể hỗ trợ hủy sân theo chính sách:
 
-                                Hủy trước thời gian sử dụng dịch vụ 5h mất 5% phí dịch vụ.
-                                Hủy trước thời gian sử dụng dịch vụ từ 1h - 5h mất 10% phí dịch vụ.
-                                Không được phép hủy trước khi thời gian diễn ra chưa tới 1h
-                                Quý khách vui lòng chú ý thời gian đã đặt để đảm bảo quyền lợi và tránh rắc rối sau này.</div>
+                                Hủy sân trước 4 tiếng hoàn lại 100% nhưng hủy sân sau 3 tiếng hoàn lại 50%. Sau 2 tiếng không thể hủy sân.</div>
                         </div>
                     </div>
                 </div>

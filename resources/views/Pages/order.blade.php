@@ -580,7 +580,7 @@
         var apiUser = 'http://127.0.0.1:8000/api/user'
         var apiVe = 'http://127.0.0.1:8000/api/ve'
         var apiChiTietThueSan = 'http://127.0.0.1:8000/api/chitietthuesan'
-        var dataSDTMaPXDiaChi 
+        var dataSDTMaPXDiaChihoTenNguoiDat 
         var apiLichSuGiaoDich = "http://127.0.0.1:8000/api/lichsugiaodich"
         Validator({
                 form: "#form-infor",
@@ -592,7 +592,7 @@
                 // Muốn submit không theo API mặc định của trình duyệt
                 onSubmit: function (data) {
                     data['tongTien'] = parseCurrency(totalPrice);
-                    dataSDTMaPXDiaChi = data;
+                    dataSDTMaPXDiaChihoTenNguoiDat = data;
                     
                     let formatThoiGianBatDau = new Date(thoiGianBatDau); // Giả sử thoiGianBatDau là một chuỗi đại diện cho thời gian bắt đầu
                     let thoiDiemHienTai = new Date();
@@ -626,16 +626,17 @@
             })
         }
         function createVe(pay){
-            // console.log("MaPX, diaChi: " + dataSDTMaPXDiaChi.diaChi)
+            // console.log("MaPX, diaChi: " + dataSDTMaPXDiaChihoTenNguoiDat.diaChi)
             // console.log("Tongtien" + totalPrice)
             let dataVe = {}
             dataVe["maNguoiDung"] = "{{ Auth::user()->maNguoiDung }}"
-            dataVe["diaChi"] = dataSDTMaPXDiaChi.diaChi
-            dataVe["maPX"] = dataSDTMaPXDiaChi.maPX
-            dataVe["SDT"] = dataSDTMaPXDiaChi.SDT
+            dataVe["diaChi"] = dataSDTMaPXDiaChihoTenNguoiDat.diaChi
+            dataVe["maPX"] = dataSDTMaPXDiaChihoTenNguoiDat.maPX
+            dataVe["SDT"] = dataSDTMaPXDiaChihoTenNguoiDat.SDT
             dataVe["tongTien"] = pay
             dataVe["daThanhToan"] = 1
             dataVe["trangThai"] = 0
+            dataVe["hoTen"] = dataSDTMaPXDiaChihoTenNguoiDat.hoTen
             dataVe["_token"] = token
             // console.log("Data ves: "+dataVe)
             fetch(apiVe, {
@@ -764,7 +765,7 @@
                     toastr.error(data.error)
                 else{
                     toastr.success(data.success)
-                    // window.location.href = "/tui";
+                    window.location.href = "/sanbong";
                 }
             })
             .catch(error => {

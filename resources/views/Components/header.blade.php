@@ -201,7 +201,7 @@
     </style>
 
     <header class="header">
-        <a href="#" class="header-logo"><img class="header-logo__image" src="assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="logo trường đại học thể dục thể thao"></a>
+        <a href="/" class="header-logo"><img class="header-logo__image" src="assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="logo trường đại học thể dục thể thao"></a>
         <ul class="header-navigation">
             <li class="header-navigation-item"><a href="/" class="header-navigation-item__link">Trang chủ</a></li>
             <li class="header-navigation-item">
@@ -246,16 +246,16 @@
                 @endif
             </label>
             
-            {{-- <a href="/thuesan" class="header-private-item">
+            <a href="/tui" class="header-private-item">
                 <i class="fa-solid fa-volleyball"></i>
                 @if(Auth::check())
                     @php
                         $maNguoiDung = Auth::user()->maNguoiDung;
-                        $sportFieldQuantity = App\Models\ThueSan::where('maNguoiDung', $maNguoiDung)->count();
+                        $sportFieldQuantity = App\Models\Ve::where('maNguoiDung', $maNguoiDung)->count();
                     @endphp
                     <span class="header-private-item__quantity header-private-item__quantity--in-bag">{{ $sportFieldQuantity }}</span>
                 @endif
-            </a> --}}
+            </a>
             <input hidden type="checkbox" id="showNotification" >
             <div class="header__notify arrow">
                 <h3 class="header-notify-list__title">

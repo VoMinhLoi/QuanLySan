@@ -261,6 +261,20 @@
         .grid-mode, .list-mode{
             margin-top: 12px;
         }
+        .sorting-search {
+            width: 80%;
+        }
+        input.sorting-view__search {
+            height: 100%;
+            border: 1px solid black;
+            margin-left: 12px;
+            padding: 8px 12px;
+            flex: 1;
+            color: black;
+        }
+        .sorting-view__search::placeholder{
+            color: rgb(217, 217, 217)
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -304,6 +318,19 @@
                         </div>
                     </div>
                     <div class="col l-9 m-9 c-12">
+                        {{-- <div class="row sorting-search">
+                            <div class="col l-9 m-9 c-12 sorting" style="height: 100%; " >
+                                <h2 class="sorting-view__heading" style="display: block">Tìm kiếm sân: </h2>
+                                <div class="sorting-view" style="flex: 1">
+                                    <input type="text" class="sorting-view__search" id="name-search" style="" placeholder="Tên sân">
+                                </div>
+                            </div>
+                            <div class="col l-3 m-3 c-0 sorting opacity-0">
+                                <label for="time">Thời gian thuê: </label>
+                                <input type="number" id="time" value="1" class="">
+                                <label for="time">Giờ</label>
+                            </div>
+                        </div> --}}
                         <div class="row">
                             <div class="col l-6 m-6 c-6 sorting ">
                                 <ul class="sorting-view">
@@ -326,19 +353,7 @@
                                 </select>
                             </div>
                         </div>
-                        {{-- <div class="row ">
-                            <div class="col l-6 m-6 c-6 sorting opacity-0">
-                                <h2 class="sorting-view__heading">Lịch thuê: </h2>
-                                <div class="sorting-view">
-                                    <input type="datetime-local" min="2024-04-10T02:02" class="sorting-view__date">
-                                </div>
-                            </div>
-                            <div class="col l-6 m-6 c-6 sorting filter-basic">
-                                <label for="time">Thời gian thuê: </label>
-                                <input type="number" id="time" value="1" class="sorting__input-time">
-                                <label for="time">Giờ</label>
-                            </div>
-                        </div> --}}
+                        
                         <div class="grid-mode">
                             <div class="row">
                             </div>
@@ -662,9 +677,6 @@
                 const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
                 return formattedDate;
             }
-
-
-
         </script>
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

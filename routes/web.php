@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChiTietThueSanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\User\BookController;
+use App\Models\ChiTietThueSan;
 
 Route::get('/', function () {
     return view('welcome');
@@ -41,5 +43,7 @@ Route::group(['middleware' => 'userLogin'], function () {
     Route::get('/sanbong', [App\Http\Controllers\SanBongController::class, 'interface']);
     Route::get('/thuesan', [BookController::class, 'interface']);
     Route::get('/hosocanhan', [LoginController::class, 'formProfile']);
+    Route::get('/tui', [ChiTietThueSanController::class, 'formVe']);
+    Route::get('/chitietthuesan/{chitietthuesan}', [ChiTietThueSanController::class, 'formDetail']);
     Route::get('/dangxuat', [LogoutController::class, 'index']);
 });
