@@ -286,4 +286,15 @@
         : message || "Giá trị không chính xác";
     },
     });
+    Validator.minMoney = (selector,min, message) => ({
+    selector,
+    test(value) {
+        return value >= min
+        ? undefined
+        : message || `Quý khách vui lòng nạp tối thiểu ${formatCurrency(min)} VND`;
+    },
+    });
+    function formatCurrency(input) {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(input);
+    }
 </script>

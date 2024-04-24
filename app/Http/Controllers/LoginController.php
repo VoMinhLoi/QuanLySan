@@ -134,23 +134,28 @@ class LoginController extends Controller
     }
     public function formRechargeVNPay(Request $request)
     {
-        // dd($request->input('totalPrice'));
         $vnp_OrderInfo = "Nạp tiền qua ví điện tử VNPay";
-        // $vnp_TxnRef = '1';
-        // $vnp_Amount = 200000 * 100;
+
+        $vnp_Amount = 0;
+        $vnp_TxnRef = rand(1000, 99999);
+        if ($request->has('soTien')) {
+            $vnp_Amount = $request->input('soTien') * 100;
+        }
+        // dd($request->input('totalPrice'));
         // Sử dụng dd để kiểm tra giá trị của 'idVe' và 'ndck'
-        // if ($request->has('idVe') && $request->has('ndck')) {
-        // Lấy giá trị của 'idVe' và 'ndck' từ yêu cầu
-        $idVe = $request->input('idVe');
-        // $ndck = $request->input('ndck');
-        $totalPrice = $request->input('totalPrice');
-        $vnp_TxnRef = $idVe;
-        // $vnp_OrderInfo = $ndck;
+        if ($request->has('idVe')) {
+            // Lấy giá trị của 'idVe' và 'ndck' từ yêu cầu
+            // $ndck = $request->input('ndck');
+            // $vnp_OrderInfo = $ndck;
+            $idVe = $request->input('idVe');
+            $totalPrice = $request->input('totalPrice');
+            $vnp_TxnRef = $idVe;
+            $totalPriceNumeric = (int) str_replace(['.', ',', '₫', ' '], '', $totalPrice);
+            $vnp_Amount = $totalPriceNumeric * 100;
+        }
         // dd($idVe, $ndck, $totalPrice);
-        $totalPriceNumeric = (int) str_replace(['.', ',', '₫', ' '], '', $totalPrice);
 
         // Chuyển đổi giá trị totalPrice thành số nguyên biểu diễn cho số tiền
-        $vnp_Amount = $totalPriceNumeric * 100;
         // dd($vnp_TxnRef, $vnp_OrderInfo, $vnp_Amount);
         // }
         $urlRedict = "http://127.0.0.1:8000/redirect_vnpay_payment";

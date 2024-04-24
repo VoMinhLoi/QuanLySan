@@ -14,7 +14,8 @@ class LichSuGiaoDichController extends Controller
      */
     public function index()
     {
-        //
+        $lichSuGiaoDich = LichSuGiaoDich::all();
+        return $lichSuGiaoDich;
     }
 
     /**

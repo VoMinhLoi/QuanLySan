@@ -85,7 +85,7 @@
             }
         </style>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    </head>
+</head>
     <body>
         <div class="grid">
             @include('Components.header')
@@ -123,9 +123,6 @@
                                     <h3 class="heading"> Thông tin cá nhân</h3>
                             
                                     <div class="spacer"></div>
-                                    <div class="form-group">
-                                        <p class="form-label">Số dư tài khoản: <i style="color: var(--primary-color)">{{number_format(Auth::user()->soDuTaiKhoan, 0, ',', '.')}} <sup>đ</sup></i></p>
-                                    </div>
                                     <div class="form-group">
                                     <label class="form-label">Email</label>
                                     <input
