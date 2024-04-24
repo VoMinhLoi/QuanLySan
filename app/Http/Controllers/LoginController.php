@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Models\LichSuGiaoDich;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -130,5 +131,104 @@ class LoginController extends Controller
     public function formProfile()
     {
         return view('Pages.profile');
+    }
+    public function formRechargeVNPay(Request $request)
+    {
+        // dd($request->input('totalPrice'));
+        $vnp_OrderInfo = "Nạp tiền qua ví điện tử VNPay";
+        // $vnp_TxnRef = '1';
+        // $vnp_Amount = 200000 * 100;
+        // Sử dụng dd để kiểm tra giá trị của 'idVe' và 'ndck'
+        // if ($request->has('idVe') && $request->has('ndck')) {
+        // Lấy giá trị của 'idVe' và 'ndck' từ yêu cầu
+        $idVe = $request->input('idVe');
+        // $ndck = $request->input('ndck');
+        $totalPrice = $request->input('totalPrice');
+        $vnp_TxnRef = $idVe;
+        // $vnp_OrderInfo = $ndck;
+        // dd($idVe, $ndck, $totalPrice);
+        $totalPriceNumeric = (int) str_replace(['.', ',', '₫', ' '], '', $totalPrice);
+
+        // Chuyển đổi giá trị totalPrice thành số nguyên biểu diễn cho số tiền
+        $vnp_Amount = $totalPriceNumeric * 100;
+        // dd($vnp_TxnRef, $vnp_OrderInfo, $vnp_Amount);
+        // }
+        $urlRedict = "http://127.0.0.1:8000/redirect_vnpay_payment";
+        error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+        $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+        $vnp_Returnurl = $urlRedict;
+        $vnp_TmnCode = "0DAQZHR2"; //Mã website tại VNPAY 
+        $vnp_HashSecret = "QCKWGCSVLEITSWLYTVIXAKJPYWUWWFCW"; //Chuỗi bí mật
+
+        //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        // $vnp_TxnRef = $_POST['order_id']; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        // 
+        $vnp_OrderType = 'billpayment';
+        $vnp_Locale = 'vn';
+        $vnp_BankCode = 'NCB';
+        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+        $inputData = array(
+            "vnp_Version" => "2.1.0",
+            "vnp_TmnCode" => $vnp_TmnCode,
+            "vnp_Amount" => $vnp_Amount,
+            "vnp_Command" => "pay",
+            "vnp_CreateDate" => date('YmdHis'),
+            "vnp_CurrCode" => "VND",
+            "vnp_IpAddr" => $vnp_IpAddr,
+            "vnp_Locale" => $vnp_Locale,
+            "vnp_OrderInfo" => $vnp_OrderInfo,
+            "vnp_OrderType" => $vnp_OrderType,
+            "vnp_ReturnUrl" => $vnp_Returnurl,
+            "vnp_TxnRef" => $vnp_TxnRef
+        );
+
+        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+            $inputData['vnp_BankCode'] = $vnp_BankCode;
+        }
+        if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
+            $inputData['vnp_Bill_State'] = $vnp_Bill_State;
+        }
+
+        //var_dump($inputData);
+        ksort($inputData);
+        $query = "";
+        $i = 0;
+        $hashdata = "";
+        foreach ($inputData as $key => $value) {
+            if ($i == 1) {
+                $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+            } else {
+                $hashdata .= urlencode($key) . "=" . urlencode($value);
+                $i = 1;
+            }
+            $query .= urlencode($key) . "=" . urlencode($value) . '&';
+        }
+
+        $vnp_Url = $vnp_Url . "?" . $query;
+        if (isset($vnp_HashSecret)) {
+            $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret); //  
+            $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+        }
+        $returnData = array(
+            'code' => '00', 'message' => 'success', 'data' => $vnp_Url
+        );
+        if (isset($_POST['redirect'])) {
+            header('Location: ' . $vnp_Url);
+            die();
+        } else {
+            echo json_encode($returnData);
+        }
+        // vui lòng tham khảo thêm tại code demo
+    }
+    public function formRedirectVNPay()
+    {
+        return view('Pages.insertmoneyandhistory');
+    }
+    public function formRecharge()
+    {
+        $lichSuGiaoDich = LichSuGiaoDich::where('maNguoiDung', Auth::user()->maNguoiDung)->get();
+        return view('Pages.recharge', ['lichSuGiaoDich' => $lichSuGiaoDich]);
     }
 }

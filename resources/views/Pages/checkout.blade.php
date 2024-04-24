@@ -83,6 +83,7 @@
         .form {
             box-shadow: unset;
             width: 100%;
+            padding: 32px 24px 0px; 
         }
     </style>
     {{-- CSS container --}}
@@ -213,9 +214,9 @@
         }
         .bound-pay {
             color: red; /* Thiết lập màu chữ là đỏ */
-            /* display: flex;
-            flex-direction: column;
-            align-items: center; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .bound-pay .form-message {
@@ -383,17 +384,34 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="bound-pay display-none">
-                                <span class="form-message ">Vui lòng nạp tiền</span>
-                                <a href="/naptien" class="btn-recharge" target="_blank">Nạp tiền</a>
-                            </div>
+                            
                             <button class="btn btn-md btn-golden">Thanh toán</button>
                           </form>
+                            @php
+                                // $veCuoiCung = App\Models\Ve::latest()->first();
+                                $idVeMoi = App\Models\Ve::orderBy('id', 'desc')->first()->id + 1;
+                                if(empty($idVeMoi)){
+                                    $idVeMoi = rand(1000, 9999); // Thay 1000 và 9999 bằng khoảng giá trị bạn muốn
+                                }
+                                $maSan = $_GET['maSan'];
+                                $tenSanBong = App\Models\SanBong::where('maSan',$maSan)->first()->tenSan;
+                                $ndck = "Thanh toán tiền ".$tenSanBong;
+                            @endphp
+                            <div class="bound-pay display-none">{{--  --}}
+                                <span class="form-message ">Vui lòng nạp tiền</span>
+                                <form id="form-recharge" class="sub-nav__item" method="POST" action="{{ url('/vnpay_payment') }}" target="_blank">
+                                    @csrf
+                                    <input type="hidden" name="idVe" value="{{ $idVeMoi }}">
+                                    <input type="hidden" name="ndck" value="{{ $ndck }}">
+                                    <button type="submit" name="redirect"  class="sub-nav__item-link" style="background: var(--primary-color); color: white; width: fit-content; margin-left: 8px; height: 40px;">Nạp tiền</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        
         @include('Components.footer')
     </div>
 </body>
@@ -466,6 +484,18 @@
     function renderTotalPrice(){
         var totalPriceView = document.querySelector('#cartSub')
         totalPrice = calculatorMoneyAndPromotion(thoiGianBatDau, thoiGianKetThuc, getGiaDichVu)
+        console.log(totalPrice)
+        // Lấy URL hiện tại
+        // var currentURL = window.location.href;
+        // // Tạo một đối tượng URL từ URL hiện tại
+        // var urlObject = new URL(currentURL);
+        // // Thêm thông tin vào URL sử dụng phương thức searchParams
+        // urlObject.searchParams.append('totalPrice', totalPrice);
+        // // Lấy URL mới với thông tin đã thêm
+        // var newURL = urlObject.toString();
+        // window.history.pushState({ path: newURL }, '', newURL);
+
+        // Redirect hoặc sử dụng URL mới tùy ý
         totalPriceView.innerHTML =  `
                                     ${totalPrice}
                                     ` 
@@ -586,6 +616,8 @@
                 form: "#form-infor",
                 rules: [
                     Validator.minLength("#SDT",10, 'Yêu cầu số điện thoại từ 10 - 11 số'),
+                    Validator.isRequired("#hoTen"),
+                    Validator.isRequired("#diaChi"),
                 ],
                 errorSelector: ".form-message",
                 buttonSubmitSelector: ".btn-golden",
@@ -617,6 +649,19 @@
                 if(data.soDuTaiKhoan < pay){
                     toastr.error("Số tiền của quý khách không đủ để thanh toán")
                     payView.classList.remove('display-none')
+                    setTimeout(transferToTalPriceToVNpay(), 10000)
+                    function transferToTalPriceToVNpay(){
+                        var formRecharge = document.querySelector('#form-recharge'); // Assuming .sub-nav__item contains a form element
+                        var input = document.createElement('input');
+                        Object.assign(input, {
+                            type: "hidden",
+                            name: "totalPrice", // Assuming totalPrice is a variable containing the name
+                            value: totalPrice // Assuming totalPrice is a variable containing the value
+                        });
+                        // console.log(input)
+                        // console.log(formRecharge)
+                        formRecharge.appendChild(input);
+                    }
                 }
                 else{
                     payView.classList.add('display-none')
@@ -773,6 +818,7 @@
             });
         }
 </script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </html>

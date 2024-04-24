@@ -46,4 +46,7 @@ Route::group(['middleware' => 'userLogin'], function () {
     Route::get('/tui', [ChiTietThueSanController::class, 'formVe']);
     Route::get('/chitietthuesan/{chitietthuesan}', [ChiTietThueSanController::class, 'formDetail']);
     Route::get('/dangxuat', [LogoutController::class, 'index']);
+    Route::post('/vnpay_payment', [LoginController::class, 'formRechargeVNPay']);
+    Route::get('/redirect_vnpay_payment', [LoginController::class, 'formRedirectVNPay']);
+    Route::get('/naptien', [LoginController::class, 'formRecharge']);
 });
