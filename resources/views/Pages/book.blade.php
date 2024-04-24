@@ -226,6 +226,10 @@
             color: red;
             margin: 8px 0;
         }
+        .fg-infor__location-price {
+            display: flex;
+            justify-content: space-between;
+        }
         .list-mode .fg-infor__description {
             color: #79808c;
             margin-bottom: 8px;
@@ -333,7 +337,7 @@
                             <div class="col l-9 m-9 c-12 sorting" style="height: 100%; " >
                                 <h2 class="sorting-view__heading" style="display: block">Tìm kiếm sân: </h2>
                                 <div class="sorting-view" style="flex: 1">
-                                    <input type="text" class="sorting-view__search" id="name-search" placeholder="Tên sân">
+                                    <input type="text" class="sorting-view__search" id="name-search" placeholder="Tên sân, mô tả, vị trí">
                                 </div>
                                 <button class="button-search"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
@@ -410,7 +414,7 @@
             function renderSanBong(sanbongs){
                 sportsFieldQuantity.innerHTML = sanbongs.length + " sân thể thao"
                 sanbongs.forEach((sanbong)=>{
-                    let formattedString = formatCurrency(sanbong.giaDichVu.toString())
+                    let formattedPriceString = formatCurrency(sanbong.giaDichVu.toString())
                     if(sanbong.trangThai === 1){
                         gridMode.innerHTML +=    `
                                                 <div class="col l-6 m-6 c-12">
@@ -427,7 +431,7 @@
                                                         </div>
                                                         <div class="fg-infor">
                                                             <a href="#" class="fg-infor__name">${sanbong.tenSan}</a>
-                                                            <p class="fg-infor__price"><span>${formattedString}</span>/h</p>
+                                                            <p class="fg-infor__price"><span>${formattedPriceString}</span>/h</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -444,7 +448,7 @@
                                                     </div>
                                                     <div class="fg-infor col l-6 m-6 c-12">
                                                         <a href="#" class="fg-infor__name">${sanbong.tenSan}</a>
-                                                        <p class="fg-infor__price"><span>${formattedString}</span>/h</p>
+                                                        <p class="fg-infor__price fg-infor__location-price"><span style="color: black">Vị trí: ${sanbong.viTri}</span><span>${formattedPriceString}/h</span></p>
                                                         <p class="fg-infor__description">${sanbong.moTa}</p>
                                                         <div class="fg-infor__action">
                                                             <p class="fg-infor__action-item fg-infor__action-improve" onclick="showImproveDialog('${sanbong.maSan}')">Đặt sân</p>
@@ -469,7 +473,7 @@
                                                         </div>
                                                         <div class="fg-infor">
                                                             <a href="#" class="fg-infor__name">${sanbong.tenSan}</a>
-                                                            <p class="fg-infor__price"><span>${formattedString}</span>/h</p>
+                                                            <p class="fg-infor__price"><span>${formattedPriceString}</span>/h</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -486,7 +490,7 @@
                                                     </div>
                                                     <div class="fg-infor col l-6 m-6 c-12">
                                                         <a href="#" class="fg-infor__name">${sanbong.tenSan}</a>
-                                                        <p class="fg-infor__price"><span>${formattedString}</span>/h</p>
+                                                        <p class="fg-infor__price fg-infor__location-price"><span style="color: black">Vị trí: ${sanbong.viTri}</span><span>${formattedPriceString}/h</span></p>
                                                         <p class="fg-infor__description">${sanbong.moTa}</p>
                                                     </div>
                                                 </div>
@@ -534,8 +538,8 @@
                     price = 200000
                 datSanBong = dataAllSanBong.filter((sanbong)=>{
                     if(categoryListView.value === "Tất cả loại sân")
-                        return sanbong.giaDichVu <= price && sanbong.tenSan.toLowerCase().includes(searchString)
-                    return sanbong.loaiSan === categoryListView.value && sanbong.giaDichVu <= price && sanbong.tenSan.toLowerCase().includes(searchString)
+                        return sanbong.giaDichVu <= price && (sanbong.tenSan.toLowerCase().includes(searchString) || sanbong.moTa.toLowerCase().includes(searchString) || sanbong.viTri.toLowerCase().includes(searchString))
+                    return sanbong.loaiSan === categoryListView.value && sanbong.giaDichVu <= price && (sanbong.tenSan.toLowerCase().includes(searchString) || sanbong.moTa.toLowerCase().includes(searchString) || sanbong.viTri.toLowerCase().includes(searchString))
                 })
                 switch(filterAZHighLow){
                     case "Xếp theo tên: A-Z":
