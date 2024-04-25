@@ -21,21 +21,27 @@ class LoginController extends Controller
     {
         return view('Pages.login');
     }
-    public function store(Request $request)
+
+    public function login(Request $request)
     {
+
         $credentials['taiKhoan'] = $request->taiKhoan;
         $credentials['password'] = $request->matKhau;
         if (Auth::attempt($credentials)) {
-            $user = User::where('taiKhoan', $request->taiKhoan)->first();
-
-            return redirect('/sanbong');
+            // $user = User::where('taiKhoan', $request->taiKhoan)->first();
+            if (Auth::user()->trangThai)
+                return redirect('/sanbong');
+            else
+                return back()->withErrors(['message' => "Tài khoản đã bị vô hiệu hóa."]);
         } else
             return redirect()->back()->withErrors('Tài khoản, mật khẩu không chính xác.');
     }
+
     public function redirectToGoogle()
     {
         return Socialite::driver('google')->redirect();
     }
+
     public function handleGoogleCallback()
     {
         try {
@@ -44,16 +50,23 @@ class LoginController extends Controller
             $finduser = User::where('google_id', $user->id)->first();
 
             if ($finduser) {
-                // Đăng nhập người dùng đã tồn tại
-                $token = $finduser->createToken('authToken')->plainTextToken;
-                Auth::login($finduser);
+                if ($finduser->trangThai) {
+                    // Đăng nhập người dùng đã tồn tại
+                    $token = $finduser->createToken('authToken')->plainTextToken;
+                    Auth::login($finduser);
+                } else
+                    return redirect('/dangnhap')->withErrors(['message' => "Tài khoản đã bị vô hiệu hóa."]);
             } else {
                 $oldUserHasEmailLikeGmail = User::where('taiKhoan', $user->email)->first();
+
                 if ($oldUserHasEmailLikeGmail) {
-                    // Cập nhật thông tin Google ID cho người dùng có email tương tự
-                    $oldUserHasEmailLikeGmail->update(['google_id' => $user->id]);
-                    $token = $oldUserHasEmailLikeGmail->createToken('authToken')->plainTextToken;
-                    Auth::login($oldUserHasEmailLikeGmail);
+                    if ($oldUserHasEmailLikeGmail->trangThai) {
+                        // Cập nhật thông tin Google ID cho người dùng có email tương tự
+                        $oldUserHasEmailLikeGmail->update(['google_id' => $user->id]);
+                        $token = $oldUserHasEmailLikeGmail->createToken('authToken')->plainTextToken;
+                        Auth::login($oldUserHasEmailLikeGmail);
+                    } else
+                        return redirect('/dangnhap')->withErrors(['message' => "Tài khoản đã bị vô hiệu hóa."]);
                 } else {
                     // Tạo người dùng mới nếu không có người dùng nào tồn tại với email tương tự
                     $newUser = User::create([

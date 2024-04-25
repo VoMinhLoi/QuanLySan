@@ -30,7 +30,7 @@ Route::get('/dieukhoanchinhsach', [App\Http\Controllers\User\PoliciesAndTermsCon
 
 Route::get('/dangky', [RegisterController::class, 'index']);
 Route::get('/dangnhap', [LoginController::class, 'index'])->name('formLogin');
-Route::post('/dangnhap', [LoginController::class, 'store'])->name('login');
+Route::post('/dangnhap', [LoginController::class, 'login'])->name('login');
 Route::get('/auth/google', [LoginController::class, 'redirectToGoogle']);
 Route::get('/auth/google/callback', [LoginController::class, 'handleGoogleCallback']);
 Route::get('/quenmatkhau', [LoginController::class, 'formForgot']);
