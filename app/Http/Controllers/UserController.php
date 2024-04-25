@@ -98,22 +98,34 @@ class UserController extends Controller
             } else
                 return response()->json(['error' => 'Mật khẩu cũ không đúng']);
         } else {
-            // Usecase update private information
-            $credentials['ho'] = $request->ho;
-            $credentials['ten'] = $request->ten;
-            if (!empty($request->ngaySinh)) {
-                $ngaySinhFormatted = Carbon::createFromFormat('d-m-Y', $request->ngaySinh)->format('Y-m-d');
-                $credentials['ngaySinh'] = $ngaySinhFormatted;
+            // Refund - Hoàn tiền
+            if (!empty($request->soDuTaiKhoan)) {
+                $result = $userIsUpdated->update([
+                    'soDuTaiKhoan' => $userIsUpdated->soDuTaiKhoan + $request->soDuTaiKhoan
+                ]);
+                if (isset($result))
+                    return response()->json(['success' => 'Hoàn tiền thành công.']);
+                else
+                    return response()->json(['error' => 'Hoàn tiền thất bại.']);
+            } else {
+                // Usecase update private information
+                $credentials['ho'] = $request->ho;
+                $credentials['ten'] = $request->ten;
+                if (!empty($request->ngaySinh)) {
+                    $ngaySinhFormatted = Carbon::createFromFormat('d-m-Y', $request->ngaySinh)->format('Y-m-d');
+                    $credentials['ngaySinh'] = $ngaySinhFormatted;
+                }
+
+                $credentials['cccd'] = $request->cccd;
+                $credentials['SDT'] = $request->SDT;
+                $credentials['maPX'] = $request->maPX;
+                $credentials['diaChi'] = $request->diaChi;
+                $userIsUpdated->update($credentials);
+                if ($userIsUpdated)
+                    return response()->json(['success' => 'Cập nhật thông tin thành công']);
+                else
+                    return response()->json(['error' => 'Cập nhật thông tin thất bại']);
             }
-            $credentials['cccd'] = $request->cccd;
-            $credentials['SDT'] = $request->SDT;
-            $credentials['maPX'] = $request->maPX;
-            $credentials['diaChi'] = $request->diaChi;
-            $userIsUpdated->update($credentials);
-            if ($userIsUpdated)
-                return response()->json(['success' => 'Cập nhật thông tin thành công']);
-            else
-                return response()->json(['error' => 'Cập nhật thông tin thất bại']);
         }
     }
 

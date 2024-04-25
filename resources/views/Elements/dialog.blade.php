@@ -714,7 +714,7 @@
                     "messageClass": "toast-message-style" // Đặt lớp CSS cho thông báo toast
                 };
                 toastr.options.closeButton = true;
-                toastr.info("Quý khách chỉ có thể thuê liên tục <strong>" + distanceAllow + " tiếng.</strong>");
+                toastr.warning("Quý khách chỉ có thể thuê liên tục <strong>" + distanceAllow + " tiếng.</strong>");
               }
               else{
                 transferDataToOtherPage(data)

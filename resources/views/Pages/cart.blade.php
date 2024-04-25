@@ -302,7 +302,7 @@
                                     </div>
                                 </div>
                                 <p class="">
-                                    <strong>Lưu ý: </strong>Hủy sân trước 4 tiếng hoàn lại 100% nhưng hủy sân sau 3 tiếng hoàn lại 50%. Sau 2 tiếng không thể hủy sân.
+                                    <strong>Lưu ý: </strong>Hủy sân trước <span style="color: red">1 tiếng</span> hoàn lại 100%. Sau <span style="color: red">1 tiếng</span> không thể hủy sân.
                                 </p>
                             </form>
                         </div>
@@ -397,12 +397,11 @@
                                                 ${formatCurrency(sanBong.giaDichVu)}/h
                                             </td>
                                             <td style="flex-direction: column">
-                                                    ${tinhKhoangCach(thoiGianHienTai, CTTS.thoiGianBatDau)>=2?`<a class="button-action button-action--delete" onclick="${cancelCalendar(CTTS.maCTTS)}" >Hủy</a>`:``}
-                                                    <a class="button-action button-action--infor" href="/chitietthuesan/${CTTS.maCTTS}" >Chi tiết</a>
+                                                ${tinhKhoangCach(thoiGianHienTai, CTTS.thoiGianBatDau)>=1?`<a style="cursor: pointer" class="button-action button-action--delete" onclick="cancelCalendar('${CTTS.maCTTS}')" >Hủy</a>`:``}
+                                                <a class="button-action button-action--infor" href="/chitietthuesan/${CTTS.maCTTS}" >Chi tiết</a>
                                             </td>
                                             <td style="text-align: center">
                                                 <strong style="color:red">${isToday(CTTS.thoiGianBatDau)?'Hôm nay <br/>':''}</strong>
-                                                
                                             </td>
                                         </tr>
                                     `;
@@ -517,6 +516,103 @@
     }
     function cancelCalendar(value){
         
+        if(confirm("Bạn có chắc chắn muốn hủy vé này không?")){
+            deleteRowViewAndQuantityCart(value)
+            handleDeleteChiTietThueSan(value)
+        }
+    }
+    function deleteRowViewAndQuantityCart(value){
+        let rowIsDeletedView = document.querySelector('#item-'+value)
+        rowIsDeletedView.remove();
+        let quantityInBag = document.querySelector('.header-private-item__quantity--in-bag')
+        quantityInBag.innerText = parseInt(quantityInBag.innerText) - 1
+    }
+    function handleDeleteChiTietThueSan(value){
+        Refund(value)
+    }
+    function Refund(value){
+        getOneChiTietThueSan(value, CTTS => 
+            getVe(CTTS.maVe, ve => {
+                updateUserMoney(ve.tongTien, value)
+            })
+        )
+    }
+    function getOneChiTietThueSan(value, callback){
+        fetch("http://127.0.0.1:8000/api/chitietthuesan/"+value)
+            .then(response => response.json())
+            .then(callback)
+    }
+    function getVe(maVe, callback){
+        fetch("http://127.0.0.1:8000/api/ve/"+maVe)
+            .then(response => response.json())
+            .then(callback)
+    }
+    function updateUserMoney(money, maCTTS){
+        var data = {}
+        data['soDuTaiKhoan'] = money;
+        console.log(data)
+        fetch("http://127.0.0.1:8000/api/user/"+parseInt("{{ Auth::user()->maNguoiDung }}"),{
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success){
+                    toastr.success(data.success)
+                    deleteChiTietThueSan(maCTTS)
+                    createLichSuGiaoDich(money)
+                }
+                else
+                    toastr.error(data.error)
+            })
+            .catch(error => {
+                toastr.error("Lỗi hoàn tiền");
+                console.error('Error:', error);
+            });
+    }
+    function deleteChiTietThueSan(maCTTS){
+        fetch("http://127.0.0.1:8000/api/chitietthuesan/"+maCTTS,{
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+            .then(response => response.json())
+            .then(data=> {
+                if(data.success){
+                    toastr.success(data.success)
+                }
+                else
+                    toastr.error(data.error)
+            })
+    }
+    function createLichSuGiaoDich(money){
+        let lsgd = {}
+        lsgd['maNguoiDung'] = "{{ Auth::user()->maNguoiDung }}";
+        lsgd['ndck'] = "Hoàn tiền hủy sân";
+        lsgd['soTien'] = money;
+        lsgd['thoiGian'] = layThoiGianHienTai();
+        lsgd['trangThai'] = 1;
+        lsgd['loaiGD'] = 3;
+        fetch('http://127.0.0.1:8000/api/lichsugiaodich',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            },
+            body: JSON.stringify(lsgd)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success)
+                    toastr.success(data.success)
+                else
+                    toastr.error(data.error)
+            })
     }
 </script>
 

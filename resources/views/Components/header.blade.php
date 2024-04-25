@@ -251,7 +251,9 @@
                 @if(Auth::check())
                     @php
                         $maNguoiDung = Auth::user()->maNguoiDung;
-                        $sportFieldQuantity = App\Models\Ve::where('maNguoiDung', $maNguoiDung)->count();
+                        $sportFieldQuantity = App\Models\Ve::where('maNguoiDung', $maNguoiDung)
+                                                ->whereHas('chiTietThueSans')
+                                                ->count();
                     @endphp
                     <span class="header-private-item__quantity header-private-item__quantity--in-bag">{{ $sportFieldQuantity }}</span>
                 @endif

@@ -95,7 +95,16 @@ class ChiTietThueSanController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $chiTietThueSan = ChiTietThueSan::where('maCTTS', $id)->first();
+            $result = $chiTietThueSan->delete();
+            if (!empty($result))
+                return response()->json(['success' => 'Hủy sân thành công.']);
+            else
+                return response()->json(['error' => 'Lỗi hủy sân!']);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Lỗi hủy sân!']);
+        }
     }
     public function formVe()
     {

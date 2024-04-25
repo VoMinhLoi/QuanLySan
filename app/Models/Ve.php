@@ -21,4 +21,8 @@ class Ve extends Model
 
     ];
     protected $primaryKey = 'id';
+    public function chiTietThueSans()
+    {
+        return $this->hasMany(ChiTietThueSan::class, 'maVe', 'id');
+    }
 }

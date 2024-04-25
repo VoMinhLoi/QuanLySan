@@ -36,11 +36,11 @@ class LichSuGiaoDichController extends Controller
             $lichSuGiaoDich = LichSuGiaoDich::create($request->all());
             // return $chiTietThueSan;
             if (!empty($lichSuGiaoDich->id))
-                return response()->json(['success' => 'Hoàn tất thủ tục 2', 'idLichSuGiaoDich' => $lichSuGiaoDich->id]);
+                return response()->json(['success' => 'Lưu giao dịch thành công.', 'idLichSuGiaoDich' => $lichSuGiaoDich->id]);
             else
-                return response()->json(['error' => 'Có lỗi khi hoàn tất thủ tục']);
+                return response()->json(['error' => 'Lưu giao dịch thất bại']);
         } catch (Exception $e) {
-            return response()->json(['error' => 'Lỗi chi tiết thuê sân']);
+            return response()->json(['error' => 'Lưu giao dịch thất bại']);
         }
     }
 
