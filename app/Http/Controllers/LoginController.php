@@ -30,7 +30,10 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             // $user = User::where('taiKhoan', $request->taiKhoan)->first();
             if (Auth::user()->trangThai)
-                return redirect('/sanbong');
+                if (Auth::user()->maQuyen == 1)
+                    return redirect('/admin');
+                else
+                    return redirect('/sanbong');
             else
                 return back()->withErrors(['message' => "Tài khoản đã bị vô hiệu hóa."]);
         } else
@@ -54,6 +57,8 @@ class LoginController extends Controller
                     // Đăng nhập người dùng đã tồn tại
                     $token = $finduser->createToken('authToken')->plainTextToken;
                     Auth::login($finduser);
+                    if (Auth::user()->maQuyen == 1)
+                        return redirect('/admin');
                 } else
                     return redirect('/dangnhap')->withErrors(['message' => "Tài khoản đã bị vô hiệu hóa."]);
             } else {
@@ -65,6 +70,8 @@ class LoginController extends Controller
                         $oldUserHasEmailLikeGmail->update(['google_id' => $user->id]);
                         $token = $oldUserHasEmailLikeGmail->createToken('authToken')->plainTextToken;
                         Auth::login($oldUserHasEmailLikeGmail);
+                        if (Auth::user()->maQuyen == 1)
+                            return redirect('/admin');
                     } else
                         return redirect('/dangnhap')->withErrors(['message' => "Tài khoản đã bị vô hiệu hóa."]);
                 } else {
@@ -77,6 +84,8 @@ class LoginController extends Controller
                     ]);
                     $token = $newUser->createToken('authToken')->plainTextToken;
                     Auth::login($newUser);
+                    if (Auth::user()->maQuyen == 1)
+                        return redirect('/admin');
                 }
             }
 

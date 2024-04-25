@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ChiTietThueSanController;
 use Illuminate\Support\Facades\Route;
 
@@ -49,4 +50,8 @@ Route::group(['middleware' => 'userLogin'], function () {
     Route::post('/vnpay_payment', [LoginController::class, 'formRechargeVNPay']);
     Route::get('/redirect_vnpay_payment', [LoginController::class, 'formRedirectVNPay']);
     Route::get('/naptien', [LoginController::class, 'formRecharge']);
+});
+
+Route::group(['middleware' => 'adminLogin'], function () {
+    Route::get('/admin', [AdminController::class, 'index']);
 });
