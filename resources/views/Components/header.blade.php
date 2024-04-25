@@ -226,7 +226,7 @@
                     </p>
                     <ul class="sub-nav">
                         <li class="sub-nav__item"><a href="/hosocanhan" class="sub-nav__item-link">Hồ sơ cá nhân</a></li>
-                        <li class="sub-nav__item"><a href="/naptien" class="sub-nav__item-link">Nạp tiền</a></li>
+                        <li class="sub-nav__item"><a href="/naptien" class="sub-nav__item-link">Ví</a></li>
                         <li class="sub-nav__item"><a href="/dangxuat" class="sub-nav__item-link">Đăng xuất</a></li>
                     </ul>
                 </li>
@@ -333,7 +333,7 @@
                     </p>
                     <ul class="menu-mobile-sub-nav">
                         <li class="menu-mobile-sub-nav__item"><a href="/hosocanhan" class="menu-mobile-sub-nav__item-link">Hồ sơ cá nhân</a></li>
-                        <li class="menu-mobile-sub-nav__item"><a href="/naptien" class="menu-mobile-sub-nav__item-link">Nạp tiền</a></li>
+                        <li class="menu-mobile-sub-nav__item"><a href="/naptien" class="menu-mobile-sub-nav__item-link">Ví</a></li>
                         <li class="menu-mobile-sub-nav__item"><a href="/dangxuat" class="menu-mobile-sub-nav__item-link">Đăng xuất</a></li>
                     </ul>
                 </li>

@@ -251,7 +251,7 @@
                 <div class="grid wide" >
                     @include('Components.breadcrumb')
                     <script>
-                        breadCrumbHeading.innerText = 'Nạp tiền'
+                        breadCrumbHeading.innerText = 'Ví'
                     </script>
                     <div class="row content no-gutters">
                         <div class="col l-12 m-12 c-12">
@@ -288,6 +288,7 @@
                                         <option value="Tất cả giao dịch">Tất cả giao dịch</option>
                                         <option value="Thanh toán">Thanh toán</option>
                                         <option value="Nạp tiền">Nạp tiền</option>
+                                        <option value="Hoàn tiền">Hoàn tiền</option>
                                     </select>
                                     <div class="table_desc">
                                         <div class="table_page table-responsive">
@@ -370,6 +371,7 @@
         var dataLSDG
         var dataThanhToanLSGD
         var dataNapTienLSGD
+        var dataHoanTienLSGD
         filterView.onchange = ()=>{
             hanldeLichSuGiaoDich(filterView.value)
         }
@@ -409,6 +411,18 @@
                     }
                     else
                         renderLichSuGiaoDich(dataThanhToanLSGD)
+                    break;
+                case "Hoàn tiền":
+                    if(!dataHoanTienLSGD){
+                                getLichSuGiaoDich(data => {
+                                    dataHoanTienLSGD = data.filter((LSGD)=>{
+                                        return LSGD.loaiGD === 3
+                                    })
+                                    renderLichSuGiaoDich(dataHoanTienLSGD)
+                                });
+                    }
+                    else
+                        renderLichSuGiaoDich(dataHoanTienLSGD)
                     break;
             }
         }
