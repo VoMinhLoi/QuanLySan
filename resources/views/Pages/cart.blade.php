@@ -302,7 +302,7 @@
                                     </div>
                                 </div>
                                 <p class="">
-                                    <strong>Lưu ý: </strong>Hủy sân trước <span style="color: red">1 tiếng</span> hoàn lại 100%. Sau <span style="color: red">1 tiếng</span> không thể hủy sân.
+                                    <strong>Lưu ý: </strong>Hủy sân trước <span style="color: red">1 tiếng</span> hoàn tiền lại 100% vào số dư tài khoản của bạn trên website. Sau <span style="color: red">1 tiếng</span> không thể hủy sân.
                                 </p>
                             </form>
                         </div>
