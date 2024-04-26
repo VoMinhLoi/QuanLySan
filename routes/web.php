@@ -53,5 +53,5 @@ Route::group(['middleware' => 'userLogin'], function () {
 });
 
 Route::group(['middleware' => 'adminLogin'], function () {
-    Route::get('/admin', [AdminController::class, 'index']);
+    Route::resource('customer', 'App\Http\Controllers\Admin\UserController');
 });
