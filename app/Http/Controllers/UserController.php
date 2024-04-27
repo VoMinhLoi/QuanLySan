@@ -53,7 +53,7 @@ class UserController extends Controller
             $newUser = User::create($credentials);
             // $token = $newUser->createToken('Token Name')->accessToken;
             if ($newUser)
-                return response()->json(['success' => 'Bạn đã đăng ký thành công']);
+                return response()->json(['success' => 'Bạn đã đăng ký thành công', 'maNguoiDung' => $newUser->maNguoiDung]);
         } catch (Exception $e) {
             return response()->json(['error' => 'Email đã tồn tại']);
         }

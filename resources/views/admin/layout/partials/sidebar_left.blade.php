@@ -63,15 +63,17 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="../../index.html" class="nav-link">
+                  <a href="/branch" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Cơ sở</p>
+                    <span class="badge badge-info right">{{ App\Models\CoSo::all()->count() }}</span>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="../../index2.html" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Sân bóng</p>
+                    <span class="badge badge-info right">{{ App\Models\SanBong::all()->count() }}</span>
                   </a>
                 </li>
               </ul>
@@ -82,7 +84,7 @@
                 <p>
                   Quản lý đặt sân
                 </p>
-                <span class="badge badge-info right">{{ App\Models\User::all()->count() }}</span>
+                <span class="badge badge-info right">{{ App\Models\ChiTietThueSan::all()->count() }}</span>
               </a>
             </div>
             <div class="nav-item">
@@ -109,7 +111,7 @@
                 <p>
                   Lịch sử giao dịch
                 </p>
-                <span class="badge badge-info right">{{ App\Models\User::all()->count() }}</span>
+                <span class="badge badge-info right">{{ App\Models\LichSuGiaoDich::all()->count() }}</span>
               </a>
             </div>
             

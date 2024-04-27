@@ -128,8 +128,6 @@
     }
 </style>
 <script>
-    var $ = document.querySelector.bind(document);
-    var $$ = document.querySelectorAll.bind(document);
     var selectorRules = {};
     // Xử lý báo lỗi
     function validate(rule, inputElement, formGroup, errorElement) {
@@ -159,7 +157,7 @@
     return errorMessage;
     }
     function Validator(option) {
-    const form = $(option.form);
+    const form = document.querySelector(option.form);
     if (form) {
         // Validate all input để điều kiện thì mới cho submit
         function getParent(element, selector) {
@@ -170,6 +168,8 @@
             element = element.parentElement;
         }
         }
+        console.log(form)
+
         var butttonSubmit = form.querySelector(option.buttonSubmitSelector);
         butttonSubmit.onclick = (e) => {
         // Chặn lại submit mặc định trình duyệt để có thể fetch API bằng JS
@@ -294,7 +294,33 @@
         : message || `Quý khách vui lòng nạp tối thiểu ${formatCurrency(min)} VND`;
     },
     });
+    Validator.isAllowHour = (selector,min, max, message) => ({
+    selector,
+    test(value) {
+        return value >= min && value<=max
+        ? undefined
+        : message || `Quý khách nhập trong khoảng từ ${min} - ${max} giờ`;
+    },
+    });
+    Validator.isNumber = (selector,min, max, message) => ({
+    selector,
+    test(value) {
+        return typeof(value) === "number" 
+        ? undefined
+        : message || `Quý khách nhập chữ số không nhập chữ.`;
+    },
+    });
+
+    Validator.mustHigherOpen = (selector, message) => ({
+    selector,
+    test(value) {
+        return value > document.querySelector("#thoiGianMoCua").value
+        ? undefined
+        : message || "Giờ đóng cửa phải lớn hơn " + document.querySelector("#thoiGianMoCua").value +" giờ.";
+    },
+    });
     function formatCurrency(input) {
             return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(input);
     }
+
 </script>

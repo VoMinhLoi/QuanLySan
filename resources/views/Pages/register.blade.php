@@ -171,6 +171,7 @@
               method: "POST",
               headers: {
                   "Content-Type": "application/x-www-form-urlencoded",
+                  'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
               },
               // body: JSON.stringify(data),
               body: formData,

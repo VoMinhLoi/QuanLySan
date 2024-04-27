@@ -54,8 +54,7 @@ Route::group(['middleware' => 'userLogin'], function () {
 
 Route::group(['middleware' => 'adminLogin'], function () {
 
-    Route::resource('/dashboard', 'App\Http\Controllers\Admin\DashboardController');
-    Route::group(['prefix' => '/customer'], function () {
-        Route::resource('', 'App\Http\Controllers\Admin\UserController');
-    });
+    Route::resource('/dashboard', 'App\Http\Controllers\Admin\DashboardController')->except(['create', 'show', 'update', 'destroy', 'edit']);
+    Route::resource('/customer', 'App\Http\Controllers\Admin\UserController')->except(['create', 'show', 'update', 'destroy', 'edit']);
+    Route::resource('/branch', 'App\Http\Controllers\Admin\CoSoController')->except(['create', 'show', 'update', 'destroy', 'edit']);
 });

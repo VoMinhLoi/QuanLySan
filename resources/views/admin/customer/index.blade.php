@@ -1,4 +1,5 @@
 @extends('admin.layout.layout')
+@include('Library.validator')
 @section('contents')
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -15,49 +16,83 @@
             </div>
             </div>
         </div><!-- /.container-fluid -->
-        </section>
-    
-        <!-- Main content -->
+    </section>
     <section class="content">
-    
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Tạo người dùng</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form id="form-user">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="ho">Họ</label>
+                        <input name="ho" type="text" class="form-control" id="ho" placeholder="Võ Minh">
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="ten">Tên</label>
+                        <input name="ten" type="text" class="form-control" id="ten" placeholder="Lợi">
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="taiKhoan">Tài khoản</label>
+                        <input name="taiKhoan" type="email" class="form-control" id="taiKhoan" placeholder="Enter email">
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mật khẩu</label>
+                        <input name="password" type="password" class="form-control" id="password" placeholder="Password">
+                        <span class="form-message"></span>
+                    </div>
+
+                </div>
+                <!-- /.card-body -->
+
+                <button type="submit" class="btn btn-primary form-submit">Tạo</button>
+            </form>
+        </div>
         <!-- Default box -->
         <div class="card">
+
             <div class="card-header">
-            <h3 class="card-title">Người dùng</h3>
-    
-            <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                <i class="fas fa-times"></i>
-                </button>
-            </div>
+                
+                <h3 class="card-title">Người dùng</h3>
+        
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                    </button>
+                </div>
             </div>
             <div class="card-body p-0">
-            <table class="table table-striped projects">
-                <thead>
-                    <tr>
-                        <th style="width: 10%">
-                            Mã người dùng
-                        </th>
-                        <th style="width: 20%">
-                            Họ và tên
-                        </th>
-                        <th style="width: 20%">
-                            Email
-                        </th>
-                        <th style="width: 10%">
-                            Vai trò
-                        </th>
-                        <th style="width: 8%" class="text-center">
-                            Trạng thái
-                        </th>
-                        <th style="width: 20%" class="text-center">
-                            Hành động
-                        </th>
-                    </tr>
-                </thead>
+                <table class="table table-striped projects">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%">
+                                Mã người dùng
+                            </th>
+                            <th style="width: 20%">
+                                Họ và tên
+                            </th>
+                            <th style="width: 20%">
+                                Email
+                            </th>
+                            <th style="width: 10%">
+                                Vai trò
+                            </th>
+                            <th style="width: 8%" class="text-center">
+                                Trạng thái
+                            </th>
+                            <th style="width: 20%" class="text-center">
+                                Hành động
+                            </th>
+                        </tr>
+                    </thead>
                     <tbody id="user-table-body">
                         @foreach ($users as $item)
                             <tr class="{{ "row-".$item->maNguoiDung }}">
@@ -172,9 +207,10 @@
             .then(response => response.json())
             .then(callback)
     }
-    function renderRow(user){
+    function renderRow(user, formTableBodyUserView){
         let rowIsUpdatedView = document.querySelector('.row-'+user.maNguoiDung)
-        rowIsUpdatedView.innerHTML =    `
+        if(!formTableBodyUserView)
+            rowIsUpdatedView.innerHTML =    `
                                             <tr>
                                                 <td>
                                                     ${"ND"+user.maNguoiDung }
@@ -197,6 +233,79 @@
                                                 </td>
                                             </tr>
                                         `
+        else
+            formTableBodyUserView.innerHTML +=   `
+                                            <tr class="row-${user.maNguoiDung}">
+                                                <td>
+                                                    ${"ND"+user.maNguoiDung }
+                                                </td>
+                                                <td>
+                                                    ${user.ho+" "+user.ten}
+                                                </td>
+                                                <td>
+                                                    ${user.taiKhoan}
+                                                </td>
+                                                <td class="project_progress text-center">
+                                                    Người dùng
+                                                </td>
+                                                <td class="project-state">
+                                                    <span style="color: green">Hoạt động</span>
+                                                </td>
+                                                <td class="project-actions text-right">
+                                                    <a class="btn btn-primary btn-sm" onclick="grantPermissions('${ user.maNguoiDung }')">Cấp quyền</a>
+                                                    <a class="btn btn-danger btn-sm button-disable" onclick="disableUser('${ user.maNguoiDung }')"><i class="fas fa-trash"></i>Vô hiệu hóa</a>
+                                                </td>
+                                            </tr>
+                                            `
     }
 
+</script>
+
+{{-- Create người dùng --}}
+<script>
+    setTimeout(()=> {
+        Validator({
+            form: "#form-user",
+            rules: [
+                Validator.isRequired("#ho"),
+                Validator.isRequired("#ten"),
+                Validator.isRequired("#taiKhoan"),
+                Validator.isEmail("#taiKhoan"),
+                Validator.isRequired("#password"),
+                Validator.minLength("#password", 7),
+            ],
+            errorSelector: ".form-message",
+            buttonSubmitSelector: ".form-submit",
+            // Muốn submit không theo API mặc định của trình duyệt
+            onSubmit: function (dataValid) {
+                fetch(apiUser, {
+                    method: "POST",
+                    headers: {
+                        // "Content-Type": "application/x-www-form-urlencoded", x-www-form-urlencoded: form data
+                        "Content-Type": "application/json",
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    },
+                    // body: JSON.stringify(data),
+                    body: JSON.stringify(dataValid),
+                })
+                .then(response => {
+                    return response.json(); // Chuyển đổi phản hồi sang JSON
+                })
+                .then(data => {
+                    if(data.error)
+                        toastr.error(data.error)
+                    else{
+                        toastr.success(data.success)
+                        dataValid['maNguoiDung'] = data.maNguoiDung
+                        let formTableBodyUserView = document.querySelector('#user-table-body')
+                        renderRow(dataValid, formTableBodyUserView)
+                    }// Dữ liệu JSON trả về từ function store
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            },
+            formGroupSelector: ".form-group",
+        });
+    }, 1000)
 </script>

@@ -289,7 +289,7 @@
               buttonSubmitSelector: ".form-submit",
               // Muốn submit không theo API mặc định của trình duyệt
               onSubmit: function (data) {
-                if(data.hinhDaiDien[0]){
+                if(data.hinhDaiDien){
                     var formData = new FormData()
                     formData.append('ho', data.ho)
                     formData.append('ten', data.ten)
