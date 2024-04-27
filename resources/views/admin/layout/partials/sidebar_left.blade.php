@@ -36,13 +36,20 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-                 with font-awesome or any other icon font library -->
+            
             <div class="nav-item">
               <a href="/dashboard" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                   Dashboard
+                </p>
+              </a>
+            </div>
+            <div class="nav-item">
+              <a href="https://sandbox.vnpayment.vn/merchantv2/" class="nav-link" target="_blank">
+                <i class="nav-icon fas fa-dollar-sign"></i>
+                <p>
+                  Thống kê doanh thu
                 </p>
               </a>
             </div>
@@ -105,15 +112,7 @@
                 <span class="badge badge-info right">{{ App\Models\User::all()->count() }}</span>
               </a>
             </div>
-            <div class="nav-item">
-              <a href="/customer" class="nav-link">
-                <i class="nav-icon fas fa-dollar-sign"></i>
-                <p>
-                  Thống kê
-                </p>
-                <span class="badge badge-info right">{{ App\Models\User::all()->count() }}</span>
-              </a>
-            </div>
+            
           </ul>
         </nav>
         <!-- /.sidebar-menu -->

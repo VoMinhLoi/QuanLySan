@@ -53,6 +53,8 @@ Route::group(['middleware' => 'userLogin'], function () {
 });
 
 Route::group(['middleware' => 'adminLogin'], function () {
+
+    Route::resource('/dashboard', 'App\Http\Controllers\Admin\DashboardController');
     Route::group(['prefix' => '/customer'], function () {
         Route::resource('', 'App\Http\Controllers\Admin\UserController');
     });
