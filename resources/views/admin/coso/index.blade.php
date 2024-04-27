@@ -156,10 +156,10 @@
                                     
                                 </td>
                                 <td class="project-actions text-right">
-                                    <a class="btn btn-info btn-sm" onclick="grantPermissions({{ $item->maNguoiDung }})">
+                                    <a class="btn btn-info btn-sm" onclick="grantPermissions({{ $item->maCoSo }})">
                                         Sửa
                                     </a>
-                                    <a class="btn btn-danger btn-sm button-disable" onclick="disableUser({{ $item->maNguoiDung }})">
+                                    <a class="btn btn-danger btn-sm button-disable" onclick="handleDeleteCoSo('{{ $item->maCoSo }}')">
                                         <i class="fas fa-trash">
                                         </i>
                                         Xóa
@@ -249,7 +249,37 @@
                 wardList.appendChild(option)
             })
         }
-        
+        function handleDeleteCoSo(maCoSo){
+            deleteRowView(maCoSo);
+            deleteCoSoInDatabase(maCoSo);
+        }
+        function deleteRowView(maCoSo){
+            let rowIsDeletedView = document.querySelector('.row-'+maCoSo)
+            rowIsDeletedView.remove();
+        }
+        function deleteCoSoInDatabase(maCoSo){
+            fetch("http://127.0.0.1:8000/api/coso/"+maCoSo,{
+                method: "delete",
+                headers: {
+                        // "Content-Type": "application/x-www-form-urlencoded", x-www-form-urlencoded: form data
+                        "Content-Type": "application/json",
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                },
+            })
+                .then(response => {
+                    return response.json(); // Chuyển đổi phản hồi sang JSON
+                })
+                .then(data => {
+                    if(data.error)
+                        toastr.error(data.error)
+                    else{
+                        toastr.success(data.success)
+                    }// Dữ liệu JSON trả về từ function store
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
     </script>
 @endsection
 
@@ -305,7 +335,6 @@
         });
     }, 1000)
     function renderRow(coSo, maNewBranch, formTableBodyUserView){
-        console.log(coSo)
         let rowIsUpdatedView = document.querySelector('.row-'+coSo.maCoSo)
         if(!formTableBodyUserView)
             rowIsUpdatedView.innerHTML =    `
@@ -327,7 +356,7 @@
                                                 </td>
                                                 <td class="project-actions text-right">
                                                     ${coSo.maQuyen == 2?`<a class="btn btn-primary btn-sm" onclick="grantPermissions('${ coSo.maNguoiDung }')">Cấp quyền</a>`:""}
-                                                    ${coSo.trangThai?`<a class="btn btn-danger btn-sm button-disable" onclick="disableUser('${ coSo.maNguoiDung }')"><i class="fas fa-trash"></i>Vô hiệu hóa</a>`:`<a class="btn btn-success btn-sm" onclick="enableUser('${ coSo.maNguoiDung }')"><i class="fas fa-folder"></i>Mở khóa</a>`}
+                                                    ${coSo.trangThai?`<a class="btn btn-danger btn-sm button-disable" onclick="handleDeleteCoSo('${ coSo.maNguoiDung }')"><i class="fas fa-trash"></i>Vô hiệu hóa</a>`:`<a class="btn btn-success btn-sm" onclick="enableUser('${ coSo.maNguoiDung }')"><i class="fas fa-folder"></i>Mở khóa</a>`}
                                                 </td>
                                             </tr>
                                         `
@@ -361,7 +390,7 @@
                                                         <a class="btn btn-info btn-sm" onclick="grantPermissions('${coSo.maCoSo}')">
                                                             Sửa
                                                         </a>
-                                                        <a class="btn btn-danger btn-sm button-disable" onclick="disableUser('${coSo.maCoSo}')">
+                                                        <a class="btn btn-danger btn-sm button-disable" onclick="handleDeleteCoSo('${coSo.maCoSo}')">
                                                             <i class="fas fa-trash">
                                                             </i>
                                                             Xóa

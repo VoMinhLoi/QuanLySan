@@ -75,6 +75,11 @@ class CoSoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            CoSo::where('maCoSo', $id)->first()->delete();
+            return response()->json(['success' => 'Xóa cơ sở thành công.']);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Xóa cơ sở thất bại.', 'message' => $e->getMessage()]);
+        }
     }
 }
