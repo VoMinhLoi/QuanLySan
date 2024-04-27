@@ -58,72 +58,54 @@
                         </th>
                     </tr>
                 </thead>
-                    <tbody>
+                    <tbody id="user-table-body">
                         @foreach ($users as $item)
-                            <tr>
+                            <tr class="{{ "row-".$item->maNguoiDung }}">
                                 <td>
                                     {{ "ND".$item->maNguoiDung }}
                                     
                                 </td>
                                 <td>
                                     {{ $item->ho ." ". $item->ten }}
-                                    {{-- <a>
-                                        AdminLTE v3
-                                    </a>
-                                    <br/>
-                                    <small>
-                                        Created 01.01.2019
-                                    </small> --}}
                                 </td>
                                 <td>
                                     {{ $item->taiKhoan }}
-                                    {{-- <ul class="list-inline">
-                                        <li class="list-inline-item">
-                                            <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar.png">
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar2.png">
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar3.png">
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar4.png">
-                                        </li>
-                                    </ul> --}}
                                 </td>
-                                <td class="project_progress">
-                                    {{ $item->maQuyen }}
-        
-                                    {{-- <div class="progress progress-sm">
-                                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
-                                        </div>
-                                    </div>
-                                    <small>
-                                        57% Complete
-                                    </small> --}}
+                                <td class="project_progress text-center">
+                                    @if($item->maQuyen == 1)
+                                        Quản trị viên
+                                    @else
+                                        Người dùng
+                                    @endif
                                 </td>
                                 <td class="project-state">
-                                    {{ $item->trangThai }}
-        
-                                    {{-- <span class="badge badge-success">Success</span> --}}
+                                    @if($item->trangThai == 1)
+                                        <span style="color: green">Hoạt động</span>
+                                    @else
+                                        <span style="color: red">Khóa</span>
+                                    @endif
                                 </td>
                                 <td class="project-actions text-right">
-                                    <a class="btn btn-primary btn-sm" href="#">
-                                        <i class="fas fa-folder">
-                                        </i>
-                                        View
-                                    </a>
-                                    <a class="btn btn-info btn-sm" href="#">
-                                        <i class="fas fa-pencil-alt">
-                                        </i>
-                                        Edit
-                                    </a>
-                                    <a class="btn btn-danger btn-sm" href="#">
-                                        <i class="fas fa-trash">
-                                        </i>
-                                        Delete
-                                    </a>
+                                    @if($item->maQuyen == 2)
+                                        <a class="btn btn-primary btn-sm" onclick="grantPermissions({{ $item->maNguoiDung }})">
+                                            Cấp quyền
+                                        </a>
+                                    @endif
+                                    @if ($item->trangThai == 1)
+                                        <a class="btn btn-danger btn-sm button-disable" onclick="disableUser({{ $item->maNguoiDung }})">
+                                            <i class="fas fa-trash">
+                                            </i>
+                                            Vô hiệu hóa
+                                        </a>
+                                    @else
+                                        <a class="btn btn-success btn-sm" onclick="enableUser({{ $item->maNguoiDung }})">
+                                            <i class="fas fa-folder">
+                                            </i>
+                                            Mở khóa
+                                        </a>
+                                    @endif
+                                    
+                                    
                                 </td>
                             </tr>
                         @endforeach
@@ -137,3 +119,84 @@
     </section>
         <!-- /.content -->
 @endsection
+<script>
+    var apiUser = "http://127.0.0.1:8000/api/user"
+    function disableUser(maNguoiDung){
+        let dataUser = {}
+        dataUser['trangThai'] = 0
+        updateUser(maNguoiDung, dataUser)
+        setTimeout(handleRender(maNguoiDung), 1000)
+    }
+    function enableUser(maNguoiDung){
+        let dataUser = {}
+        dataUser['trangThai'] = 1
+        updateUser(maNguoiDung, dataUser)
+        setTimeout(handleRender(maNguoiDung), 1000)
+    }
+    function grantPermissions(maNguoiDung){
+        if(confirm("Bạn có chắc chắn muốn cấp quyền quản trị viên cho người dùng mã ND" + maNguoiDung)){
+            let dataUser = {}
+            dataUser['maQuyen'] = 1
+            updateUser(maNguoiDung, dataUser)
+            setTimeout(handleRender(maNguoiDung), 1000)
+        }
+    }
+    function updateUser(maNguoiDung, data){
+        data['_token'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        fetch(apiUser+"/"+maNguoiDung,{
+            method: 'PUT', // hoặc 'POST' tùy thuộc vào yêu cầu của bạn
+            headers: {
+                'Content-Type': 'application/json'
+                
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if(data.error)
+                    toastr.error(data.error)
+                else 
+                    if(data.warning)
+                        toastr.warning(data.warning)
+                    else
+                        toastr.success(data.success)
+                        
+            })
+            .catch(response => console.log(response))
+    }
+    function handleRender(maNguoiDung){
+        getUser(maNguoiDung,userRecentlyIsUpdated => renderRow(userRecentlyIsUpdated))
+    }
+    function getUser(maNguoiDung, callback){
+        fetch(apiUser+"/"+maNguoiDung)
+            .then(response => response.json())
+            .then(callback)
+    }
+    function renderRow(user){
+        let rowIsUpdatedView = document.querySelector('.row-'+user.maNguoiDung)
+        rowIsUpdatedView.innerHTML =    `
+                                            <tr>
+                                                <td>
+                                                    ${"ND"+user.maNguoiDung }
+                                                </td>
+                                                <td>
+                                                    ${user.ho+" "+user.ten}
+                                                </td>
+                                                <td>
+                                                    ${user.taiKhoan}
+                                                </td>
+                                                <td class="project_progress text-center">
+                                                    ${user.maQuyen == 1?"Quản trị viên":"Người dùng"}
+                                                </td>
+                                                <td class="project-state">
+                                                    ${user.trangThai?`<span style="color: green">Hoạt động</span>`:`<span style="color: red">Khóa</span>`}
+                                                </td>
+                                                <td class="project-actions text-right">
+                                                    ${user.maQuyen == 2?`<a class="btn btn-primary btn-sm" onclick="grantPermissions('${ user.maNguoiDung }')">Cấp quyền</a>`:""}
+                                                    ${user.trangThai?`<a class="btn btn-danger btn-sm button-disable" onclick="disableUser('${ user.maNguoiDung }')"><i class="fas fa-trash"></i>Vô hiệu hóa</a>`:`<a class="btn btn-success btn-sm" onclick="enableUser('${ user.maNguoiDung }')"><i class="fas fa-folder"></i>Mở khóa</a>`}
+                                                </td>
+                                            </tr>
+                                        `
+    }
+
+</script>

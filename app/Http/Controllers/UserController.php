@@ -107,25 +107,46 @@ class UserController extends Controller
                     return response()->json(['success' => 'Hoàn tiền thành công.']);
                 else
                     return response()->json(['error' => 'Hoàn tiền thất bại.']);
-            } else {
-                // Usecase update private information
-                $credentials['ho'] = $request->ho;
-                $credentials['ten'] = $request->ten;
-                if (!empty($request->ngaySinh)) {
-                    $ngaySinhFormatted = Carbon::createFromFormat('d-m-Y', $request->ngaySinh)->format('Y-m-d');
-                    $credentials['ngaySinh'] = $ngaySinhFormatted;
-                }
+            } else
+                // Mở khóa và vô hiệu hóa tài khoản
+                if (isset($request->trangThai)) {
+                    $credentials['trangThai'] = $request->trangThai;
+                    $result = $userIsUpdated->update($credentials);
+                    if ($result)
+                        if ($userIsUpdated->trangThai == 0)
+                            return response()->json(['warning' => 'Vô hiệu hóa thành công']);
+                        else
+                            return response()->json(['success' => 'Mở khóa tài khoản thành công']);
+                    else
+                        return response()->json(['error' => 'Lỗi chuyển trạng thái tài khoản thất bại.']);
+                } else
+                    // Cấp quyền người dùng
+                    if (isset($request->maQuyen)) {
+                        $credentials['maQuyen'] = $request->maQuyen;
+                        $result = $userIsUpdated->update($credentials);
+                        if ($result)
+                            return response()->json(['success' => 'Cấp quyền thành công thành công']);
+                        else
+                            return response()->json(['error' => 'Lỗi cấp quyền.']);
+                    } else {
+                        // Usecase update private information
+                        $credentials['ho'] = $request->ho;
+                        $credentials['ten'] = $request->ten;
+                        if (!empty($request->ngaySinh)) {
+                            $ngaySinhFormatted = Carbon::createFromFormat('d-m-Y', $request->ngaySinh)->format('Y-m-d');
+                            $credentials['ngaySinh'] = $ngaySinhFormatted;
+                        }
 
-                $credentials['cccd'] = $request->cccd;
-                $credentials['SDT'] = $request->SDT;
-                $credentials['maPX'] = $request->maPX;
-                $credentials['diaChi'] = $request->diaChi;
-                $userIsUpdated->update($credentials);
-                if ($userIsUpdated)
-                    return response()->json(['success' => 'Cập nhật thông tin thành công']);
-                else
-                    return response()->json(['error' => 'Cập nhật thông tin thất bại']);
-            }
+                        $credentials['cccd'] = $request->cccd;
+                        $credentials['SDT'] = $request->SDT;
+                        $credentials['maPX'] = $request->maPX;
+                        $credentials['diaChi'] = $request->diaChi;
+                        $result = $userIsUpdated->update($credentials);
+                        if ($result)
+                            return response()->json(['success' => 'Cập nhật thông tin thành công']);
+                        else
+                            return response()->json(['error' => 'Cập nhật thông tin thất bại']);
+                    }
         }
     }
 
