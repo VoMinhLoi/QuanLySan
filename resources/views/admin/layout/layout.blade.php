@@ -14,7 +14,8 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('admin/dist/css/adminlte.min.css') }}">
 </head>
-<body class="hold-transition sidebar-mini dark-mode">
+<body class="hold-transition sidebar-mini">
+{{-- <body class="hold-transition sidebar-mini dark-mode"> --}}
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->

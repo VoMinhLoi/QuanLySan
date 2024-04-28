@@ -168,7 +168,7 @@
             element = element.parentElement;
         }
         }
-        console.log(form)
+        // console.log(form)
 
         var butttonSubmit = form.querySelector(option.buttonSubmitSelector);
         butttonSubmit.onclick = (e) => {
@@ -179,7 +179,7 @@
         var isValid = true;
         option.rules.forEach((rule) => {
             var inputElement = form.querySelector(rule.selector);
-            console.log(rule.selector);
+            // console.log(rule.selector);
             var formGroup = getParent(inputElement, option.formGroupSelector);
             var errorElement = formGroup.querySelector(option.errorSelector);
             isInValid = validate(rule, inputElement, formGroup, errorElement);

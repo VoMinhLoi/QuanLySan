@@ -129,10 +129,10 @@
                                     {{$item->maCoSo }}
                                     
                                 </td>
-                                <td>
+                                <td class="column-name-branch">
                                     {{ $item->tenCoSo }}
                                 </td>
-                                <td>
+                                <td class="column-description">
                                     {{ $item->moTa }}
                                 </td>
                                 <td class="project_progress text-center">
@@ -142,21 +142,22 @@
                                         $quanHuyen = App\Models\QuanHuyen::where('maQuanHuyen', $phuongXa->maQH)->first();
                                         $tenQH = $quanHuyen->tenQuanHuyen;
                                         $tenTT = App\Models\TinhThanh::where('maTinhThanh', $quanHuyen->maTT)->first()->tenTinhThanh;
+
                                     @endphp
                                     {{ $item->diaChi.", ".$tenPX.", ".$tenQH.", ".$tenTT }}
                                 </td>
                                 <td class="project_progress text-center">
                                     {{ $item->maPX }}
                                 </td>
-                                <td class="project-state">
+                                <td class="project-state column-time-open">
                                     {{ $item->thoiGianMoCua }}
                                 </td>
-                                <td class="project-actions">
+                                <td class="project-actions column-time-close">
                                     {{ $item->thoiGianDongCua }}
                                     
                                 </td>
-                                <td class="project-actions text-right">
-                                    <a class="btn btn-info btn-sm" onclick="grantPermissions({{ $item->maCoSo }})">
+                                <td class="project-actions text-right column-action">
+                                    <a class="btn btn-info btn-sm" onclick="handleUpdatedCoSo({{ $item }})">
                                         Sửa
                                     </a>
                                     <a class="btn btn-danger btn-sm button-disable" onclick="handleDeleteCoSo('{{ $item->maCoSo }}')">
@@ -174,8 +175,12 @@
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
-        
+
+        <div class="over-lay display-none">
+            @include('admin.coso.update')
+        </div>
     </section>
+    
     <script>
         var apiProvince = 'http://127.0.0.1:8000/api/tinhthanh'
         var apiDistrict = 'http://127.0.0.1:8000/api/quanhuyen'
@@ -183,7 +188,7 @@
         var provinceList = document.querySelector('#maTT') 
         var districtList = document.querySelector('#maQH') 
         var wardList = document.querySelector('#maPX') 
-        console.log(provinceList, districtList, wardList)
+        // console.log(provinceList, districtList, wardList)
         start()
         function start(){
             getProvince(provinces => renderProvince(provinces))
@@ -261,9 +266,9 @@
             fetch("http://127.0.0.1:8000/api/coso/"+maCoSo,{
                 method: "delete",
                 headers: {
-                        // "Content-Type": "application/x-www-form-urlencoded", x-www-form-urlencoded: form data
-                        "Content-Type": "application/json",
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    // "Content-Type": "application/x-www-form-urlencoded", x-www-form-urlencoded: form data
+                    "Content-Type": "application/json",
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 },
             })
                 .then(response => {
@@ -324,7 +329,7 @@
                     else{
                         toastr.success(data.success)
                         let formTableBodyUserView = document.querySelector('#branch-table-body')
-                        renderRow(dataValid, data.maNewBranch, formTableBodyUserView)
+                        renderRow(data.newCoSo, formTableBodyUserView)
                     }// Dữ liệu JSON trả về từ function store
                 })
                 .catch(error => {
@@ -334,42 +339,52 @@
             formGroupSelector: ".form-group",
         });
     }, 1000)
-    function renderRow(coSo, maNewBranch, formTableBodyUserView){
-        let rowIsUpdatedView = document.querySelector('.row-'+coSo.maCoSo)
-        if(!formTableBodyUserView)
-            rowIsUpdatedView.innerHTML =    `
-                                            <tr>
-                                                <td>
-                                                    ${"ND"+coSo.maCoSo }
-                                                </td>
-                                                <td>
-                                                    ${coSo.ho+" "+coSo.ten}
-                                                </td>
-                                                <td>
-                                                    ${coSo.taiKhoan}
-                                                </td>
-                                                <td class="project_progress text-center">
-                                                    ${coSo.maQuyen == 1?"Quản trị viên":"Người dùng"}
-                                                </td>
-                                                <td class="project-state">
-                                                    ${coSo.trangThai?`<span style="color: green">Hoạt động</span>`:`<span style="color: red">Khóa</span>`}
-                                                </td>
-                                                <td class="project-actions text-right">
-                                                    ${coSo.maQuyen == 2?`<a class="btn btn-primary btn-sm" onclick="grantPermissions('${ coSo.maNguoiDung }')">Cấp quyền</a>`:""}
-                                                    ${coSo.trangThai?`<a class="btn btn-danger btn-sm button-disable" onclick="handleDeleteCoSo('${ coSo.maNguoiDung }')"><i class="fas fa-trash"></i>Vô hiệu hóa</a>`:`<a class="btn btn-success btn-sm" onclick="enableUser('${ coSo.maNguoiDung }')"><i class="fas fa-folder"></i>Mở khóa</a>`}
-                                                </td>
-                                            </tr>
-                                        `
-        else
+    function renderRow(coSo, formTableBodyUserView){
+        // Render lại ô cập nhật
+        let rowIsUpdatedView
+        let columnTenCoSo
+        let columnDescription
+        let columnOpen
+        let columnClose
+        let columnAction
+        if(!formTableBodyUserView){
+            rowIsUpdatedView = document.querySelector('.row-'+coSo.maCoSo)
+            columnTenCoSo = rowIsUpdatedView.querySelector('.column-name-branch')
+            columnDescription = rowIsUpdatedView.querySelector('.column-description')
+            columnOpen = rowIsUpdatedView.querySelector('.column-time-open')
+            columnClose = rowIsUpdatedView.querySelector('.column-time-close')
+            columnTenCoSo.innerText = coSo.tenCoSo
+            columnDescription.innerText = coSo.moTa
+            columnOpen.innerText = coSo.thoiGianMoCua
+            columnClose.innerText = coSo.thoiGianDongCua
+            columnAction = rowIsUpdatedView.querySelector('.column-action')
+            console.log(columnAction)
+
+            columnAction.innerHTML = `
+                                    <td class="project-actions text-right column-action">
+                                        <a class="btn btn-info btn-sm" onclick='handleUpdatedCoSo(${JSON.stringify(coSo)})'>
+                                            Sửa
+                                        </a>
+                                        <a class="btn btn-danger btn-sm button-disable" onclick=handleDeleteCoSo('${coSo.maCoSo}')>
+                                            <i class="fas fa-trash">
+                                            </i>
+                                            Xóa
+                                        </a>
+                                    </td>
+                                    `
+        }
+        // Render dòng vừa tạo
+        else{
+            console.log(formTableBodyUserView)
             formTableBodyUserView.innerHTML +=  `
-                                                <tr class="${ "row-"+maNewBranch}">
+                                                <tr class="${ "row-"+coSo.maCoSo}">
                                                     <td>
-                                                        ${maNewBranch }
+                                                        ${coSo.maCoSo }
                                                     </td>
-                                                    <td>
+                                                    <td class="column-name-branch">
                                                         ${coSo.tenCoSo }
                                                     </td>
-                                                    <td>
+                                                    <td class="column-description">
                                                         ${coSo.moTa }
                                                     </td>
                                                     <td class="project_progress text-center">
@@ -379,25 +394,25 @@
                                                     <td class="project_progress text-center">
                                                         ${coSo.maPX}
                                                     </td>
-                                                    <td class="project-state">
+                                                    <td class="project-state column-time-open">
                                                         ${coSo.thoiGianMoCua}
                                                     </td>
-                                                    <td class="project-actions">
+                                                    <td class="project-actions column-time-close">
                                                         ${coSo.thoiGianDongCua}
                                                         
                                                     </td>
-                                                    <td class="project-actions text-right">
-                                                        <a class="btn btn-info btn-sm" onclick="grantPermissions('${coSo.maCoSo}')">
+                                                    <td class="project-actions text-right column-action">
+                                                        <a class="btn btn-info btn-sm" onclick=handleUpdatedCoSo('${JSON.stringify(coSo)}')>
                                                             Sửa
                                                         </a>
-                                                        <a class="btn btn-danger btn-sm button-disable" onclick="handleDeleteCoSo('${coSo.maCoSo}')">
+                                                        <a class="btn btn-danger btn-sm button-disable" onclick=handleDeleteCoSo('${coSo.maCoSo}')>
                                                             <i class="fas fa-trash">
                                                             </i>
                                                             Xóa
                                                         </a>
                                                     </td>
                                                 </tr>
-                                                `
+                                                `}
     }
 
 </script>

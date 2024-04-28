@@ -38,9 +38,9 @@ class CoSoController extends Controller
             $credentials['maPX'] = $request->maPX;
             $credentials['thoiGianMoCua'] = $request->thoiGianMoCua;
             $credentials['thoiGianDongCua'] = $request->thoiGianDongCua;
-            $newCoSo = CoSo::create($credentials);
-            $maNewBranch = CoSo::orderBy('maCoSo', 'desc')->first()->maCoSo;
-            return response()->json(['success' => 'Tạo cơ sở thành công.', 'newCoSo' => $newCoSo, 'maNewBranch' => $maNewBranch]);
+            CoSo::create($credentials);
+            $newCoSo = CoSo::orderBy('maCoSo', 'desc')->first();
+            return response()->json(['success' => 'Tạo cơ sở thành công.', 'newCoSo' => $newCoSo]);
         } catch (Exception $e) {
             return response()->json(['error' => 'Tạo cơ sở thất bại.', 'message' => $e->getMessage()]);
         }
@@ -67,7 +67,21 @@ class CoSoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        try {
+            $branchIsUpdated = CoSo::where('maCoSo', $id)->first();
+            $credentials['tenCoSo'] = $request->tenCoSo;
+            $credentials['diaChi'] = $request->diaChi;
+            $credentials['moTa'] = $request->moTa;
+            // $credentials['maPX'] = $request->maPX;
+            $credentials['thoiGianMoCua'] = $request->thoiGianMoCua;
+            $credentials['thoiGianDongCua'] = $request->thoiGianDongCua;
+            $branchIsUpdated->update($credentials);
+            // return $branchIsUpdated;
+            return response()->json(['success' => 'Cập nhật cơ sở thành công.', '$branchIsUpdated' => $branchIsUpdated]);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Cập nhật cơ sở thất bại.', 'message' => $e->getMessage()]);
+        }
     }
 
     /**

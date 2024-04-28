@@ -265,7 +265,7 @@
                                         <span class="form-message"></span>
                                     </div>
 
-                                    <input name="hinhDaiDien" type="file" class="choose-avatar" hidden id="hinhDaiDien"/>
+                                    {{-- <input name="hinhDaiDien" type="file" class="choose-avatar" hidden id="hinhDaiDien"/> --}}
                                     <button class="form-submit">Lưu</button>
                               </form>
                             </div>
@@ -289,42 +289,45 @@
               buttonSubmitSelector: ".form-submit",
               // Muốn submit không theo API mặc định của trình duyệt
               onSubmit: function (data) {
-                if(data.hinhDaiDien){
-                    var formData = new FormData()
-                    formData.append('ho', data.ho)
-                    formData.append('ten', data.ten)
-                    formData.append('ngaySinh', data.ngaySinh)
-                    formData.append('gioiTinh', data.gioiTinh)
-                    formData.append('cccd', data.cccd)
-                    formData.append('diaChi', data.diaChi)
-                    formData.append('SDT', data.SDT)
-                    formData.append('maPX', data.maPX)
-                    formData.append('hinhDaiDien', data.hinhDaiDien)
-                    fetch(apiUser+'/{{ Auth::user()->maNguoiDung }}',{
-                        method: 'PUT',
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if(data.error)
-                            toastr.error(data.error)
-                        else
-                            toastr.success(data.success)
-                    })
-                }
-                else{
+                // data["_token"] = csrfToken
+                // if(data.hinhDaiDien){
+                //     var formData = new FormData()
+                //     formData.append('ho', data.ho)
+                //     formData.append('ten', data.ten)
+                //     formData.append('ngaySinh', data.ngaySinh)
+                //     formData.append('gioiTinh', data.gioiTinh)
+                //     formData.append('cccd', data.cccd)
+                //     formData.append('diaChi', data.diaChi)
+                //     formData.append('SDT', data.SDT)
+                //     formData.append('maPX', data.maPX)
+                //     formData.append('hinhDaiDien', data.hinhDaiDien)
+                //     fetch(apiUser+'/{{ Auth::user()->maNguoiDung }}',{
+                //         method: 'PUT',
+                //         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                //         body: formData
+                //     })
+                //     .then(response => response.json())
+                //     .then(data => {
+                //         if(data.error)
+                //             toastr.error(data.error)
+                //         else
+                //             toastr.success(data.success)
+                //     })
+                // }
+                // else{
                     UpdateNoImage(data)
-                }
+                // }
 
               },
               formGroupSelector: ".form-group",
             });
             function UpdateNoImage(data){
-                data["_token"] = csrfToken;
+                console.log(data)
                 fetch(apiUser+'/{{ Auth::user()->maNguoiDung }}',{
                     method: 'PUT', // hoặc 'POST' tùy thuộc vào yêu cầu của bạn
                     headers: {
-                        'Content-Type': 'application/json'
+                        "Content-Type": "application/json",
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                     },
                     body: JSON.stringify(data)
                 })
@@ -494,7 +497,6 @@
                 buttonSubmitSelector: ".form-submit",
                 // Muốn submit không theo API mặc định của trình duyệt
                 onSubmit: function (data) {
-                    console.log(data)
                     UpdateNoImage(data)
                 },
                 formGroupSelector: ".form-group",
