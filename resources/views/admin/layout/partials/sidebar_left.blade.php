@@ -76,6 +76,13 @@
                     <span class="badge badge-info right">{{ App\Models\SanBong::all()->count() }}</span>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="/booking" class="nav-link">
+                    <i class="nav-icon fas fa-calendar-alt"></i>
+                    <p>Lịch đặt sân</p>
+                    <span class="badge badge-info right">{{ App\Models\ChiTietThueSan::all()->count() }}</span>
+                  </a>
+                </li>
               </ul>
             </li>
 
@@ -95,15 +102,6 @@
                   Quản lý người dùng
                 </p>
                 <span class="badge badge-info right">{{ App\Models\User::all()->count() }}</span>
-              </a>
-            </div>
-            <div class="nav-item">
-              <a href="/booking" class="nav-link">
-                <i class="nav-icon fas fa-calendar-alt"></i>
-                <p>
-                  Quản lý đặt sân
-                </p>
-                <span class="badge badge-info right">{{ App\Models\ChiTietThueSan::all()->count() }}</span>
               </a>
             </div>
             <div class="nav-item">

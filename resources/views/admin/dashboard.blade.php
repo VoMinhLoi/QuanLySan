@@ -89,13 +89,13 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h5 class="card-title">Monthly Recap Report</h5>
+              <h5 class="card-title">Báo cáo tóm tắt</h5>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                   <i class="fas fa-minus"></i>
                 </button>
-                <div class="btn-group">
+                {{-- <div class="btn-group">
                   <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
                     <i class="fas fa-wrench"></i>
                   </button>
@@ -106,7 +106,7 @@
                     <a class="dropdown-divider"></a>
                     <a href="#" class="dropdown-item">Separated link</a>
                   </div>
-                </div>
+                </div> --}}
                 <button type="button" class="btn btn-tool" data-card-widget="remove">
                   <i class="fas fa-times"></i>
                 </button>
@@ -115,50 +115,8 @@
             <!-- /.card-header -->
             <div class="card-body">
               <div class="row">
-                <div class="col-md-8">
-                    <div class="card">
-                      <div class="card-header border-0">
-                        <div class="d-flex justify-content-between">
-                          <h3 class="card-title">Doanh thu nhận về</h3>
-                          <a href="javascript:void(0);">View Report</a>
-                        </div>
-                      </div>
-                      <div class="card-body">
-                        <div class="d-flex">
-                          <p class="d-flex flex-column">
-                            <span class="text-bold text-lg">
-                              {{ number_format($doanhThu, 0, ',', '.') }}<sup>₫</sup>
-                            </span>
-                            <span>Sales Over Time</span>
-                          </p>
-                          <p class="ml-auto d-flex flex-column text-right">
-                            <span class="text-success">
-                              <i class="fas fa-arrow-up"></i> 33.1%
-                            </span>
-                            <span class="text-muted">Since last month</span>
-                          </p>
-                        </div>
-                        <!-- /.d-flex -->
-        
-                        <div class="position-relative mb-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                          <canvas id="sales-chart" height="250" width="715" style="display: block; height: 200px; width: 572px;" class="chartjs-render-monitor"></canvas>
-                        </div>
-        
-                        <div class="d-flex flex-row justify-content-end">
-                          <span class="mr-2">
-                            <i class="fas fa-square text-primary"></i> This year
-                          </span>
-        
-                          <span>
-                            <i class="fas fa-square text-gray"></i> Last year
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- /.card -->
-                </div>
                 <!-- /.col -->
-                <div class="col-md-4">
+                <div class="col-md-12">
                   <p class="text-center">
                     <strong>So sánh tổng hệ thống</strong>
                   </p>
@@ -186,7 +144,7 @@
                   <!-- /.progress-group -->
 
                   <div class="progress-group">
-                    Vé / Tổng vé (tính cả vé hủy)
+                    Vé
                     @php
                       $ticketTotal = \App\Models\ChiTietThueSan::withTrashed()->count();
                       $ratioTicket = $veQuantity/$ticketTotal;
@@ -213,6 +171,32 @@
                       <div class="progress-bar bg-warning" style="width: {{ $percentUser }}%"></div>
                     </div>
                   </div>
+                  <div class="progress-group">
+                    Sân bóng
+                    @php
+                        $yardTotal = App\Models\SanBong::all()->count();
+                        $activeYardCount = App\Models\SanBong::where('trangThai',1)->count();
+                        $ratioYard = $activeYardCount/$yardTotal;
+                        $percentYard = $ratioYard * 100;
+                    @endphp
+                    <span class="float-right"><b>{{ $activeYardCount }}</b>/{{ $yardTotal }}</span>
+                    <div class="progress progress-sm" title="{{ $percentYard }}%">
+                      <div class="progress-bar" style="width: {{ $percentYard }}%; background: purple"></div>
+                    </div>
+                  </div>
+                  <div class="progress-group">
+                    Cơ sở
+                    @php
+                        $branchTotal = App\Models\CoSo::all()->count();
+                        $activeBranchCount = App\Models\CoSo::where('trangThai',1)->count();
+                        $ratioBranch = $activeBranchCount/$branchTotal;
+                        $percentBranch = $ratioBranch * 100;
+                    @endphp
+                    <span class="float-right"><b>{{ $activeBranchCount }}</b>/{{ $branchTotal }}</span>
+                    <div class="progress progress-sm" title="{{ $percentBranch }}%">
+                      <div class="progress-bar bg-danger" style="width: {{ $percentBranch }}%; background: purple"></div>
+                    </div>
+                  </div>
                   <!-- /.progress-group -->
                 </div>
                 <!-- /.col -->
@@ -224,39 +208,50 @@
               <div class="row">
                 <div class="col-sm-3 col-6">
                   <div class="description-block border-right">
-                    <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span>
-                    <h5 class="description-header">$35,210.43</h5>
-                    <span class="description-text">TOTAL REVENUE</span>
+                    <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 100%</span>
+                    <h5 class="description-header">{{ number_format($totalRevenue, 0, ',', '.') }}<sup>₫</sup></h5>
+                    <span class="description-text">Tổng tiền trên web</span>
                   </div>
                   <!-- /.description-block -->
                 </div>
-                <!-- /.col -->
                 <div class="col-sm-3 col-6">
                   <div class="description-block border-right">
-                    <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span>
-                    <h5 class="description-header">$10,390.90</h5>
-                    <span class="description-text">TOTAL COST</span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-3 col-6">
-                  <div class="description-block border-right">
-                    <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span>
-                    <h5 class="description-header">$24,813.53</h5>
-                    <span class="description-text">TOTAL PROFIT</span>
+                    <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> {{ $percentRevenue }}%</span>
+                    <h5 class="description-header">{{ number_format($doanhThu, 0, ',', '.') }}<sup>₫</sup></h5>
+                    <span class="description-text">Tổng doanh thu</span>
                   </div>
                   <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-3 col-6">
                   <div class="description-block">
-                    <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i> 18%</span>
-                    <h5 class="description-header">1200</h5>
-                    <span class="description-text">GOAL COMPLETIONS</span>
+                    <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i>
+                      @php
+                          $percentCancel = 100 - $percentRevenue;
+                      @endphp
+                      {{ $percentCancel }}%                      
+                    </span>
+                    <h5 class="description-header">
+                      @php
+                          $cancelingTicketQuantity = $ticketTotal - $veQuantity;
+                      @endphp
+                      {{ $cancelingTicketQuantity }}
+                    </h5>
+                    <span class="description-text">Tổng vé hủy</span>
                   </div>
                   <!-- /.description-block -->
                 </div>
+                <!-- /.col -->
+                <div class="col-sm-3 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-warning"></span>
+                    <h5 class="description-header">{{ number_format($averagePrice, 0, ',', '.') }}<sup>₫</sup></h5>
+                    <span class="description-text">Trung bình giá vé</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                
               </div>
               <!-- /.row -->
             </div>

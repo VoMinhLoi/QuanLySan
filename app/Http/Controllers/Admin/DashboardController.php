@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Models\ChiTietThueSan;
+use App\Models\Ve;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -14,15 +15,16 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $ve = ChiTietThueSan::all();
+        $chiTietThueSan = ChiTietThueSan::all();
         $veQuantity = ChiTietThueSan::count();
         $doanhThu = 0;
-        foreach ($ve as $item) {
-            $doanhThu += $item->tongTien;
+        foreach ($chiTietThueSan as $item) {
+            $tongTienVe = Ve::where('id', $item->maVe)->first()->tongTien;
+            $doanhThu += $tongTienVe;
         }
-
+        $averagePrice = $doanhThu / $veQuantity;
         $activeUsersCount = User::where('trangThai', '!=', 0)->count();
-        return view('Admin.dashboard', compact('activeUsersCount', 'veQuantity', 'doanhThu'));
+        return view('Admin.dashboard', compact('activeUsersCount', 'veQuantity', 'doanhThu', 'averagePrice'));
     }
 
     /**
