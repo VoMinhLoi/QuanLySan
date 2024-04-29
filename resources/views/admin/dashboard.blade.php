@@ -172,19 +172,6 @@
                     </div>
                   </div>
                   <div class="progress-group">
-                    Sân bóng
-                    @php
-                        $yardTotal = App\Models\SanBong::all()->count();
-                        $activeYardCount = App\Models\SanBong::where('trangThai',1)->count();
-                        $ratioYard = $activeYardCount/$yardTotal;
-                        $percentYard = $ratioYard * 100;
-                    @endphp
-                    <span class="float-right"><b>{{ $activeYardCount }}</b>/{{ $yardTotal }}</span>
-                    <div class="progress progress-sm" title="{{ $percentYard }}%">
-                      <div class="progress-bar" style="width: {{ $percentYard }}%; background: purple"></div>
-                    </div>
-                  </div>
-                  <div class="progress-group">
                     Cơ sở
                     @php
                         $branchTotal = App\Models\CoSo::all()->count();
@@ -194,9 +181,23 @@
                     @endphp
                     <span class="float-right"><b>{{ $activeBranchCount }}</b>/{{ $branchTotal }}</span>
                     <div class="progress progress-sm" title="{{ $percentBranch }}%">
-                      <div class="progress-bar bg-danger" style="width: {{ $percentBranch }}%; background: purple"></div>
+                      <div class="progress-bar" style="width: {{ $percentBranch }}%; background: purple"></div>
                     </div>
                   </div>
+                  <div class="progress-group">
+                    Sân bóng
+                    @php
+                        $yardTotal = App\Models\SanBong::all()->count();
+                        $activeYardCount = App\Models\SanBong::where('trangThai',1)->count();
+                        $ratioYard = $activeYardCount/$yardTotal;
+                        $percentYard = $ratioYard * 100;
+                    @endphp
+                    <span class="float-right"><b>{{ $activeYardCount }}</b>/{{ $yardTotal }}</span>
+                    <div class="progress progress-sm" title="{{ $percentYard }}%">
+                      <div class="progress-bar" style="width: {{ $percentYard }}%; background: pink"></div>
+                    </div>
+                  </div>
+
                   <!-- /.progress-group -->
                 </div>
                 <!-- /.col -->
