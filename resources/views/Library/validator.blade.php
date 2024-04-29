@@ -148,6 +148,7 @@
     }
     if (errorMessage) {
         errorElement.innerText = errorMessage;
+        inputElement.focus();
         formGroup.classList.add("invalid");
     } else {
         errorElement.innerText = "";

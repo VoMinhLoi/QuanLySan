@@ -98,7 +98,7 @@
               </a>
             </div>
             <div class="nav-item">
-              <a href="/customer" class="nav-link">
+              <a href="/booking" class="nav-link">
                 <i class="nav-icon fas fa-calendar-alt"></i>
                 <p>
                   Quản lý đặt sân
