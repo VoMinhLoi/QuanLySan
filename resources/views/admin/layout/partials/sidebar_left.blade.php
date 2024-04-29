@@ -78,15 +78,7 @@
                 </li>
               </ul>
             </li>
-            <div class="nav-item">
-              <a href="/customer" class="nav-link">
-                <i class="nav-icon fas fa-calendar-alt"></i>
-                <p>
-                  Quản lý đặt sân
-                </p>
-                <span class="badge badge-info right">{{ App\Models\ChiTietThueSan::all()->count() }}</span>
-              </a>
-            </div>
+
             <div class="nav-item">
               <a href="/customer" class="nav-link">
                 <i class="nav-icon fas fa-edit"></i>
@@ -107,6 +99,15 @@
             </div>
             <div class="nav-item">
               <a href="/customer" class="nav-link">
+                <i class="nav-icon fas fa-calendar-alt"></i>
+                <p>
+                  Quản lý đặt sân
+                </p>
+                <span class="badge badge-info right">{{ App\Models\ChiTietThueSan::all()->count() }}</span>
+              </a>
+            </div>
+            <div class="nav-item">
+              <a href="/history" class="nav-link">
                 <i class="nav-icon fas fa-money-bill-wave"></i>
                 <p>
                   Lịch sử giao dịch
