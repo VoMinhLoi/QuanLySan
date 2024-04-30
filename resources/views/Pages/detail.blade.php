@@ -266,7 +266,7 @@
                                                 <tbody id="cartUpdate">
                                                     <tr id="item-">
                                                         <td class="product_thumb">
-                                                            <a><img src="assets/img/{{$sanBong->hinhAnh}}.jpg" style="width: 100px; height: 66px; object-fit: cover;"></a>
+                                                            <a><img src="assets/img/{{$sanBong->hinhAnh}}" style="width: 100px; height: 66px; object-fit: cover;"></a>
                                                         </td>
                                                         <td class="product_name">
                                                             <a href="/productDetails?id=">

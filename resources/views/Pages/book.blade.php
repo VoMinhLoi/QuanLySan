@@ -421,8 +421,8 @@
                                                     <div class="football-ground">
                                                         <div class="fg-image">
                                                             <div class="image-box">
-                                                                <img class="image-box__item" src="assets/img/${sanbong.hinhAnh}.jpg">
-                                                                <img class="image-box__item image-box__item--hover"  src="assets/img/${sanbong.hinhAnh}_hover.jpg">
+                                                                <img class="image-box__item" src="assets/img/${sanbong.hinhAnh}">
+                                                                ${sanbong.hinhAnhHover?`<img class="image-box__item image-box__item--hover"  src="assets/img/${sanbong.hinhAnhHover}">`:``}
                                                             </div>
                                                             <p class="image-status">Hoạt động</p>
                                                             <div class="image-action">
@@ -440,8 +440,8 @@
                                                 <div class="football-ground row">
                                                     <div class="fg-image col l-6 m-6 c-12">
                                                         <div class="image-box">
-                                                            <img class="image-box__item" src="assets/img/${sanbong.hinhAnh}.jpg">
-                                                            <img class="image-box__item image-box__item--hover"  src="assets/img/${sanbong.hinhAnh}_hover.jpg">
+                                                            <img class="image-box__item" src="assets/img/${sanbong.hinhAnh}">
+                                                            ${sanbong.hinhAnhHover?`<img class="image-box__item image-box__item--hover"  src="assets/img/${sanbong.hinhAnhHover}">`:``}
                                                         </div>
                                                         <p class="image-status">Hoạt động</p>
                                                         
@@ -463,8 +463,8 @@
                                                     <div class="football-ground football-ground--0">
                                                         <div class="fg-image">
                                                             <div class="image-box">
-                                                                <img class="image-box__item" src="assets/img/${sanbong.hinhAnh}.jpg">
-                                                                <img class="image-box__item image-box__item--hover"  src="assets/img/${sanbong.hinhAnh}_hover.jpg">
+                                                                <img class="image-box__item" src="assets/img/${sanbong.hinhAnh}">
+                                                                ${sanbong.hinhAnhHover?`<img class="image-box__item image-box__item--hover"  src="assets/img/${sanbong.hinhAnhHover}">`:``}
                                                             </div>
                                                             <p class="image-status">Bảo trì</p>
                                                             <div class="image-action">
@@ -482,8 +482,8 @@
                                                 <div class="football-ground football-ground--0 row">
                                                     <div class="fg-image col l-6 m-6 c-12">
                                                         <div class="image-box">
-                                                            <img class="image-box__item" src="assets/img/${sanbong.hinhAnh}.jpg">
-                                                            <img class="image-box__item image-box__item--hover"  src="assets/img/${sanbong.hinhAnh}_hover.jpg">
+                                                            <img class="image-box__item" src="assets/img/${sanbong.hinhAnh}">
+                                                            ${sanbong.hinhAnhHover?`<img class="image-box__item image-box__item--hover"  src="assets/img/${sanbong.hinhAnhHover}">`:``}
                                                         </div>
                                                         <p class="image-status">Bảo trì</p>
                                                         

@@ -65,7 +65,7 @@
     </div>
     <!-- /.card-body -->
 
-    <button type="submit" class="btn btn-primary form-submit" style="color: ">Tạo</button>
+    <button type="submit" class="btn btn-primary form-submit" style="color: ">Cập nhật</button>
 </form>
 <script>
 
