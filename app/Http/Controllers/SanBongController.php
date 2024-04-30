@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\SanBong;
+use Exception;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -41,7 +42,24 @@ class SanBongController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->hasFile('hinhAnh')) {
+            $imageSRC = $request->file('hinhAnh');
+            $imageName = $imageSRC->getClientOriginalName();
+            try {
+                $imageSRC->move(public_path('assets/img'), $imageName);
+            } catch (Exception $e) {
+                return response()->json(['error' => 'Tạo sân bóng thất bại.', 'message' => $e->getMessage()]);
+            }
+            $sanBongData = $request->except('hinhAnh');
+            $sanBongData['hinhAnh'] = $imageName;
+            SanBong::create($sanBongData); // không có mã sân chèn vào
+            $newPitch = SanBong::orderBy('maSan', 'desc')->first(); //lấy thêm mã sân ra
+            return response()->json(['success' => 'Tạo sân bóng mới thành công.', 'newPitch' => $newPitch]);
+        } else {
+            SanBong::create($request->all());
+            $newPitch = SanBong::orderBy('maSan', 'desc')->first(); //lấy thêm mã sân ra
+            return response()->json(['success' => 'Tạo sân bóng mới thành công.', 'newPitch' => $newPitch]);
+        }
     }
 
     /**
@@ -70,7 +88,20 @@ class SanBongController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $pitchIsUpdated = SanBong::where('maSan', $id)->first();
+            $credentials['tenSan'] = $request->tenSan;
+            $credentials['viTri'] = $request->viTri;
+            $credentials['moTa'] = $request->moTa;
+            $credentials['giaDichVu'] = $request->giaDichVu;
+            // $credentials['loaiSan'] = $request->loaiSan;
+            $credentials['trangThai'] = $request->trangThai;
+            $pitchIsUpdated->update($credentials);
+            // return $pitchIsUpdated;
+            return response()->json(['success' => 'Cập nhật sân bóng thành công.', 'pitchIsUpdated' => $pitchIsUpdated]);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Cập nhật sân bóng thất bại.', 'message' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -78,6 +109,11 @@ class SanBongController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            SanBong::where('maSan', $id)->first()->delete();
+            return response()->json(['success' => 'Xóa sân bóng thành công.']);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Xóa sân bóng thất bại.', 'message' => $e->getMessage()]);
+        }
     }
 }

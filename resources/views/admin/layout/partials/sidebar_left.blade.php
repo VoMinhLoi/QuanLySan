@@ -70,7 +70,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="../../index2.html" class="nav-link">
+                  <a href="/pitch" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Sân bóng</p>
                     <span class="badge badge-info right">{{ App\Models\SanBong::all()->count() }}</span>

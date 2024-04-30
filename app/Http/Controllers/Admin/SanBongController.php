@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Models\SanBong;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class SanBongController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $sanBongs = SanBong::all();
+        return view('admin.sanbong.index', compact('sanBongs'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+}

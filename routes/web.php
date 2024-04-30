@@ -58,4 +58,5 @@ Route::group(['middleware' => 'adminLogin'], function () {
     Route::resource('/branch', 'App\Http\Controllers\Admin\CoSoController')->except(['create', 'show', 'update', 'destroy', 'edit']);
     Route::resource('/history', 'App\Http\Controllers\Admin\LichSuGiaoDichController')->except(['create', 'show', 'update', 'destroy', 'edit']);
     Route::resource('/booking', 'App\Http\Controllers\Admin\ChiTietThueSanController')->except(['create', 'show', 'update', 'destroy', 'edit']);
+    Route::resource('/pitch', 'App\Http\Controllers\Admin\SanBongController')->except(['create', 'show', 'update', 'destroy', 'edit']);
 });
