@@ -19,6 +19,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\User\BookController;
 use App\Models\ChiTietThueSan;
+use App\Models\TinTuc;
 
 Route::get('/', function () {
     return view('welcome');
@@ -59,4 +60,5 @@ Route::group(['middleware' => 'adminLogin'], function () {
     Route::resource('/history', 'App\Http\Controllers\Admin\LichSuGiaoDichController')->except(['create', 'show', 'update', 'destroy', 'edit']);
     Route::resource('/booking', 'App\Http\Controllers\Admin\ChiTietThueSanController')->except(['create', 'show', 'update', 'destroy', 'edit']);
     Route::resource('/pitch', 'App\Http\Controllers\Admin\SanBongController')->except(['create', 'show', 'update', 'destroy', 'edit']);
+    Route::resource('/news', 'App\Http\Controllers\Admin\TinTucController')->except(['create', 'show', 'update', 'destroy', 'edit']);
 });

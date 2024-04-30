@@ -87,7 +87,7 @@
             </li>
 
             <div class="nav-item">
-              <a href="/customer" class="nav-link">
+              <a href="/news" class="nav-link">
                 <i class="nav-icon fas fa-edit"></i>
                 <p>
                   Quản lý tin tức

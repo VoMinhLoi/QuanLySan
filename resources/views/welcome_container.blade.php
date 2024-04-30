@@ -83,8 +83,10 @@
         font-size: 24px;
     }
     .new-infor__date {
+        margin-top: 24px;
+        text-align: right; 
         font-size: 12px;
-        color: #ccc;
+        color: rgb(157, 145, 145);
     }
     .new-infor__description {
         margin-top: 20px;
@@ -99,65 +101,36 @@
 </style>
 <div class="container">
     <div class="grid wide">
-        <div class="row no-gutters">
-            <div class="new">
-                <div class="new-extension col l-5 m-5 c-12">
-                    <img src="assets/img/news.png" alt="news" class="new-extension__img">
-                    <button class="extra-extension__button">
-                        Xem thêm
-                    </button>
-                    <div class="extra-extension__detail">Chi tiết</div>
-                </div>
-                <div class="new-infor col l-7 m-7 c-12">
-                    <h2 class="new-infor__heading">Sân bóng đang được bảo trì</h2>
-                    <p class="new-infor__date">20-03-2002 11PM</p>
-                    <p class="new-infor__description">Được xây dựng để phục vụ nhu cầu chơi game, chính vì vậy các linh kiện để xây dựng nên bộ PC Gaming Asus phải đáp ứng được tối thiểu các tựa game phổ biến hiện nay.
-                        Được xây dựng để phục vụ nhu cầu chơi game, chính vì vậy các linh kiện để xây dựng nên bộ PC Gaming Asus phải đáp ứng được tối thiểu các tựa game phổ biến hiện nay.
-                        Được xây dựng để phục vụ nhu cầu chơi game, chính vì vậy các linh kiện để xây dựng nên bộ PC Gaming Asus phải đáp ứng được tối thiểu các tựa game phổ biến hiện nay.
-                        Được xây dựng để phục vụ nhu cầu chơi game, chính vì vậy các linh kiện để xây dựng nên bộ PC Gaming Asus phải đáp ứng được tối thiểu các tựa game phổ biến hiện nay.
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="row no-gutters">
-            <div class="new">
-                <div class="new-extension col l-5 m-5 c-12">
-                    <img src="assets/img/news.png" alt="news" class="new-extension__img">
-                    <button class="extra-extension__button">
-                        Xem thêm
-                    </button>
-                    <div class="extra-extension__detail">Chi tiết</div>
-                </div>
-                <div class="new-infor col l-7 m-7 c-12">
-                    <h2 class="new-infor__heading">Sân bóng đang được bảo trì</h2>
-                    <p class="new-infor__date">20-03-2002 11PM</p>
-                    <p class="new-infor__description">Được xây dựng để phục vụ nhu cầu chơi game, chính vì vậy các linh kiện để xây dựng nên bộ PC Gaming Asus phải đáp ứng được tối thiểu các tựa game phổ biến hiện nay.
-                        Được xây dựng để phục vụ nhu cầu chơi game, chính vì vậy các linh kiện để xây dựng nên bộ PC Gaming Asus phải đáp ứng được tối thiểu các tựa game phổ biến hiện nay.
-                        Được xây dựng để phục vụ nhu cầu chơi game, chính vì vậy các linh kiện để xây dựng nên bộ PC Gaming Asus phải đáp ứng được tối thiểu các tựa game phổ biến hiện nay.
-                        Được xây dựng để phục vụ nhu cầu chơi game, chính vì vậy các linh kiện để xây dựng nên bộ PC Gaming Asus phải đáp ứng được tối thiểu các tựa game phổ biến hiện nay.
-                    </p>
+        @php
+            $news = App\Models\TinTuc::all();
+        @endphp
+        @foreach ($news as $item)
+            @php
+                $author = App\Models\User::where('maNguoiDung', $item->maNguoiDang)->first();
+            @endphp
+            <div class="row no-gutters">
+                <div class="new">
+                    <div class="new-extension col l-5 m-5 c-12">
+                        <img src="assets/img/{{ $item->hinhAnh }}" alt="news" class="new-extension__img">
+                        <button class="extra-extension__button">
+                            Xem thêm
+                        </button>
+                        <div class="extra-extension__detail">Chi tiết</div>
+                    </div>
+                    <div class="new-infor col l-7 m-7 c-12">
+                        <h2 class="new-infor__heading">{{ $item->tieuDe }}</h2>
+                        <p class="new-infor__description">
+                            @if (empty($item->moTa))
+                                Xem báo cáo chi tiết
+                            @else
+                                {{ $item->moTa }}
+                            @endif
+                        </p>
+                        <p class="new-infor__date">{{\DateTime::createFromFormat('Y-m-d H:i:s',  $item->thoiGian)->format('d-m-Y H:i:s') }} - <span class="new-infor__auth">Tác giả: {{ $author->ho ." ". $author->ten }}</span></p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row no-gutters">
-            <div class="new">
-                <div class="new-extension col l-5 m-5 c-12">
-                    <img src="assets/img/news.png" alt="news" class="new-extension__img">
-                    <button class="extra-extension__button">
-                        Xem thêm
-                    </button>
-                    <div class="extra-extension__detail">Chi tiết</div>
-                </div>
-                <div class="new-infor col l-7 m-7 c-12">
-                    <h2 class="new-infor__heading">Sân bóng đang được bảo trì</h2>
-                    <p class="new-infor__date">20-03-2002 11PM</p>
-                    <p class="new-infor__description">Được xây dựng để phục vụ nhu cầu chơi game, chính vì vậy các linh kiện để xây dựng nên bộ PC Gaming Asus phải đáp ứng được tối thiểu các tựa game phổ biến hiện nay.
-                        Được xây dựng để phục vụ nhu cầu chơi game, chính vì vậy các linh kiện để xây dựng nên bộ PC Gaming Asus phải đáp ứng được tối thiểu các tựa game phổ biến hiện nay.
-                        Được xây dựng để phục vụ nhu cầu chơi game, chính vì vậy các linh kiện để xây dựng nên bộ PC Gaming Asus phải đáp ứng được tối thiểu các tựa game phổ biến hiện nay.
-                        Được xây dựng để phục vụ nhu cầu chơi game, chính vì vậy các linh kiện để xây dựng nên bộ PC Gaming Asus phải đáp ứng được tối thiểu các tựa game phổ biến hiện nay.
-                    </p>
-                </div>
-            </div>
-        </div>
+        @endforeach
+
     </div>
 </div>
