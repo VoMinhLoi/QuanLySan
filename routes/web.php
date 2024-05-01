@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+
 use App\Http\Controllers\ChiTietThueSanController;
+use App\Http\Controllers\TinTucController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,8 +19,6 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\User\BookController;
-use App\Models\ChiTietThueSan;
-use App\Models\TinTuc;
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,6 +38,8 @@ Route::get('/quenmatkhau', [LoginController::class, 'formForgot']);
 Route::post('/quenmatkhau', [LoginController::class, 'forgot'])->name('user.forgot');
 Route::get('/cailaimatkhau/{token}', [LoginController::class, 'formResetPassword']);
 Route::post('/cailaimatkhau', [LoginController::class, 'resetPassword'])->name('user.resetPassword');
+Route::get('/tintuc/{tintuc}', [TinTucController::class, 'formTinTuc'])->name('formTinTuc');
+
 
 
 Route::group(['middleware' => 'userLogin'], function () {

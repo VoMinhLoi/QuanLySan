@@ -12,6 +12,14 @@ class TinTucController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function formTinTuc($maTin)
+    {
+        // dd($maTin);
+        $tinTuc = TinTuc::where('id', $maTin)->first();
+        $tinTuc->luotXem += 1;
+        $tinTuc->save(); // Use save() to update the model
+        return view('Pages.news', compact('tinTuc'));
+    }
     public function index()
     {
         //
@@ -63,7 +71,6 @@ class TinTucController extends Controller
      */
     public function edit(string $id)
     {
-        //
     }
 
     /**

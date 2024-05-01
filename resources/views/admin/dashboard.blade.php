@@ -23,7 +23,7 @@
   .bar::after {
     content: attr(data-percentage) '%';
     position: absolute;
-    bottom: -2px;
+    bottom: -6px;
     left: 50%;
     transform: translateX(-50%);
 
