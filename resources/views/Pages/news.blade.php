@@ -52,11 +52,11 @@
                             <div class="new-infor col l-12 m-12 c-12">
                                 <p class="new-infor__description">
                                     @if (empty($tinTuc->moTa))
-                                        Xem chi tiết hơn: <a style="color: red; font-weight: bold" href="{{ $tinTuc->lienKetNgoai }}">Tệp</a>
+                                        Xem chi tiết hơn: <a style="color: red; font-weight: bold" href="{{ $tinTuc->lienKetNgoai }}">Link</a>
                                     @else
                                         {{ $tinTuc->moTa }}
                                         <br/>
-                                        Xem chi tiết hơn: <a style="color: red; font-weight: bold" href="{{ $tinTuc->lienKetNgoai }}">Tệp</a>
+                                        Xem chi tiết hơn: <a style="color: red; font-weight: bold" href="{{ $tinTuc->lienKetNgoai }}">Link</a>
                                     @endif
                                 </p>
                             </div>
