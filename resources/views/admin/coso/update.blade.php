@@ -60,7 +60,7 @@
     </div>
     <div class="form-group">
         <label for="thoiGianDongCua2">Thời gian đóng cửa</label>
-        <input name="thoiGianDongCua2" type="number" class="form-control" id="thoiGianDongCua2" placeholder="2-24">
+        <input name="thoiGianDongCua2" type="number" class="form-control" id="thoiGianDongCua2" placeholder="2-25">
         <span class="form-message"></span>
     </div>
     <!-- /.card-body -->
@@ -95,8 +95,8 @@
                     Validator.isRequired("#thoiGianMoCua2"),
                     Validator.isAllowHour("#thoiGianMoCua2",1,23),
                     Validator.isRequired("#thoiGianDongCua2"),
-                    Validator.isAllowHour("#thoiGianDongCua2",2,24),
-                    Validator.mustHigherOpen("#thoiGianDongCua2"),
+                    Validator.isAllowHour("#thoiGianDongCua2",2,25),
+                    Validator.mustHigherOpen("#thoiGianDongCua2","#thoiGianMoCua2"),
                 ],
                 errorSelector: ".form-message",
                 buttonSubmitSelector: ".form-submit",

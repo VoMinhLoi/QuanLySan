@@ -312,12 +312,12 @@
     },
     });
 
-    Validator.mustHigherOpen = (selector, message) => ({
+    Validator.mustHigherOpen = (selector, selectorMoCua, message) => ({
     selector,
     test(value) {
-        return value > document.querySelector("#thoiGianMoCua").value
+        return value > document.querySelector(selectorMoCua).value
         ? undefined
-        : message || "Giờ đóng cửa phải lớn hơn " + document.querySelector("#thoiGianMoCua").value +" giờ.";
+        : message || "Giờ đóng cửa phải lớn hơn " + document.querySelector(selectorMoCua).value +" giờ.";
     },
     });
     function formatCurrency(input) {

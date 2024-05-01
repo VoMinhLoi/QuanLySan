@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\CoSo;
 use App\Models\SanBong;
 use Exception;
 use Illuminate\Contracts\Debug\ExceptionHandler;
@@ -16,7 +17,11 @@ class SanBongController extends Controller
      */
     public function interface()
     {
-        return view('Pages.book');
+        $coSo = CoSo::where('maCoSo', 'COSO001')->first();
+        $gioMoCua = $coSo->thoiGianMoCua;
+        $gioDongCua = $coSo->thoiGianDongCua;
+        $soGioThue = $gioDongCua - $gioMoCua;
+        return view('Pages.book', compact('gioMoCua', 'gioDongCua', 'soGioThue'));
     }
 
     public function index()

@@ -98,7 +98,21 @@
               >Chọn giờ bắt đầu</label
             >
             <div class="form-input">
-              <div class="form-input__value">
+              @for ($i = $gioMoCua; $i < $gioDongCua; $i++)
+                <div class="form-input__value">
+                  <input
+                    id="hour{{ $i }}"
+                    class="form-input__value-input hourStart"
+                    name="hourStart"
+                    style="margin-right: 4px"
+                    value="{{ $i }}"
+                    type="radio"
+                    hidden
+                  />
+                  <label for="hour{{ $i }}" style="font-size: 12px" class="form-input__value-label">{{ $i }}</label>
+                </div>
+              @endfor
+              {{-- <div class="form-input__value">
                 <input
                   id="hour1"
                   class="form-input__value-input hourStart"
@@ -385,14 +399,14 @@
                   hidden
                 />
                 <label for="hour24" style="font-size: 12px" class="form-input__value-label">24</label>
-              </div>
+              </div> --}}
             </div>
             <span class="form-message"></span>
         </div>
         <div class="form-group">
             <label for="borrowHour" class="form-label" style="font-size: 14px;">Thời gian thuê</label>
             <div class="">
-              <input type="number" name="borrowHour" id="borrowHour" value="1" max="24"> 
+              <input type="number" name="borrowHour" id="borrowHour" value="1" max="{{ $soGioThue }}"> 
               Giờ
             </div>
             
