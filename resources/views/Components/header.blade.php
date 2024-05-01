@@ -348,28 +348,29 @@
     </header>
     @include('Elements.buttontotop')
 <script>
-    var labelNotificationView = document.querySelector('.header-private-item-notification')
-    var quantityNotificationView
-    labelNotificationView.onclick = () => {
-        quantityNotificationView = labelNotificationView.querySelector('.header-private-item__quantity-notification')
-        quantityNotificationView.innerText = 0;
-        fetch("http://127.0.0.1:8000/api/thongbao")
-            .then(response => response.json())
-            .then(thongBaos => {
-                thongBaos = thongBaos.filter((thongBao)=>{
-                    return thongBao.maNguoiDung == "{{ Auth::user()->maNguoiDung }}"
+        var labelNotificationView = document.querySelector('.header-private-item-notification')
+        var quantityNotificationView
+        labelNotificationView.onclick = () => {
+            quantityNotificationView = labelNotificationView.querySelector('.header-private-item__quantity-notification')
+            quantityNotificationView.innerText = 0;
+    
+            fetch("http://127.0.0.1:8000/api/thongbao")
+                .then(response => response.json())
+                .then(thongBaos => {
+                    // thongBaos = thongBaos.filter((thongBao)=>{
+                    //     return thongBao.maNguoiDung == maNguoiDung
+                    // })
+                    maThongBaoCanDuocCapNhat = thongBaos[thongBaos.length - 1].id
+                    let dataDaXem ={}
+                    dataDaXem['daXem'] = 1
+                    fetch("http://127.0.0.1:8000/api/thongbao/"+maThongBaoCanDuocCapNhat,{
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        },
+                        body: JSON.stringify(dataDaXem)
+                    })
                 })
-                maThongBaoCanDuocCapNhat = thongBaos[thongBaos.length - 1].id
-                let dataDaXem ={}
-                dataDaXem['daXem'] = 1
-                fetch("http://127.0.0.1:8000/api/thongbao/"+maThongBaoCanDuocCapNhat,{
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    },
-                    body: JSON.stringify(dataDaXem)
-                })
-            })
-    }
+        }
 </script>
