@@ -401,7 +401,7 @@
                                         <span class="form-message"></span>
                                     </div>
                                     <p class="">
-                                        <strong>Lưu ý: </strong>Hủy sân trước 4 tiếng hoàn lại 100% nhưng hủy sân sau 3 tiếng hoàn lại 50%. Sau 2 tiếng không thể hủy sân.
+                                        <strong>Lưu ý: </strong>Hủy sân trước <span style="color: red">1 tiếng</span> hoàn tiền lại 100% vào số dư tài khoản của bạn trên website. Sau <span style="color: red">1 tiếng</span> không thể hủy sân.
                                     </p>
                                 </form>
                             </div>
