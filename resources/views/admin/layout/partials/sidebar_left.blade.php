@@ -92,7 +92,7 @@
                 <p>
                   Quản lý tin tức
                 </p>
-                <span class="badge badge-info right">{{ App\Models\User::all()->count() }}</span>
+                <span class="badge badge-info right">{{ App\Models\TinTuc::all()->count() }}</span>
               </a>
             </div>
             <div class="nav-item">

@@ -3,10 +3,10 @@
       <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="../../index3.html" class="nav-link">Trang chủ</a>
+      <a href="/" class="nav-link">Trang chủ</a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="#" class="nav-link">Liên hệ</a>
+      <a href="/lienhe" class="nav-link">Liên hệ</a>
     </li>
 </ul>
 
@@ -38,7 +38,7 @@
     <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">
         <i class="far fa-comments"></i>
-        <span class="badge badge-danger navbar-badge">3</span>
+        {{-- <span class="badge badge-danger navbar-badge">3</span> --}}
       </a>
       <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
         <a href="#" class="dropdown-item">

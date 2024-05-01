@@ -1,4 +1,78 @@
+
 @extends('admin.layout.layout')
+<style>
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .bars {
+    display: flex;
+    flex-grow: 1;
+    align-items: flex-end;
+  }
+
+  .bar {
+    width: 50px;
+    margin-right: 10px;
+    background-color: #4CAF50;
+    position: relative;
+    color: white;
+  }
+
+  .bar::after {
+    content: attr(data-percentage) '%';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+
+  }
+
+  .bar-label {
+    position: absolute;
+    bottom: -20px; /* Điều chỉnh vị trí của nhãn */
+    left: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .y-axis {
+    margin-right: 10px;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: flex-end; */
+  }
+
+  .tick {
+    /* margin-top: 10px; */
+    height: 21px;
+  }
+
+
+
+  .legend {
+    margin-top: 20px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
+  .legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    margin-right: 5px;
+  }
+
+  .legend-label {
+    font-size: 14px;
+  }
+
+</style>
 @section('contents')
   <div class="content-header">
     <div class="container-fluid">
@@ -54,7 +128,7 @@
         <!-- fix for small devices only -->
         <div class="clearfix hidden-md-up"></div>
 
-        <div class="col-12 col-sm-6 col-md-3">
+        <a class="col-12 col-sm-6 col-md-3" href="/booking">
           <div class="info-box mb-3">
             <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
 
@@ -67,7 +141,7 @@
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->
-        </div>
+        </a>
         <!-- /.col -->
         <div class="col-12 col-sm-6 col-md-3">
           <a href="/customer" class="info-box mb-3">
@@ -86,7 +160,120 @@
       <!-- /.row -->
 
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-5">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title">Biểu đồ</h5>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <div class="row">
+                <!-- /.col -->
+                <div class="col-md-12">
+                  <p class="text-center">
+                    <strong>Tỷ lệ đặt loại sân</strong>
+                  </p>
+                  <div class="wrapper-chart" style="display: flex; height: 255px; align-items: center; justify-content: space-between">
+                    @php
+                        $sanBongs = App\Models\ChiTietThueSan::all()->pluck('maSan');
+                        $total = $sanBongs->count();
+                        $bongChuyen = 0;
+                        $bongChuyenCat = 0;
+                        $bongDa = 0;
+                        $bongRo = 0;
+                
+                        foreach ($sanBongs as $maSan) {
+                            $sanBong = App\Models\SanBong::where('maSan', $maSan)->first();
+                            if ($sanBong) {
+                                switch ($sanBong->loaiSan) {
+                                    case 'Chuyền':
+                                        ++$bongChuyen;
+                                        break;
+                                    case 'Bóng đá':
+                                        ++$bongDa;
+                                        break;
+                                    case 'Chuyền cát':
+                                        ++$bongChuyenCat;
+                                        break;
+                                    case 'Bóng rỗ':
+                                        ++$bongRo;
+                                        break;
+                                }
+                            }
+                        }
+                
+                        // Tính phần trăm cho mỗi loại bóng
+                        $percentChuyen = ($bongChuyen / $total) * 100;
+                        $percentChuyenCat = ($bongChuyenCat / $total) * 100;
+                        $percentDa = ($bongDa / $total) * 100;
+                        $percentRo = ($bongRo / $total) * 100;
+                        // dd($percentChuyen, $percentChuyenCat, $percentDa, $percentRo);
+                    @endphp
+                
+                <div class="bar-chart">
+                  <div class="y-axis">
+                    <div class="tick">100%</div>
+                    <div class="tick">75%</div>
+                    <div class="tick">50%</div>
+                    <div class="tick">25%</div>
+                    <div class="tick">0%</div>
+                  </div>
+                  <div class="bars">
+                    <div class="bar" data-percentage="{{round($percentChuyen,2)}}"; style="height: {{ $percentChuyen }}; background-color: #ff6384;">
+                      {{-- <span class="bar-label">Bóng chuyền</span> --}}
+                    </div>
+                    <div class="bar" data-percentage="{{round($percentChuyenCat,2)}}"; style="height: {{ $percentChuyenCat }}; background-color: #36a2eb;">
+                      {{-- <span class="bar-label">Bóng chuyền cát</span> --}}
+                    </div>
+                    <div class="bar" data-percentage="{{round($percentDa,2)}}"; style="height: {{ $percentDa }}; background-color: #cc65fe;">
+                      {{-- <span class="bar-label">Bóng đá</span> --}}
+                    </div>
+                    <div class="bar" data-percentage="{{round($percentRo,2)}}"; style="height: {{ $percentRo }}; background-color: #ffce56;">
+                      {{-- <span class="bar-label">Bóng rỗ</span> --}}
+                    </div>
+                  </div>
+                </div>
+                  <div class="legend">
+                    <div class="legend-item">
+                      <span class="legend-color" style="background-color: #ff6384;"></span>
+                      <span class="legend-label">Bóng chuyền ({{ $bongChuyen }})</span>
+                    </div>
+                    <div class="legend-item">
+                      <span class="legend-color" style="background-color: #36a2eb;"></span>
+                      <span class="legend-label">Bóng chuyền cát ({{ $bongChuyenCat }})</span>
+                    </div>
+                    <div class="legend-item">
+                      <span class="legend-color" style="background-color: #cc65fe;"></span>
+                      <span class="legend-label">Bóng đá ({{ $bongDa }})</span>
+                    </div>
+                    <div class="legend-item">
+                      <span class="legend-color" style="background-color: #ffce56;"></span>
+                      <span class="legend-label">Bóng rỗ ({{ $bongRo }})</span>
+                    </div>
+                  </div>                
+                    
+                </div>                
+                  <!-- /.progress-group -->
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- ./card-body -->
+
+            <!-- /.card-footer -->
+          </div>
+        </div>
+        <div class="col-md-7" style="height: fit-content">
           <div class="card">
             <div class="card-header">
               <h5 class="card-title">Báo cáo tóm tắt</h5>
@@ -205,60 +392,64 @@
               <!-- /.row -->
             </div>
             <!-- ./card-body -->
-            <div class="card-footer">
-              <div class="row">
-                <div class="col-sm-3 col-6">
-                  <div class="description-block border-right">
-                    <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 100%</span>
-                    <h5 class="description-header">{{ number_format($totalRevenue, 0, ',', '.') }}<sup>₫</sup></h5>
-                    <span class="description-text">Tổng tiền trên web</span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <div class="col-sm-3 col-6">
-                  <div class="description-block border-right">
-                    <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> {{ $percentRevenue }}%</span>
-                    <h5 class="description-header">{{ number_format($doanhThu, 0, ',', '.') }}<sup>₫</sup></h5>
-                    <span class="description-text">Tổng doanh thu</span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-3 col-6">
-                  <div class="description-block">
-                    <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i>
-                      @php
-                          $percentCancel = 100 - $percentRevenue;
-                      @endphp
-                      {{ $percentCancel }}%                      
-                    </span>
-                    <h5 class="description-header">
-                      @php
-                          $cancelingTicketQuantity = $ticketTotal - $veQuantity;
-                      @endphp
-                      {{ $cancelingTicketQuantity }}
-                    </h5>
-                    <span class="description-text">Tổng vé hủy</span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-3 col-6">
-                  <div class="description-block border-right">
-                    <span class="description-percentage text-warning"></span>
-                    <h5 class="description-header">{{ number_format($averagePrice, 0, ',', '.') }}<sup>₫</sup></h5>
-                    <span class="description-text">Trung bình giá vé</span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
-                
-              </div>
-              <!-- /.row -->
-            </div>
+
             <!-- /.card-footer -->
           </div>
           <!-- /.card -->
+        </div>
+        <div class="col-md-12">
+          <div class="card-footer">
+            <div class="row">
+              <div class="col-sm-3 col-6">
+                <div class="description-block border-right">
+                  <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 100%</span>
+                  <h5 class="description-header">{{ number_format($totalRevenue, 0, ',', '.') }}<sup>₫</sup></h5>
+                  <span class="description-text">Tổng tiền trên web</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <div class="col-sm-3 col-6">
+                <div class="description-block border-right">
+                  <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> {{ $percentRevenue }}%</span>
+                  <h5 class="description-header">{{ number_format($doanhThu, 0, ',', '.') }}<sup>₫</sup></h5>
+                  <span class="description-text">Tổng doanh thu</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <div class="col-sm-3 col-6">
+                <div class="description-block border-right">
+                  <span class="description-percentage text-warning"></span>
+                  <h5 class="description-header">{{ number_format($averagePrice, 0, ',', '.') }}<sup>₫</sup></h5>
+                  <span class="description-text">Trung bình 1 vé</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-3 col-6">
+                <div class="description-block">
+                  <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i>
+                    @php
+                        $percentCancel = 100 - $percentRevenue;
+                    @endphp
+                    {{ $percentCancel }}%                      
+                  </span>
+                  <h5 class="description-header">
+                    @php
+                        $cancelingTicketQuantity = $ticketTotal - $veQuantity;
+                    @endphp
+                    {{ $cancelingTicketQuantity }}
+                  </h5>
+                  <span class="description-text">Tổng vé hủy</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+
+              <!-- /.col -->
+              
+            </div>
+            <!-- /.row -->
+          </div>
         </div>
         <!-- /.col -->
       </div>
