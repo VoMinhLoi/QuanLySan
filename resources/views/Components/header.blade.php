@@ -155,7 +155,7 @@
         }
 
         .header-notify__item--viewed {
-            background-color: rgba(238, 75, 43, 0.08);
+            background-color: rgba(238, 75, 43, 0.08) !important;
         }
 
         .header-notify__item:hover {
@@ -241,11 +241,16 @@
             <label for="showMenuMobile" class="header-private-item header-private-item--bars">
                 <i class="fa-solid fa-bars"></i>
             </label>
-            <label for="showNotification" class="header-private-item">
+            <label for="showNotification" class="header-private-item header-private-item-notification">
 
                 <i class="fa-solid fa-bell"></i>
                 @if(Auth::check())
-                    <span class="header-private-item__quantity">0</span>
+                    <span class="header-private-item__quantity header-private-item__quantity-notification">
+                        @php
+                            $thongBaoQuantity = App\Models\ThongBao::where('maNguoiDung',Auth::user()->maNguoiDung)->where('daXem',0)->count();
+                        @endphp
+                        {{ $thongBaoQuantity }}
+                    </span>
                 @endif
             </label>
             
@@ -261,56 +266,39 @@
                     <span class="header-private-item__quantity header-private-item__quantity--in-bag">{{ $sportFieldQuantity }}</span>
                 @endif
             </a>
-            <input hidden type="checkbox" id="showNotification" >
-            <div class="header__notify arrow">
-                <h3 class="header-notify-list__title">
-                    Thông báo mới nhận
-                </h3>
-                <ul class="header-notify__list">
-                    <li class="header-notify__item header-notify__item--viewed">
-                        <a href="#" class="header-notify-item__link">
-                            <img class="header-notify-item-link__img" src="./assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="ASUS">
-                            <div class="header-notify-item__info">
-                                <span class="header-notify-item-link__name">ASUS ROG Strix G35CZ Gaming Desktop PCASUS ROG Strix G35CZ Gaming Desktop PC</span>
-                            <span class="header-notify-item-link__description">GeForce RTX 3080, Factory Overclocked Intel Core i9-10900KF ASUS ROG Strix G35CZ Gaming Desktop PC</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="header-notify__item">
-                        <a href="#" class="header-notify-item__link">
-                            <img class="header-notify-item-link__img" src="./assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="ASUS">
-                            <div class="header-notify-item__info">
-                                <span class="header-notify-item-link__name">
-                                    Máy Tính Chơi Game Asus SSD + HDD</span>
-                                <span class="header-notify-item-link__description">Được xây dựng để phục vụ nhu cầu chơi game, chính vì vậy các linh kiện để xây dựng nên bộ PC Gaming Asus phải đáp ứng được tối thiểu các tựa game phổ biến hiện nay.</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="header-notify__item">
-                        <a href="#" class="header-notify-item__link">
-                            <img class="header-notify-item-link__img" src="./assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="ASUS">
-                            <div class="header-notify-item__info">
-                                <span class="header-notify-item-link__name">
-                                    Máy Tính Chơi Game Asus SSD + HDD</span>
-                                <span class="header-notify-item-link__description">Được xây dựng để phục vụ nhu cầu chơi game, chính vì vậy các linh kiện để xây dựng nên bộ PC Gaming Asus phải đáp ứng được tối thiểu các tựa game phổ biến hiện nay.</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="header-notify__item">
-                        <a href="#" class="header-notify-item__link">
-                            <img class="header-notify-item-link__img" src="./assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="ASUS">
-                            <div class="header-notify-item__info">
-                                <span class="header-notify-item-link__name">
-                                    Máy Tính Chơi Game Asus SSD + HDD</span>
-                                <span class="header-notify-item-link__description">Được xây dựng để phục vụ nhu cầu chơi game, chính vì vậy các linh kiện để xây dựng nên bộ PC Gaming Asus phải đáp ứng được tối thiểu các tựa game phổ biến hiện nay.</span>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <div class="footer-notify ">
-                    <a href="#" class="footer-notify__link">Xem tất cả</a>
+            @if(Auth::check())
+                <input hidden type="checkbox" id="showNotification" >
+                <div class="header__notify arrow">
+                    <h3 class="header-notify-list__title">
+                        Thông báo mới nhận
+                    </h3>
+                    <ul class="header-notify__list">
+                        @php
+                            $thongBao = App\Models\ThongBao::where('maNguoiDung',Auth::user()->maNguoiDung)->get();
+                        @endphp
+                        @foreach ($thongBao as $item)
+                            @if($item->daXem == 0)
+                                <li class="header-notify__item">
+                            @else
+                                <li class="header-notify__item header-notify__item--viewed">
+                            @endif 
+                                    <a href="#" class="header-notify-item__link">
+                                        <img class="header-notify-item-link__img" src="./assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="ASUS">
+                                        <div class="header-notify-item__info">
+                                            <span class="header-notify-item-link__name">{{ $item->tieuDe }}</span>
+                                            <span class="header-notify-item-link__description">{{ \DateTime::createFromFormat('Y-m-d H:i:s', $item->thoiGian)->format('d-m-Y H:i:s') }}</span>
+                                            <br>
+                                            <span class="header-notify-item-link__description">{{ $item->noiDung }}</span>
+                                        </div>
+                                    </a>
+                                </li>
+                        @endforeach
+                    </ul>
+                    <div class="footer-notify ">
+                        {{-- <a href="#" class="footer-notify__link">Xem tất cả</a> --}}
+                    </div>
                 </div>
-            </div>
+            @endif
         </ul>
         <input type="checkbox" id='showMenuMobile' hidden>
         <label for="showMenuMobile" class="over-lay"></label>
@@ -359,4 +347,29 @@
         </ul>
     </header>
     @include('Elements.buttontotop')
-    
+<script>
+    var labelNotificationView = document.querySelector('.header-private-item-notification')
+    var quantityNotificationView
+    labelNotificationView.onclick = () => {
+        quantityNotificationView = labelNotificationView.querySelector('.header-private-item__quantity-notification')
+        quantityNotificationView.innerText = 0;
+        fetch("http://127.0.0.1:8000/api/thongbao")
+            .then(response => response.json())
+            .then(thongBaos => {
+                thongBaos = thongBaos.filter((thongBao)=>{
+                    return thongBao.maNguoiDung == "{{ Auth::user()->maNguoiDung }}"
+                })
+                maThongBaoCanDuocCapNhat = thongBaos[thongBaos.length - 1].id
+                let dataDaXem ={}
+                dataDaXem['daXem'] = 1
+                fetch("http://127.0.0.1:8000/api/thongbao/"+maThongBaoCanDuocCapNhat,{
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    },
+                    body: JSON.stringify(dataDaXem)
+                })
+            })
+    }
+</script>

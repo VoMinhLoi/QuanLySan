@@ -565,6 +565,7 @@
                     toastr.success(data.success)
                     deleteChiTietThueSan(maCTTS)
                     createLichSuGiaoDich(money)
+                    createThongBaoHuy()
                 }
                 else
                     toastr.error(data.error)
@@ -613,6 +614,37 @@
                 else
                     toastr.error(data.error)
             })
+    }
+    function createThongBaoHuy(){
+        let dataThongBao = {}
+        dataThongBao['loaiTB'] = 2
+        dataThongBao['maNguoiDung'] = "{{ Auth::user()->maNguoiDung }}"
+        dataThongBao['tieuDe'] = "Hủy sân thành công."
+        dataThongBao['noiDung'] = "Việc hủy sân hợp lệ trước 1 tiếng bắt đầu."
+        
+        fetch("http://127.0.0.1:8000/api/thongbao", {
+            method: "POST",
+            headers: {
+                // "Content-Type": "application/x-www-form-urlencoded", x-www-form-urlencoded: form data
+                "Content-Type": "application/json",
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            },
+            // body: JSON.stringify(data),
+            body: JSON.stringify(dataThongBao),
+            })
+            .then(response => {
+                return response.json(); // Chuyển đổi phản hồi sang JSON
+            })
+            .then(data => {
+                if(data.error)
+                    toastr.error(data.error)
+                else{
+                    toastr.success(data.success)
+                }// Dữ liệu JSON trả về từ function store
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 </script>
 
