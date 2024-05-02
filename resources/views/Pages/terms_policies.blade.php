@@ -124,9 +124,6 @@
                                     <li>
                                         Đủ 24 tiếng thì được giảm 50%
                                     </li>
-                                    <li>
-                                        Đủ 48 tiếng thì được giảm 70%
-                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -136,7 +133,7 @@
                             <div class="content__heading">9. Chính sách hủy sân</div>
                             <div class="content__description">Chúng tôi có thể hỗ trợ hủy sân theo chính sách:
 
-                                Hủy sân trước 4 tiếng hoàn lại 100% nhưng hủy sân sau 3 tiếng hoàn lại 50%. Sau 2 tiếng không thể hủy sân.</div>
+                                Hủy sân trước 1 tiếng hoàn lại 100% vào số dư trong ví nhưng hủy sân sau 1 tiếng không thể hoàn sân.</div>
                         </div>
                     </div>
                 </div>
