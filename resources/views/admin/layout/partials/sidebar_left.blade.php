@@ -113,7 +113,14 @@
                 <span class="badge badge-info right">{{ App\Models\LichSuGiaoDich::all()->count() }}</span>
               </a>
             </div>
-            
+            <div class="nav-item">
+              <a href="/dangxuat" class="nav-link">
+                <i class="fas fa-angle-left nav-icon"></i>
+                <p>
+                  Đăng xuất
+                </p>
+              </a>
+            </div>
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
