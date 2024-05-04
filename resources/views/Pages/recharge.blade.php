@@ -449,7 +449,7 @@
                                                                 ${LSGD.ndck}
                                                             </td>
                                                             <td class="product-date">
-                                                                ${formatCurrency(LSGD.soTien)}<sup>₫</sup>
+                                                                ${formatCurrency(LSGD.soTien)}
                                                             </td>
                                                             
                                                             <td class="product_total yard-note" style="text-align: center">

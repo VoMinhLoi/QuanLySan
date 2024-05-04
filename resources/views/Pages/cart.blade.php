@@ -284,7 +284,7 @@
                                         <table>
                                             <thead>
                                             <tr>
-                                                {{-- <th class="product_remove">Trạng thái</th> --}}
+                                                <th class="product_remove">Mã vé</th>
                                                 <th class="product_thumb product_quantity">Hình Ảnh</th>
                                                 <th class="product_name product_quantity">Tên</th>
                                                 <th class="product-date product_quantity">Thời gian bắt đầu</th>
@@ -383,6 +383,9 @@
                 .then(sanBong => {
                     tableBody.innerHTML +=   `
                                         <tr id="item-${CTTS.maCTTS}">
+                                            <td>
+                                                V${CTTS.maVe}
+                                            </td>
                                             <td class="product_thumb">
                                                 <a><img src="assets/img/${sanBong.hinhAnh}" style="width: 100px; height: 66px; object-fit: cover;"></a>
                                             </td>

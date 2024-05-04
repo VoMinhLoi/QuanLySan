@@ -412,7 +412,7 @@
             
             <span class="form-message"></span>
         </div>
-        <button class="form-submit" style="margin-bottom: 8px;">Lưu</button>
+        <button class="form-submit" style="margin-bottom: 8px;">Đặt</button>
         <div class="form-close" onclick="document.querySelector('.overlay').classList.add('display-none'); enableHourOutCurrentDate(); if (calendarView.value === currentDateGlobal) {
           buttonBeforeCalendar.classList.add('calendar-action--disable');
         }">
