@@ -77,6 +77,13 @@
                   </a>
                 </li>
                 <li class="nav-item">
+                  <a href="/tools" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Dụng cụ</p>
+                    <span class="badge badge-info right">{{ App\Models\DungCu::all()->count() }}</span>
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a href="/booking" class="nav-link">
                     <i class="nav-icon fas fa-calendar-alt"></i>
                     <p>Lịch đặt sân</p>

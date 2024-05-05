@@ -233,6 +233,43 @@
             text-decoration: none; /* Loại bỏ gạch chân */
             margin-top: 10px; /* Khoảng cách giữa các phần tử con */
         }
+        /* .tool-renting-button {
+            width: fit-content;
+            padding: 10px 20px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            position: relative;
+            left: 50%;
+            transform: translate(-50%);
+            cursor: pointer;
+        }
+        .tool-renting-button:hover {
+            color: var(--primary-color);
+            border: 1px solid;
+            background: white;
+        }
+        .tool-list-panel {
+            width: fit-content;
+        }
+        .tool-img {
+            width: 70px;
+        }
+        .tool-action {
+            position: relative;
+            bottom: 50%;
+            transform: translateY(50%);
+            width: 50px;
+            text-align: center;
+            background: red;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            cursor: pointer;
+        } */
     </style>
 </head>
 <body>
@@ -366,12 +403,71 @@
                                     />
                                     <span class="form-message"></span>
                                 </div>
+                                {{-- <p class="tool-renting-button">
+                                    Thuê dụng cụ
+                                </p>
+                                <div id="wrapper-tools-table" class="table_desc display-none">
+                                    <div class="table_page table-responsive">
+                                        <table style="text-align: center">
+                                            <thead>
+                                            <tr>
+                                                <th class="product_name">Mã dụng cụ</th>
+                                                <th class="product_quantity">Tên</th>
+                                                <th class="product_thumb">Hình Ảnh</th>
+                                                <th class="product-date">Số lượng</th>
+                                                <th class="product_remove">Giá dịch vụ</th>
+                                                <th class="product_remove">Hoạt động</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="toolRenting" style="position: relative">
+                                                @php
+                                                    $i = 0;
+                                                    $count = count($vatPhams);
+                                                    while ($i < $count) {
+                                                        $allowQuantity = $vatPhams[$i]->soLuongCon - $vatPhams[$i]->soLuongChoThue;
+                                                        if ($allowQuantity == 0) {
+                                                            $i++;
+                                                        } else {
+                                                            break;
+                                                        }
+                                                    } 
+                                                @endphp
+                                                <td class="tool-id">{{ $vatPhams[$i]->maVatPham }}</td>
+                                                <td>
+                                                    <select class="tool-list-panel" title="{{ $vatPhams[$i]->moTa }}">
+                                                        @foreach ($vatPhams as $item)
+                                                            @if($item->maVatPham == $vatPhams[$i]->maVatPham)
+                                                                <option value="{{ $item->maVatPham }}" selected>{{ $item->tenVatPham }}</option>
+                                                            @else
+                                                                <option value="{{ $item->maVatPham }}">{{ $item->tenVatPham }}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td class="tool-img"><img src="assets/img/{{ $vatPhams[$i]->hinhAnh1 }}" /></td>
+                                                <td >
+                                                    <input  class="tool-quantity" type="number" value="1" min="1" max="{{ $vatPhams[$i]->soLuongCon - $vatPhams[$i]->soLuongChoThue }}" />
+                                                </td>
+                                                <td class="tool-price">{{ number_format($vatPhams[$i]->donGiaThue, 0, ',', '.') }} <sup>₫</sup>/h</td>
+                                                <td class="tool-action"><i class="fa-solid fa-xmark fa-fw"></i></td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div> --}}
                             <div class="coupon_code -aos-delay="400">
                                 <h3>Giá trị thanh toán</h3>
                                 <div class="coupon_inner">
                                     <div class="cart_subtotal">
                                         <p>Khuyến mãi</p>
                                         <p class="promotion-percent">0</p>
+                                    </div>
+                                    <div class="cart_subtotal">
+                                        <p>Tiền đặt sân</p>
+                                        <p class="cart_amount" id="yardRentingTotalPrice"></p>
+                                    </div>
+                                    <div class="cart_subtotal">
+                                        <p>Tiền thuê dụng cụ</p>
+                                        <p class="cart_amount" id="toolRentingTotalPrice">0</p>
                                     </div>
                                     <div class="cart_subtotal">
                                         <p>Tổng tiền</p>
@@ -482,9 +578,10 @@
     }, 1000);
     var totalPrice
     function renderTotalPrice(){
+        var yardRentingPriceView = document.querySelector('#yardRentingTotalPrice')
         var totalPriceView = document.querySelector('#cartSub')
         totalPrice = calculatorMoneyAndPromotion(thoiGianBatDau, thoiGianKetThuc, getGiaDichVu)
-        console.log(totalPrice)
+        // console.log(totalPrice)
         // Lấy URL hiện tại
         // var currentURL = window.location.href;
         // // Tạo một đối tượng URL từ URL hiện tại
@@ -496,6 +593,7 @@
         // window.history.pushState({ path: newURL }, '', newURL);
 
         // Redirect hoặc sử dụng URL mới tùy ý
+        yardRentingPriceView.innerHTML = `${totalPrice}`
         totalPriceView.innerHTML =  `
                                     ${totalPrice}
                                     ` 
@@ -817,6 +915,22 @@
                 console.error('Error:', error);
             });
         }
+        // var toolsRentingButtonView = document.querySelector('.tool-renting-button')
+        // var wrapperToolsTableView = document.querySelector('#wrapper-tools-table')
+        // toolsRentingButtonView.onclick = ()=>{
+        //     wrapperToolsTableView.classList.remove("display-none")
+        // }
+        // var toolsRentingCloseButtonView = document.querySelector('.tool-action')
+        // toolsRentingCloseButtonView.onclick = ()=>{
+        //     wrapperToolsTableView.classList.add("display-none")
+
+        // }
+        // var inputRentingToolQuantityView = document.querySelector('.tool-quantity')
+        // var toolRentingPriceView = document.querySelector('.tool-price')
+        // inputRentingToolQuantityView.onchange = ()=>{
+        //     let toolRentingPrice = parseInt(toolRentingPriceView.innerText.replace(/\D/g, ''));
+            
+        // }
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

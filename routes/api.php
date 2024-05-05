@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ChiTietThueSanController;
 use App\Http\Controllers\CoSoController;
+use App\Http\Controllers\DungCuController;
 use App\Http\Controllers\LichSuGiaoDichController;
 use App\Http\Controllers\SanBongController;
 use App\Http\Controllers\TinhThanhController;
@@ -41,3 +42,4 @@ Route::apiResource('chitietthuesan', ChiTietThueSanController::class);
 Route::apiResource('lichsugiaodich', LichSuGiaoDichController::class);
 Route::apiResource('tintuc', TinTucController::class);
 Route::apiResource('thongbao', ThongBaoController::class);
+Route::apiResource('dungcu', DungCuController::class);
