@@ -83,6 +83,9 @@
                                 Email
                             </th>
                             <th style="width: 10%">
+                                Số dư tài khoản
+                            </th>
+                            <th style="width: 10%">
                                 Vai trò
                             </th>
                             <th style="width: 8%" class="text-center">
@@ -106,6 +109,9 @@
                                 <td>
                                     {{ $item->taiKhoan }}
                                 </td>
+                                <td>
+                                    {{ number_format($item->soDuTaiKhoan, 0, ',', '.') }}<sup>₫</sup>
+                                </td>
                                 <td class="project_progress text-center">
                                     @if($item->maQuyen == 1)
                                         Quản trị viên
@@ -113,6 +119,7 @@
                                         Người dùng
                                     @endif
                                 </td>
+                                
                                 <td class="project-state">
                                     @if($item->trangThai == 1)
                                         <span style="color: green">Hoạt động</span>
@@ -120,6 +127,7 @@
                                         <span style="color: red">Khóa</span>
                                     @endif
                                 </td>
+                                
                                 <td class="project-actions text-right">
                                     @if($item->maQuyen == 2)
                                         <a class="btn btn-primary btn-sm" onclick="grantPermissions({{ $item->maNguoiDung }})">
