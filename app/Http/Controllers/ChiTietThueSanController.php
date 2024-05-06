@@ -99,7 +99,7 @@ class ChiTietThueSanController extends Controller
             $chiTietThueSan = ChiTietThueSan::where('maCTTS', $id)->first();
             $result = $chiTietThueSan->delete();
             if (!empty($result))
-                return response()->json(['success' => 'Hủy sân thành công.']);
+                return response()->json(['success' => 'Hủy sân thành công.', 'chiTietThueSan' => $chiTietThueSan]);
             else
                 return response()->json(['error' => 'Lỗi hủy sân!']);
         } catch (Exception $e) {

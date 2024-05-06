@@ -401,7 +401,7 @@
                                             </td>
                                             <td style="flex-direction: column">
                                                 ${tinhKhoangCach(thoiGianHienTai, CTTS.thoiGianBatDau)>=1?`<a style="cursor: pointer" class="button-action button-action--delete" onclick="cancelCalendar('${CTTS.maCTTS}')" >Hủy</a>`:``}
-                                                <a class="button-action button-action--infor" href="/chitietthuesan/${CTTS.maCTTS}" >Chi tiết</a>
+                                                <a class="button-action button-action--infor" href="/chitietthuesan/${CTTS.maCTTS}" target="_blank">Chi tiết</a>
                                             </td>
                                             <td style="text-align: center">
                                                 <strong style="color:red">${isToday(CTTS.thoiGianBatDau)?'Hôm nay <br/>':''}</strong>
@@ -592,8 +592,34 @@
                 }
                 else
                     toastr.error(data.error)
+                    updateToolRentingQuantity(data.chiTietThueSan)
             })
     }
+    function updateToolRentingQuantity(chiTietThueSan){
+            fetch("http://127.0.0.1:8000/api/dungcu/"+chiTietThueSan.maDungCu, {
+                method: "PUT",
+                headers: {
+                    // "Content-Type": "application/x-www-form-urlencoded", x-www-form-urlencoded: form data
+                    "Content-Type": "application/json",
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                },
+                // body: JSON.stringify(data),
+                body: JSON.stringify({ soLuongChoThue: -chiTietThueSan.soLuong }),
+            })
+            .then(response => {
+                return response.json(); // Chuyển đổi phản hồi sang JSON
+            })
+            .then(data => {
+                if(data.error)
+                    toastr.error(data.error)
+                else{
+                    toastr.success(data.success)
+                }// Dữ liệu JSON trả về từ function store
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
     function createLichSuGiaoDich(money){
         let lsgd = {}
         lsgd['maNguoiDung'] = "{{ Auth::user()->maNguoiDung }}";
