@@ -258,7 +258,11 @@
                                                     <th class="product-date">Thời gian nhận</th>
                                                     <th class="product_quantity">Thời gian trả</th>
                                                     <th class="product_quantity">Giá dịch vụ</th>
-                                                    <th class="product_quantity">Tổng tiền</th>
+                                                    @if (isset($chiTietThueSan->maDungCu))
+                                                        <th class="product_quantity">Tổng tiền <br> {{ number_format($ve->tongTien, 0, ',', '.') }}<sup>₫</sup></th>
+                                                    @else
+                                                        <th class="product_quantity">Tổng tiền</th>
+                                                    @endif
                                                     <th class="product_quantity">Ghi chú</th>
                                                     {{-- <th class="product_total">Tổng</th> --}}
                                                 </tr>
@@ -280,7 +284,8 @@
                                                             <sup>₫</sup>/h
                                                         </td>
                                                         <td class="product_total">
-                                                            {{ number_format($ve->tongTien, 0, ',', '.') }}<sup>₫</sup>
+                                                            Thuê sân <br>
+                                                            {{ number_format($ve->tongTien - $chiTietThueSan->gia, 0, ',', '.') }}<sup>₫</sup>
                                                         </td>
                                                         <td class="product_total yard-note" style="text-align: center">
                                                             @php
@@ -295,8 +300,34 @@
                                                             @if(isset($daSuDung))
                                                                 <strong>{{ $daSuDung }}</strong>
                                                             @endif
+                                                            @php
+                                                                $batDau = new DateTime($chiTietThueSan->thoiGianBatDau);
+                                                                $ketThuc = new DateTime($chiTietThueSan->thoiGianKetThuc);
+                                                                
+                                                                // Tính toán khoảng cách thời gian (tính bằng giây)
+                                                                $khoangCachSeconds = $ketThuc->getTimestamp() - $batDau->getTimestamp();
+                                                                
+                                                                // Chuyển đổi khoảng cách từ giây thành giờ
+                                                                $khoangCachGio = $khoangCachSeconds / (60 * 60);
+                                                                
+                                                                echo '<p style="color:black">Thuê '. $khoangCachGio.' tiếng</p>';
+                                                            @endphp
                                                         </td>
                                                     </tr>
+                                                    @if(isset($chiTietThueSan->maDungCu))
+                                                        <tr>
+                                                            @php
+                                                                $tool = App\Models\DungCu::where('maDungCu',$chiTietThueSan->maDungCu)->first();
+                                                                echo '<td><img src="assets/img/'.$tool->hinhAnh1.'" alt="tool" style="width: 100px; height: 66px; object-fit: cover;"></td>';
+                                                                echo '<td>'.$tool->tenDungCu.'</td>';
+                                                                echo '<td></td>';
+                                                                echo '<td></td>';
+                                                                echo '<td>'.number_format($tool->donGiaThue, 0, ',', '.').'<sup>₫</sup>/h</td>';
+                                                                echo '<td>Thuê dụng cụ<br/>'.number_format($chiTietThueSan->gia, 0, ',', '.').'<sup>₫</sup></td>';
+                                                                echo '<td>Số lượng: '.$chiTietThueSan->soLuong.'</td>';
+                                                            @endphp
+                                                        </tr>
+                                                    @endif
                                                 </tbody>
                                             </table>
                                         </div>
