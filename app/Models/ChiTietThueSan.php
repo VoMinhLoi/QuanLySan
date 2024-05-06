@@ -13,6 +13,7 @@ class ChiTietThueSan extends Model
     protected $fillable = [
         'maVe',
         'maVatPham',
+        'maDungCu',
         'maSan',
         'soLuong',
         'gia',

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\DungCu;
 use Exception;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class DungCuController extends Controller
@@ -55,7 +56,7 @@ class DungCuController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return DungCu::where('maDungCu', $id)->first();
     }
 
     /**
@@ -72,19 +73,22 @@ class DungCuController extends Controller
     public function update(Request $request, string $id)
     {
         try {
-            $newsIsUpdated = DungCu::where('maDungCu', $id)->first();
-            $credentials['tenDungCu'] = $request->tenDungCu;
-            $credentials['soLuongCon'] = $request->soLuongCon;
-            $credentials['moTa'] = $request->moTa;
-            $credentials['donGiaGoc'] = $request->donGiaGoc;
-            $credentials['donGiaThue'] = $request->donGiaThue;
-            $credentials['trangThai'] = $request->trangThai;
-            // $credentials['thoiGian'] = $request->thoiGian;
-            $newsIsUpdated->update($credentials);
-            // return $newsIsUpdated;
-            return response()->json(['success' => 'Cập nhật tin tức thành công.', 'newsIsUpdated' => $newsIsUpdated]);
-        } catch (Exception $e) {
-            return response()->json(['error' => 'Cập nhật tin tức thất bại.', 'message' => $e->getMessage()]);
+            $dungCu = DungCu::where('maDungCu', $id)->firstOrFail();
+
+            if ($request->has('soLuongChoThue')) {
+                $dungCu->soLuongChoThue += intval($request->input('soLuongChoThue'));
+                $dungCu->save();
+                return response()->json(['success' => 'Cập nhật dụng cụ thành công.']);
+            }
+
+            // Validate input data here if needed
+
+            $dungCu->update($request->all());
+            return response()->json(['success' => 'Cập nhật dụng cụ thành công.', 'newsIsUpdated' => $dungCu]);
+        } catch (QueryException $e) {
+            return response()->json(['error' => 'Cập nhật dụng cụ thất bại.', 'message' => $e->getMessage()], 500);
+        } catch (\Throwable $e) {
+            return response()->json(['error' => 'Cập nhật dụng cụ thất bại.', 'message' => $e->getMessage()], 500);
         }
     }
 

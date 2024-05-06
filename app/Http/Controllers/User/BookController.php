@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-// use App\Models\DungCu;
+use App\Models\DungCu;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -13,8 +13,8 @@ class BookController extends Controller
      */
     public function interface()
     {
-        // $dungCus = DungCu::whereRaw('soLuongCon - soLuongChoThue >= 1')->get();
-        return view('Pages.checkout');
+        $dungCus = DungCu::whereRaw('soLuongCon - soLuongChoThue >= 1')->where('trangThai', 1)->get();
+        return view('Pages.checkout', compact('dungCus'));
     }
 
     public function index()
