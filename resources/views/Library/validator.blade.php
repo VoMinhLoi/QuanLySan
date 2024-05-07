@@ -315,7 +315,7 @@
     Validator.mustHigherOpen = (selector, selectorMoCua, message) => ({
     selector,
     test(value) {
-        return value > document.querySelector(selectorMoCua).value
+        return parseInt(value) > parseInt(document.querySelector(selectorMoCua).value)
         ? undefined
         : message || "Giờ đóng cửa phải lớn hơn " + document.querySelector(selectorMoCua).value +" giờ.";
     },

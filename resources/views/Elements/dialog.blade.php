@@ -93,319 +93,35 @@
             <i class="fa-solid fa-arrow-right"></i>
           </p>
         </div>
-        <div class="form-group">
+        <div class="form-group" id="wrapper-start-hour"  data-set="{{ $gioDongCua }}">
             <label class="form-label" 
               >Chọn giờ bắt đầu</label
             >
             <div class="form-input">
-              @for ($i = $gioMoCua; $i < $gioDongCua; $i++)
-                <div class="form-input__value">
-                  <input
-                    id="hour{{ $i }}"
-                    class="form-input__value-input hourStart"
-                    name="hourStart"
-                    style="margin-right: 4px"
-                    value="{{ $i }}"
-                    type="radio"
-                    hidden
-                  />
-                  <label for="hour{{ $i }}" style="font-size: 12px" class="form-input__value-label">{{ $i }}</label>
-                </div>
-              @endfor
-              {{-- <div class="form-input__value">
-                <input
-                  id="hour1"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="1"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour1" style="font-size: 12px" class="form-input__value-label">1</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour2"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="2"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour2" style="font-size: 12px" class="form-input__value-label">2</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour3"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="3"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour3" style="font-size: 12px" class="form-input__value-label">3</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour4"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="4"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour4" style="font-size: 12px" class="form-input__value-label">4</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour5"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="5"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour5" style="font-size: 12px" class="form-input__value-label">5</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour6"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="6"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour6" style="font-size: 12px" class="form-input__value-label">6</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour7"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="7"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour7" style="font-size: 12px" class="form-input__value-label">7</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour8"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="8"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour8" style="font-size: 12px" class="form-input__value-label">8</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour9"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="9"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour9" style="font-size: 12px" class="form-input__value-label">9</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour10"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="10"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour10" style="font-size: 12px" class="form-input__value-label">10</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour11"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="11"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour11" style="font-size: 12px" class="form-input__value-label">11</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour12"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="12"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour12" style="font-size: 12px" class="form-input__value-label">12</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour13"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="13"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour13" style="font-size: 12px" class="form-input__value-label">13</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour14"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="14"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour14" style="font-size: 12px" class="form-input__value-label">14</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour15"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="15"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour15" style="font-size: 12px" class="form-input__value-label">15</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour16"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="16"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour16" style="font-size: 12px" class="form-input__value-label">16</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour17"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="17"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour17" style="font-size: 12px" class="form-input__value-label">17</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour18"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="18"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour18" style="font-size: 12px" class="form-input__value-label">18</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour19"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="19"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour19" style="font-size: 12px" class="form-input__value-label">19</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour20"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="20"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour20" style="font-size: 12px" class="form-input__value-label">20</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour21"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="21"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour21" style="font-size: 12px" class="form-input__value-label">21</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour22"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="22"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour22" style="font-size: 12px" class="form-input__value-label">22</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour23"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="23"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour23" style="font-size: 12px" class="form-input__value-label">23</label>
-              </div>
-              <div class="form-input__value">
-                <input
-                  id="hour24"
-                  class="form-input__value-input hourStart"
-                  name="hourStart"
-                  style="margin-right: 4px"
-                  value="24"
-                  type="radio"
-                  hidden
-                />
-                <label for="hour24" style="font-size: 12px" class="form-input__value-label">24</label>
-              </div> --}}
+                @for ($i = $gioMoCua; $i < $gioDongCua; $i++)
+                  <div class="form-input__value">
+                    <input
+                      id="hour{{ $i }}"
+                      class="form-input__value-input hourStart"
+                      name="hourStart"
+                      style="margin-right: 4px"
+                      value="{{ $i }}"
+                      type="radio"
+                      hidden
+                    />
+                    <label for="hour{{ $i }}" style="font-size: 12px" class="form-input__value-label">{{ $i }}</label>
+                  </div>
+                @endfor
             </div>
             <span class="form-message"></span>
         </div>
         <div class="form-group">
             <label for="borrowHour" class="form-label" style="font-size: 14px;">Thời gian thuê</label>
             <div class="">
+              @if($gioDongCua < 25)
+                {{ $gioMoCua }} giờ bắt đầu - tối đa thuê: {{ $soGioThue }} tiếng.
+                <br/>
+              @endif
               <input type="number" name="borrowHour" id="borrowHour" value="1" max="{{ $soGioThue }}"> 
               Giờ
             </div>
@@ -452,6 +168,7 @@
         
       </form>
 <script>
+
   var maSanGlobal
   function showImproveDialog(maSan){
     maSanGlobal = maSan
@@ -698,55 +415,70 @@
     errorSelector: ".form-message",
     buttonSubmitSelector: ".form-submit",
     onSubmit: function (data) {
-          data["maSan"] = $('.overlay')[0].dataset.key,
-          data["soLuong"] = 1,
-          data["thoiGianBatDau"] = getTimeStart(formatDateToYYYYMMDD(calendarChoosing),data.hourStart).toString(),
-          data["thoiGianKetThuc"] = getTimeEnd(data["thoiGianBatDau"], data.borrowHour, data.hourStart).toString(),
-          data["trangThai"] = 0,
-          // Kiểm tra giờ bắt đầu tới giờ kết thúc trong sân này thì có thể thuê bao nhiêu tiếng
-          fetch("http://127.0.0.1:8000/api/chitietthuesan")
-            .then(promise => promise.json())
-            .then(CTTSs => {
-              let distanceAllow
-              let isEnd = false
-              CTTSs.forEach((CTTS)=>{
-                // console.log(CTTS.maSan)
-                if(data['maSan'] === CTTS.maSan ){
-                  let distance = tinhKhoangCach(data["thoiGianBatDau"],CTTS.thoiGianBatDau)
-                  if(!isEnd){
-                    if(distance >= 0){
-                      distanceAllow = distance
-                      isEnd = true
-                    }
-                  }
-                }
-              })
-              if(parseInt(data.borrowHour) > distanceAllow){
-                toastr.options = {
-                    "toastClass": "toast-style", // Đặt lớp CSS cho toast
-                    "titleClass": "toast-title-style", // Đặt lớp CSS cho tiêu đề toast
-                    "messageClass": "toast-message-style" // Đặt lớp CSS cho thông báo toast
-                };
-                toastr.options.closeButton = true;
-                toastr.warning("Quý khách chỉ có thể thuê liên tục <strong>" + distanceAllow + " tiếng.</strong>");
-              }
-              else{
-                transferDataToOtherPage(data)
-              }
-            })
-            .catch(error => {
-              toastr.error('Lỗi ràng buộc thời gian kết thúc vượt qua thời gian bắt đầu vé.')
-            })
-          function transferDataToOtherPage(data){
-            var queryString = Object.keys(data).map(function(key) {
-              return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
-            }).join('&');
-            // console.log(queryString)
-            window.location.href = "/thuesan?" + queryString;
-          }
+      // Kiểm tra thuê giờ cho hợp lệ nếu không được thuê liên tục
+      if(parseInt(borrowTimeView.max)<24){
+        // let gioDongCua = document.querySelector('#wrapper-start-hour').getAttribute('data-set');
+        let gioDongCua = document.querySelector('#wrapper-start-hour').dataset.set;
+        if(parseInt(data.hourStart) + parseInt(data.borrowHour) > gioDongCua){
+          let allowHours = gioDongCua - parseInt(data.hourStart)
+          toastr.warning('Quý khách chỉ có thể thuê liên tục '+ allowHours + " tiếng nếu bắt đầu từ "+ data.hourStart + " giờ vì chúng tôi sẽ đóng cửa vào "+ gioDongCua+" giờ. Mong quý khách thông cảm và thực hiện theo chỉ dẫn.")
+        }
+        else
+          hanldeRentingYard(data)
+      }
+      else
+        hanldeRentingYard(data)
     },
     formGroupSelector: ".form-group",
 }); //Thêm dấu ngoặc nhọn này để đóng hàm Validator
+function hanldeRentingYard(data){
+  data["maSan"] = $('.overlay')[0].dataset.key,
+  data["soLuong"] = 1,
+  data["thoiGianBatDau"] = getTimeStart(formatDateToYYYYMMDD(calendarChoosing),data.hourStart).toString(),
+  data["thoiGianKetThuc"] = getTimeEnd(data["thoiGianBatDau"], data.borrowHour, data.hourStart).toString(),
+  data["trangThai"] = 0,
+  // Kiểm tra giờ bắt đầu tới giờ kết thúc trong sân này thì có thể thuê bao nhiêu tiếng
+  fetch("http://127.0.0.1:8000/api/chitietthuesan")
+    .then(promise => promise.json())
+    .then(CTTSs => {
+      let distanceAllow
+      let isEnd = false
+      CTTSs.forEach((CTTS)=>{
+        // console.log(CTTS.maSan)
+        if(data['maSan'] === CTTS.maSan ){
+          let distance = tinhKhoangCach(data["thoiGianBatDau"],CTTS.thoiGianBatDau)
+          if(!isEnd){
+            if(distance >= 0){
+              distanceAllow = distance
+              isEnd = true
+            }
+          }
+        }
+      })
+      if(parseInt(data.borrowHour) > distanceAllow){
+        toastr.options = {
+            "toastClass": "toast-style", // Đặt lớp CSS cho toast
+            "titleClass": "toast-title-style", // Đặt lớp CSS cho tiêu đề toast
+            "messageClass": "toast-message-style" // Đặt lớp CSS cho thông báo toast
+        };
+        toastr.options.closeButton = true;
+        toastr.warning("Quý khách chỉ có thể thuê liên tục <strong>" + distanceAllow + " tiếng</strong> vì lý do cấn lịch.");
+      }
+      else{
+        transferDataToOtherPage(data)
+      }
+    })
+    .catch(error => {
+      toastr.error('Lỗi ràng buộc thời gian kết thúc vượt qua thời gian bắt đầu vé.')
+    })
+  function transferDataToOtherPage(data){
+    var queryString = Object.keys(data).map(function(key) {
+      return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+    }).join('&');
+    // console.log(queryString)
+    window.location.href = "/thuesan?" + queryString;
+  }
+}
 function formatDateToYYYYMMDD(calendar) {
     // Tách ngày, tháng và năm từ chuỗi
     const parts = calendar.split('-');
