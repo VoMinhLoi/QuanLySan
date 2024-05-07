@@ -449,6 +449,8 @@
                                                     <td class="tool-img"><img src="assets/img/{{ $dungCus[$i]->hinhAnh1 }}" /></td>
                                                     <td  class="tool-quantity">
                                                         <input class="tool-quantity-input" type="number" value="1" min="1" max="{{ $dungCus[$i]->soLuongCon - $dungCus[$i]->soLuongChoThue }}" />
+                                                        <br/>
+                                                        Tối đa: <span class="subtitle-renting-allow-max-quantity">{{ $dungCus[$i]->soLuongCon - $dungCus[$i]->soLuongChoThue }}</span>
                                                     </td>
                                                     <td class="tool-price">{{ number_format($dungCus[$i]->donGiaThue, 0, ',', '.') }} <sup>₫</sup>/h</td>
                                                     <td class="tool-action"><i class="fa-solid fa-xmark fa-fw"></i></td>
@@ -736,7 +738,7 @@
         var columnToolID = toolRowView.querySelector('.tool-id')
         var columnToolImage = toolRowView.querySelector('.tool-img')
         var toolQuantityInputView = document.querySelector('.tool-quantity-input')
-
+        var subtitleMaxQuantity = document.querySelector('.subtitle-renting-allow-max-quantity')
         var columnToolPrice = toolRowView.querySelector('.tool-price')
         toolListView.onchange = ()=>{
             fetch("http://127.0.0.1:8000/api/dungcu/"+ toolListView.value)
@@ -747,6 +749,7 @@
                     columnToolImage.innerHTML = `<img src="assets/img/${ dataOneToolIsRented.hinhAnh1 }"/>`
                     toolQuantityInputView.setAttribute('max', dataOneToolIsRented.soLuongCon - dataOneToolIsRented.soLuongChoThue)
                     toolQuantityInputView.value = 1
+                    subtitleMaxQuantity.innerText = toolQuantityInputView.getAttribute('max')
                     columnToolPrice.innerText = formatCurrency(dataOneToolIsRented.donGiaThue)+"/h"
                     rentingToolTotalPriceGlobal = dataOneToolIsRented.donGiaThue * tinhKhoangCach(thoiGianBatDau, thoiGianKetThuc)
                     toolRentingTotalPriceView.innerText = formatCurrency(rentingToolTotalPriceGlobal)
@@ -758,7 +761,18 @@
                 })
         }
     toolQuantityInputView.onchange = ()=> {
-        rentingToolTotalPriceGlobal = dataOneToolIsRented.donGiaThue * tinhKhoangCach(thoiGianBatDau, thoiGianKetThuc) * parseInt(toolQuantityInputView.value)
+        let enteringUserToolQuantity = parseInt(toolQuantityInputView.value)
+        let rentingAllowToolQuantity =  parseInt(toolQuantityInputView.max)
+        if(enteringUserToolQuantity > rentingAllowToolQuantity){
+            toolQuantityInputView.value = rentingAllowToolQuantity
+            enteringUserToolQuantity = rentingAllowToolQuantity
+        }
+        else
+        if(enteringUserToolQuantity <= 0){
+            toolQuantityInputView.value = 1
+            enteringUserToolQuantity = 1
+        }
+        rentingToolTotalPriceGlobal = dataOneToolIsRented.donGiaThue * tinhKhoangCach(thoiGianBatDau, thoiGianKetThuc) * enteringUserToolQuantity
         toolRentingTotalPriceView.innerText = formatCurrency(rentingToolTotalPriceGlobal)
         totalPrice = rentingToolTotalPriceGlobal + rentingYardTotalPrice
         totalPriceView.innerText = formatCurrency(totalPrice)
