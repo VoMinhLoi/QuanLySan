@@ -87,7 +87,17 @@ class ChiTietThueSanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $chiTietThueSan = ChiTietThueSan::where('maCTTS', $id)->first();
+            // return $chiTietThueSan;
+            if (!empty($chiTietThueSan)) {
+                $chiTietThueSan->update($request->all());
+                return response()->json(['success' => 'Cập nhật chi tiết thành công']);
+            } else
+                return response()->json(['error' => 'Cập nhật chi tiết thất bại']);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Cập nhật chi tiết thất bại']);
+        }
     }
 
     /**

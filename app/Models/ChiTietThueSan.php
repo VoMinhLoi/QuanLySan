@@ -20,6 +20,7 @@ class ChiTietThueSan extends Model
         'maHinhThuc',
         'thoiGianBatDau',
         'thoiGianKetThuc',
+        'daTra'
     ];
     protected $primaryKey = 'maCTTS';
     public function ve()

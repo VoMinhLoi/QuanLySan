@@ -124,15 +124,27 @@
                                         if ($khoangCach->invert === 1) {
                                             $tongSoGiay *= -1;
                                         }
-                                        if (!empty($item->deleted_at)){
-                                            echo '<span style="color: red">Đã hủy</span>';
-                                        }
-                                        else {
-                                            if ($tongSoGiay < 0) {
-                                                echo ' Đã sử dụng.';
-                                            }
-                                        }
                                     @endphp
+                                    @if (!empty($item->deleted_at))
+                                        <span style="color: red">Đã hủy</span><br/>
+                                    @else 
+                                        @if ($tongSoGiay < 0)
+                                            Đã sử dụng.<br/>
+                                        @endif
+                                        @if (isset($item->maDungCu))
+                                            @if ($item->daTra == 0)
+                                                <div class="return-tool-panel">
+                                                    Thuê {{ $item->maDungCu }}
+                                                    <br/>
+                                                    Số lượng: {{ $item->soLuong }}
+                                                    <button onclick="returnTool('{{ $item->maCTTS }}', '{{ $item->maDungCu }}', '{{ $item->soLuong }}')" style="margin-top: 2px">Nhận lại dụng cụ thuê</button>
+                                                </div>
+                                            @else
+                                                Đã trả dụng cụ {{ $item->maDungCu }} với số lượng {{ $item->soLuong }}
+                                            @endif
+                                        @endif
+                                    @endif
+                                   
                                 </td>
                             </tr>
                         @endforeach
@@ -144,3 +156,53 @@
         </div>
     </section>
 @endsection
+<script>
+    function returnTool(maCTTS, maDungCu, soLuong){
+        let returnToolPanel = document.querySelector('.return-tool-panel')
+        if(confirm("Bạn đã kiểm tra dụng cụ thuê và người dùng đã trả dụng cụ đầy đủ?")){
+            returnToolPanel.innerHTML = "Đã trả dụng cụ " + maDungCu + " với số lượng "+soLuong
+            fetch("http://127.0.0.1:8000/api/chitietthuesan/"+maCTTS,{
+                method: "PUT",
+                headers: {
+                    // "Content-Type": "application/x-www-form-urlencoded", x-www-form-urlencoded: form data
+                    "Content-Type": "application/json",
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                },
+                // body: JSON.stringify(data),
+                body: JSON.stringify({ daTra: 1 }),
+            })
+                .then(response => response.json())
+                .then(data =>{
+                    if(data.success){
+                        toastr.success(data.success)
+                        fetch("http://127.0.0.1:8000/api/dungcu/"+maDungCu, {
+                            method: "PUT",
+                            headers: {
+                                // "Content-Type": "application/x-www-form-urlencoded", x-www-form-urlencoded: form data
+                                "Content-Type": "application/json",
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            },
+                            // body: JSON.stringify(data),
+                            body: JSON.stringify({ soLuongChoThue: -soLuong }),
+                        })
+                        .then(response => {
+                            return response.json(); // Chuyển đổi phản hồi sang JSON
+                        })
+                        .then(data => {
+                            if(data.error)
+                                toastr.error(data.error)
+                            else{
+                                toastr.success(data.success)
+                            }// Dữ liệu JSON trả về từ function store
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    }
+                    else
+                        toastr.error(data.error)
+
+                })
+        }
+    }
+</script>
