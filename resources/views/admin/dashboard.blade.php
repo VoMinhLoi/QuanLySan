@@ -182,7 +182,7 @@
                   <p class="text-center">
                     <strong>Tỷ lệ đặt loại sân</strong>
                   </p>
-                  <div class="wrapper-chart" style="display: flex; height: 255px; align-items: center; justify-content: space-between">
+                  <div class="wrapper-chart" style="display: flex; height: 294px; align-items: center; justify-content: space-between">
                     @php
                         $sanBongs = App\Models\ChiTietThueSan::all()->pluck('maSan');
                         $total = $sanBongs->count();
@@ -382,6 +382,19 @@
                     <span class="float-right"><b>{{ $activeYardCount }}</b>/{{ $yardTotal }}</span>
                     <div class="progress progress-sm" title="{{ $percentYard }}%">
                       <div class="progress-bar" style="width: {{ $percentYard }}%; background: pink"></div>
+                    </div>
+                  </div>
+                  <div class="progress-group">
+                    Dụng cụ
+                    @php
+                        $toolTotal = App\Models\dungcu::all()->count();
+                        $activeToolCount = App\Models\DungCu::whereRaw('soLuongCon - soLuongChoThue >= 1')->where('trangThai', 1)->count();
+                        $ratioTool = $activeToolCount/$toolTotal;
+                        $percentTool = $ratioTool * 100;
+                    @endphp
+                    <span class="float-right"><b>{{ $activeToolCount }}</b>/{{ $toolTotal }}</span>
+                    <div class="progress progress-sm" title="{{ $percentTool }}%">
+                      <div class="progress-bar" style="width: {{ $percentTool }}%; background: orange"></div>
                     </div>
                   </div>
 

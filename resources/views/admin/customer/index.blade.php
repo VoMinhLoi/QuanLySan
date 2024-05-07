@@ -229,6 +229,9 @@
                                                 <td>
                                                     ${user.taiKhoan}
                                                 </td>
+                                                <td>
+                                                    ${formatCurrency(user.soDuTaiKhoan)}
+                                                </td>
                                                 <td class="project_progress text-center">
                                                     ${user.maQuyen == 1?"Quản trị viên":"Người dùng"}
                                                 </td>
@@ -253,6 +256,9 @@
                                                 <td>
                                                     ${user.taiKhoan}
                                                 </td>
+                                                <td>
+                                                    0 <sup>₫</sup>
+                                                </td>
                                                 <td class="project_progress text-center">
                                                     Người dùng
                                                 </td>
@@ -266,7 +272,9 @@
                                             </tr>
                                             `
     }
-
+    function formatCurrency(input) {
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(input);
+    }
 </script>
 
 {{-- Create người dùng --}}

@@ -59,10 +59,10 @@
                 <div class="footer-contact">
                     <h4 class="footer-contact__heading">Thông tin</h4>
                     <ul class="footer-contact__list">
-                        <li class="footer-contact-list__item"><a href="" class="footer-contact-list-item__link">Giới thiệu</a></li>
-                        <li class="footer-contact-list__item"><a href="" class="footer-contact-list-item__link">Đặt sân</a></li>
-                        <li class="footer-contact-list__item"><a href="" class="footer-contact-list-item__link">Liên hệ</a></li>
-                        <li class="footer-contact-list__item"><a href="" class="footer-contact-list-item__link">Chính sách</a></li>
+                        <li class="footer-contact-list__item"><a href="/" class="footer-contact-list-item__link">Giới thiệu</a></li>
+                        <li class="footer-contact-list__item"><a href="/sanbong" class="footer-contact-list-item__link">Đặt sân</a></li>
+                        <li class="footer-contact-list__item"><a href="/lienhe" class="footer-contact-list-item__link">Liên hệ</a></li>
+                        <li class="footer-contact-list__item"><a href="/dieukhoanchinhsach" class="footer-contact-list-item__link">Chính sách</a></li>
                     </ul>
                 </div>
             </div>
@@ -71,9 +71,9 @@
                 <div class="footer-contact">
                     <h4 class="footer-contact__heading">Tài khoản</h4>
                     <ul class="footer-contact__list">
-                        <li class="footer-contact-list__item"><a href="" class="footer-contact-list-item__link">Số dư</a></li>
-                        <li class="footer-contact-list__item"><a href="" class="footer-contact-list-item__link">Thuê sân</a></li>
-                        <li class="footer-contact-list__item"><a href="" class="footer-contact-list-item__link">Thông tin cá nhân</a></li>
+                        <li class="footer-contact-list__item"><a href="/naptien" class="footer-contact-list-item__link">Số dư</a></li>
+                        <li class="footer-contact-list__item"><a href="/tui" class="footer-contact-list-item__link">Thuê sân</a></li>
+                        <li class="footer-contact-list__item"><a href="/hosocanhan" class="footer-contact-list-item__link">Thông tin cá nhân</a></li>
                     </ul>
                 </div>
             </div>
@@ -82,7 +82,7 @@
                     <h4 class="footer-contact__heading">Theo dõi</h4>
                     <ul class="footer-contact__list footer-contact__list-social">
                         <li class="footer-contact-list__item footer-contact__list-social-item"><a href="" class="footer-contact-list-item__link">
-                            <i class="fa-brands fa-google"></i>    
+                            <i class="fa-brands fa-google"></i>
                         </a></li>
                         <li class="footer-contact-list__item footer-contact__list-social-item"><a href="" class="footer-contact-list-item__link">
                             <i class="fa-brands fa-twitter"></i>   

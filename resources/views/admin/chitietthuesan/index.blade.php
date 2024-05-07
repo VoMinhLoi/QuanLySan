@@ -127,6 +127,11 @@
                                     @endphp
                                     @if (!empty($item->deleted_at))
                                         <span style="color: red">Đã hủy</span><br/>
+                                        @if (isset($item->maDungCu))
+                                            Thuê {{ $item->maDungCu }}
+                                            <br/>
+                                            Số lượng: {{ $item->soLuong }}
+                                        @endif
                                     @else 
                                         @if ($tongSoGiay < 0)
                                             Đã sử dụng.<br/>

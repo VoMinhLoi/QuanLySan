@@ -102,7 +102,7 @@
 <div class="container">
     <div class="grid wide">
         @php
-            $news = App\Models\TinTuc::all();
+            $news = App\Models\TinTuc::orderBy('id', 'desc')->take(10)->get();
         @endphp
         @foreach ($news as $item)
             @php

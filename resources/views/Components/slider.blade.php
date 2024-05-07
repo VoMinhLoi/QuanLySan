@@ -179,16 +179,16 @@
     <script>
       var data = [
         {
-          imageURL: "slider1.jpg",
+          imageURL: "slider1_new.jpg",
         },
         {
-          imageURL: "slider2.jpg",
+          imageURL: "slider2_new.jpg",
         },
         {
-          imageURL: "slider3.jpg",
+          imageURL: "slider3_new.jpg",
         },
         {
-          imageURL: "slider4.jpg",
+          imageURL: "slider4_new.jpg",
         },
       ];
       sliderImage(0, data, 5000);
