@@ -290,6 +290,11 @@
             background: white;
             color: var(--primary-color);
         }
+        .toast-style {
+            background-color: #333; /* Đặt màu nền */
+            color: #fff; /* Đặt màu văn bản */
+            font-weight: bold; /* Làm đậm văn bản */
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -709,8 +714,18 @@
                     handleFilter(dataAllSanBongFollowFilter)
                 }
             });
+
         </script>
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        toastr.options = {
+            "toastClass": "toast-style", // Đặt lớp CSS cho thông báo
+            "titleClass": "toast-title-style", // Đặt lớp CSS cho tiêu đề thông báo
+            "messageClass": "toast-message-style", // Đặt lớp CSS cho nội dung thông báo
+            "closeButton": true, // Hiển thị nút đóng
+            "timeOut": 0 // Không tự động tắt
+        };
+    </script>
 </html>

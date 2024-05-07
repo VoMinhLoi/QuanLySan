@@ -255,8 +255,10 @@
             })
         }
         function handleDeleteCoSo(maCoSo){
-            deleteRowView(maCoSo);
-            deleteCoSoInDatabase(maCoSo);
+            if(confirm('Bạn chắc chắn muốn xóa ' +maCoSo+ ' không?')){
+                deleteRowView(maCoSo);
+                deleteCoSoInDatabase(maCoSo);
+            }
         }
         function deleteRowView(maCoSo){
             let rowIsDeletedView = document.querySelector('.row-'+maCoSo)

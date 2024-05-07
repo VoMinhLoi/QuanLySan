@@ -156,8 +156,10 @@
     <script>
 
         function handleDeletePitch(maSan){
-            deleteRowView(maSan);
-            deletePitchInDatabase(maSan);
+            if(confirm('Bạn chắc chắn muốn xóa ' +maSan+ ' không?')){
+                deleteRowView(maSan);
+                deletePitchInDatabase(maSan);
+            }
         }
         function deleteRowView(maSan){
             let rowIsDeletedView = document.querySelector('.row-'+maSan)
