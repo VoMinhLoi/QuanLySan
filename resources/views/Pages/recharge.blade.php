@@ -273,7 +273,7 @@
                                         type="number"
                                         placeholder="Ví dụ: hai trăm nghìn VND - 200000"
                                         min="50000"
-                                        step="50000"
+                                        step="20000"
                                         class="form-control"
                                         required
                                       />
