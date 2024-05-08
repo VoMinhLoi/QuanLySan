@@ -138,7 +138,7 @@
                                         @endif
                                         @if (isset($item->maDungCu))
                                             @if ($item->daTra == 0)
-                                                <div class="return-tool-panel">
+                                                <div class="return-tool-panel-{{ $item->maCTTS }}">
                                                     Thuê {{ $item->maDungCu }}
                                                     <br/>
                                                     Số lượng: {{ $item->soLuong }}
@@ -163,7 +163,7 @@
 @endsection
 <script>
     function returnTool(maCTTS, maDungCu, soLuong){
-        let returnToolPanel = document.querySelector('.return-tool-panel')
+        let returnToolPanel = document.querySelector('.return-tool-panel-'+maCTTS)
         if(confirm("Bạn đã kiểm tra dụng cụ thuê và người dùng đã trả dụng cụ đầy đủ?")){
             returnToolPanel.innerHTML = "Đã trả dụng cụ " + maDungCu + " với số lượng "+soLuong
             fetch("http://127.0.0.1:8000/api/chitietthuesan/"+maCTTS,{
