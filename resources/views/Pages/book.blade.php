@@ -682,11 +682,16 @@
                 const startDateTime = new Date(startTime);
                 
                 // Đặt giờ bắt đầu
-                startDateTime.setHours(parseInt(hourStart));
-
-                // Cộng thêm số giờ thuê
-                startDateTime.setHours(startDateTime.getHours() + parseInt(borrowHour));
-
+                    // Nếu giờ bắt đầu là 00:00:00, thêm số giờ vào ngày hiện tại
+                if (startDateTime.getHours() === 0 && startDateTime.getMinutes() === 0 && startDateTime.getSeconds() === 0) {
+                    startDateTime.setHours(startDateTime.getHours() + parseInt(borrowHour));
+                } else {
+                    // Đặt giờ bắt đầu
+                    startDateTime.setHours(parseInt(hourStart));
+                    
+                    // Cộng thêm số giờ thuê
+                    startDateTime.setHours(startDateTime.getHours() + parseInt(borrowHour));
+                }
                 // Lấy thông tin ngày, tháng, năm, giờ, phút và giây từ đối tượng Date
                 const year = startDateTime.getFullYear();
                 const month = String(startDateTime.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0, nên cộng thêm 1
