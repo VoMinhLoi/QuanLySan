@@ -441,20 +441,26 @@ function hanldeRentingYard(data){
   fetch("http://127.0.0.1:8000/api/chitietthuesan")
     .then(promise => promise.json())
     .then(CTTSs => {
-      let distanceAllow
-      let isEnd = false
-      CTTSs.forEach((CTTS)=>{
-        // console.log(CTTS.maSan)
-        if(data['maSan'] === CTTS.maSan ){
-          let distance = tinhKhoangCach(data["thoiGianBatDau"],CTTS.thoiGianBatDau)
-          if(!isEnd){
-            if(distance >= 0){
-              distanceAllow = distance
-              isEnd = true
-            }
-          }
-        }
+      CTTSs = CTTSs.filter((CTTS)=>{
+        return CTTS.maSan == data['maSan']
       })
+      CTTSs.sort(function(a, b) {
+          // Chuyển đổi thời gian bắt đầu của mỗi phần tử thành đối tượng Date để so sánh
+          var dateA = new Date(a.thoiGianBatDau);
+          var dateB = new Date(b.thoiGianBatDau);
+          
+          // So sánh thời gian bắt đầu của hai phần tử và trả về kết quả
+          return dateA - dateB;
+      });
+      let distanceAllow
+      for (const CTTS of CTTSs) {
+        // console.log(CTTS)
+        let distance = tinhKhoangCach(data["thoiGianBatDau"], CTTS.thoiGianBatDau);
+        if (distance >= 0) {
+          distanceAllow = distance;
+          break;
+        }
+      }
       if(parseInt(data.borrowHour) > distanceAllow){
         toastr.options = {
             "toastClass": "toast-style", // Đặt lớp CSS cho toast
