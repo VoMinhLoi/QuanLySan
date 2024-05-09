@@ -15,16 +15,26 @@ class ContactController extends Controller
 
     public function sendChat(Request $request)
     {
-        $result = OpenAI::completions()->create([
-            // 'max_tokens' => 100,
-            'model' => 'gpt-3.5-turbo-instruct',
-            'prompt' => $request->input('input')
-        ]);
-        $response = array_reduce(
-            $result->toArray()['choices'],
-            fn (string $result, array $choice) => $result . $choice['text'],
-            ''
-        );
-        return $response;
+        try {
+            $result = OpenAI::completions()->create([
+                'temperature' => 0,
+                'max_tokens' => 2048,
+                'model' => 'gpt-3.5-turbo-instruct',
+                'prompt' => $request->input('input')
+            ]);
+
+            if ($result && isset($result['choices'])) {
+                $response = array_reduce(
+                    $result['choices'],
+                    fn (string $result, array $choice) => $result . $choice['text'],
+                    ''
+                );
+                return $response;
+            } else {
+                return "No response from OpenAI API.";
+            }
+        } catch (\Exception $e) {
+            return "An error occurred: " . $e->getMessage();
+        }
     }
 }
