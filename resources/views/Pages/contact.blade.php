@@ -30,7 +30,7 @@
                 position: relative;
                 display: flex;
                 background: white;
-                max-width: 40%;
+                max-width: 60%;
                 width: fit-content;
                 color: var(--primary-color);
                 align-items: center;
@@ -156,13 +156,13 @@
                     'input': dataUserMessage
                 },
                 success: function (data){
-                    bodyConversationView.append(`
-                                                <div class="chat-bot-body__bot">
-                                                    <img class="header-logo__image" src="assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="logo trường đại học thể dục thể thao">
-                                                    <p style="margin-left: 8px">`+data+`</p>
-                                                </div>
-                                                `)
+                    let div = document.createElement('div')
+                    div.setAttribute('class','chat-bot-body__bot')
+                    div.innerHTML = `<img class="header-logo__image" src="assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="logo trường đại học thể dục thể thao">
+                                    <p style="margin-left: 8px">${data}</p>`;
+                    bodyConversationView.append(div)
                 }
+
             })
         }
     </script>
