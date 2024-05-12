@@ -905,7 +905,7 @@
             .then(response => response.json())
             .then(data => {
                 var payView = document.querySelector('.bound-pay');
-                if(data.soDuTaiKhoan < pay){
+                if(parseInt('{{ Auth::user()->soDuTaiKhoan }}') < pay){
                     toastr.error("Số tiền của quý khách không đủ để thanh toán")
                     payView.classList.remove('display-none')
                     setTimeout(transferToTalPriceToVNpay(), 1000)
@@ -915,7 +915,7 @@
                         Object.assign(input, {
                             type: "hidden",
                             name: "totalPrice", // Assuming totalPrice is a variable containing the name
-                            value: totalPrice // Assuming totalPrice is a variable containing the value
+                            value: totalPrice - parseInt('{{ Auth::user()->soDuTaiKhoan }}') // Assuming totalPrice is a variable containing the value
                         });
                         // console.log(input)
                         // console.log(formRecharge)
