@@ -145,25 +145,91 @@
         }
 
 
-        function hanldeCallApiGPT(dataUserMessage){
-            $.ajax({            
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                type: 'post',
-                url: '{{ url('lienhe') }}',
-                data: {
-                    'input': dataUserMessage
-                },
-                success: function (data){
-                    let div = document.createElement('div')
-                    div.setAttribute('class','chat-bot-body__bot')
-                    div.innerHTML = `<img class="header-logo__image" src="assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="logo trường đại học thể dục thể thao">
-                                    <p style="margin-left: 8px">${data}</p>`;
-                    bodyConversationView.append(div)
-                }
+        // function hanldeCallApiGPT(dataUserMessage){
+        //     $.ajax({            
+        //         headers: {
+        //             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        //         },
+        //         type: 'post',
+        //         url: '{{ url('lienhe') }}',
+        //         data: {
+        //             'input': dataUserMessage
+        //         },
+        //         success: function (data){
+        //             let div = document.createElement('div')
+        //             div.setAttribute('class','chat-bot-body__bot')
+        //             div.innerHTML = `<img class="header-logo__image" src="assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="logo trường đại học thể dục thể thao">
+        //                             <p style="margin-left: 8px">${data}</p>`;
+        //             bodyConversationView.append(div)
+        //         }
 
+        //     })
+        // }
+        var dataChiTietThueSanGlobal
+        var dataChiTietThueSanString = ""
+        var ngayHienTai = new Date()
+
+        fetch("http://127.0.0.1:8000/api/chitietthuesan")
+            .then(response => response.json())
+            .then(CTTSs => {
+                dataChiTietThueSanGlobal = CTTSs
+                dataChiTietThueSanString += dataChiTietThueSanGlobal.reduce((initial, value, index)=>{
+                    // console.log(value.tenDungCu,value.trangThai)
+                    // if(value.trangThai){
+                        // let trangThaiString = " và sẩn phẩm này còn kinh doanh."
+                        // return initial + " " +value.tenDungCu + " có số lượng có thể thuê: " + (value.soLuongCon - value.soLuongChoThue) + " cái" + trangThaiString
+                        // return initial + " " +value.tenDungCu
+                    // }
+                    let formatThoiGianBatDau = new Date(value.thoiGianBatDau)
+                    let formatThoiGianKetThuc = new Date(value.thoiGianKetThuc)
+                    // console.table(formatThoiGianBatDau.getTime(), formatThoiGianKetThuc.getTime(), ngayHienTai.getTime())
+                    if(ngayHienTai.getTime()< formatThoiGianBatDau.getTime() || ngayHienTai.getTime() < formatThoiGianKetThuc)
+                        return initial + (index+1) + ". " + value.thoiGianBatDau + value.thoiGianKetThuc + ". "
+                    return initial
+                },"")
+                console.log(dataChiTietThueSanString)
             })
+        var i  = 1
+        var historyConversation
+        async function hanldeCallApiGPT(text) {
+            // historyConversation += ". "+ text
+            // let apiServerBorrow = 'http://103.20.97.118:5002/chat_stream/'
+            let apiServerMinhHoang = "https://provider-obituaries-resolutions-entrepreneurs.trycloudflare.com/chat_stream/"
+            const response = await fetch(apiServerMinhHoang, {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ "text":text, "prompt": "Bạn là một trợ lý ảo, được tạo ra với mục đích hỗ trợ và tư vấn lịch đặt sân cho khách hàng. Đây là thông tin lịch đặt sân, bạn có thể sử dụng để tư vấn cho khách hàng: "+dataChiTietThueSanString+". Hãy trả lời câu hỏi sau dựa trên thông tin đã được cung cấp:" })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Request failed with status ${response.status}`);
+            }
+
+            // Xử lý stream dữ liệu
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let full_text = ""
+            let div = document.createElement('div')
+            div.setAttribute('class','chat-bot-body__bot')
+            div.innerHTML = `<img class="header-logo__image" src="assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="logo trường đại học thể dục thể thao">
+                            <p class="response-from-serve-${i}" style="margin-left: 8px">${full_text}</p>`;
+            bodyConversationView.append(div)
+            while (true) {
+                const { done, value } = await reader.read();
+
+                if (done) {
+                break;
+                }
+                const decodedValue = decoder.decode(value);
+                // full_text += decodedValue
+                // console.log(full_text);
+                let messageChatBox = document.querySelector('.response-from-serve-'+i)
+                messageChatBox.innerText += " "+ decodedValue.replace("</s>", "");
+                // historyConversation +=". "+ messageChatBox.innerText
+            }
+            i++
         }
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
