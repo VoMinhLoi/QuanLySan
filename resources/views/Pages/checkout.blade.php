@@ -803,11 +803,70 @@
                     dataSDTMaPXDiaChihoTenNguoiDat = data;
                     
                     let formatThoiGianBatDau = new Date(thoiGianBatDau); // Giả sử thoiGianBatDau là một chuỗi đại diện cho thời gian bắt đầu
+                    let formatThoiGianKetThuc = new Date(thoiGianKetThuc); // Giả sử thoiGianBatDau là một chuỗi đại diện cho thời gian bắt đầu
                     let thoiDiemHienTai = new Date();
                     // console.log("Thời gian bắt đầu: "+ formatThoiGianBatDau.getTime())
                     // console.log("Thời gian hiện tại:"+ thoiDiemHienTai.getTime())
-                    if (formatThoiGianBatDau.getTime() > thoiDiemHienTai.getTime()) {
-                        handleMoneyUser(data['tongTien']);
+                    // Kiểm tra nếu đã qua giờ bắt đầu
+                    if (formatThoiGianBatDau.getTime() > thoiDiemHienTai.getTime() && formatThoiGianKetThuc.getTime() > formatThoiGianBatDau.getTime()) {
+                        // Kiểm tra có trùng lịch không?
+                        fetch("http://127.0.0.1:8000/api/chitietthuesan")
+                            .then(promise => promise.json())
+                            .then(CTTSs => {
+                                CTTSs = CTTSs.filter((CTTS)=>{
+                                    let formatThoiGianBatDauCuaVeDaDat = new Date(CTTS.thoiGianBatDau)
+                                    return CTTS.maSan == maSan && formatThoiGianBatDauCuaVeDaDat.getTime() >= thoiDiemHienTai.getTime()
+                                })
+                                CTTSs.sort(function(a, b) {
+                                    // Chuyển đổi thời gian bắt đầu của mỗi phần tử thành đối tượng Date để so sánh
+                                    var dateA = new Date(a.thoiGianBatDau);
+                                    var dateB = new Date(b.thoiGianBatDau);
+                                    
+                                    // So sánh thời gian bắt đầu của hai phần tử và trả về kết quả
+                                    return dateA - dateB;
+                                });
+                                // console.log(CTTSs)
+                                let isSameDate = false
+                                for (const CTTS of CTTSs) {
+                                    // console.log(CTTS.thoiGianBatDau, CTTS.thoiGianKetThuc)
+
+                                    let formatThoiGianBatDauBooking = new Date(thoiGianBatDau)
+                                    let formatThoiGianKetThucBooking = new Date(thoiGianKetThuc)
+
+                                    let formatThoiGianBatDauVe = new Date(CTTS.thoiGianBatDau)
+                                    isSameDate =  formatThoiGianBatDauBooking<= formatThoiGianBatDauVe && formatThoiGianBatDauVe < formatThoiGianKetThucBooking?true:false
+                                    if(isSameDate)
+                                        break;
+
+                                    let formatThoiGianKetThucVe = new Date(CTTS.thoiGianKetThuc)
+                                    isSameDate = formatThoiGianBatDauBooking < formatThoiGianKetThucVe && formatThoiGianKetThucVe <= formatThoiGianKetThucBooking?true:false
+                                    if(isSameDate)
+                                        break;
+                                    // Còn 1 trường hợp vé đặt có khoảng thời gian nhỏ hơn vs vé đã đặt: 19 - 21 vs 18 - 22
+                                    if(formatThoiGianBatDauVe<= formatThoiGianBatDauBooking  && formatThoiGianBatDauBooking < formatThoiGianKetThucVe || formatThoiGianBatDauVe< formatThoiGianKetThucBooking  && formatThoiGianKetThucBooking <= formatThoiGianKetThucVe){
+                                        isSameDate = true;
+                                        break;
+                                    }
+                                }
+                                if(isSameDate){
+                                    toastr.options = {
+                                        "toastClass": "toast-style", // Đặt lớp CSS cho toast
+                                        "titleClass": "toast-title-style", // Đặt lớp CSS cho tiêu đề toast
+                                        "messageClass": "toast-message-style" // Đặt lớp CSS cho thông báo toast
+                                    };
+                                    toastr.options.closeButton = true;
+                                    toastr.warning("Lịch của quý khách đã bị trùng. Quý khách vui lòng quay lại trang đặt sân xem để xem lịch đặt sân.");
+                                    setTimeout(()=> {
+                                        window.location.href = "/sanbong";
+                                    },10000)
+                                }
+                                else{
+                                    handleMoneyUser(data['tongTien']);
+                                }
+                            })
+                            .catch(error => {
+                                toastr.error('Lỗi ràng buộc thời gian trùng lịch.')
+                            })
                     } else {
                         toastr.error('Thời gian bắt đầu không hợp lệ.');
                     }
