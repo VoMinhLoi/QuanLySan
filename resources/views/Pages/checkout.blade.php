@@ -749,6 +749,8 @@
                     columnToolImage.innerHTML = `<img src="assets/img/${ dataOneToolIsRented.hinhAnh1 }"/>`
                     toolQuantityInputView.setAttribute('max', dataOneToolIsRented.soLuongCon - dataOneToolIsRented.soLuongChoThue)
                     toolQuantityInputView.value = 1
+                    if(toolQuantityInputView.getAttribute('max') === '0')
+                        toolQuantityInputView.value = 0
                     subtitleMaxQuantity.innerText = toolQuantityInputView.getAttribute('max')
                     columnToolPrice.innerText = formatCurrency(dataOneToolIsRented.donGiaThue)+"/h"
                     rentingToolTotalPriceGlobal = dataOneToolIsRented.donGiaThue * tinhKhoangCach(thoiGianBatDau, thoiGianKetThuc)
@@ -762,22 +764,28 @@
         }
     toolQuantityInputView.onchange = ()=> {
         let enteringUserToolQuantity = parseInt(toolQuantityInputView.value)
-        let rentingAllowToolQuantity =  parseInt(toolQuantityInputView.max)
-        if(enteringUserToolQuantity > rentingAllowToolQuantity){
-            toolQuantityInputView.value = rentingAllowToolQuantity
-            enteringUserToolQuantity = rentingAllowToolQuantity
-        }
-        else
-        if(enteringUserToolQuantity <= 0){
-            toolQuantityInputView.value = 1
-            enteringUserToolQuantity = 1
-        }
-        rentingToolTotalPriceGlobal = dataOneToolIsRented.donGiaThue * tinhKhoangCach(thoiGianBatDau, thoiGianKetThuc) * enteringUserToolQuantity
-        toolRentingTotalPriceView.innerText = formatCurrency(rentingToolTotalPriceGlobal)
-        totalPrice = rentingToolTotalPriceGlobal + rentingYardTotalPrice
-        totalPriceView.innerText = formatCurrency(totalPrice)
-        var payView = document.querySelector('.bound-pay');
-        payView.classList.add('display-none')
+        let rentingAllowToolQuantity
+        fetch("http://127.0.0.1:8000/api/dungcu/"+ toolListView.value)
+                .then(response => response.json())
+                .then(data => {
+                    rentingAllowToolQuantity = data.soLuongCon - data.soLuongChoThue
+                    subtitleMaxQuantity.innerText = rentingAllowToolQuantity
+                    if(enteringUserToolQuantity > rentingAllowToolQuantity){
+                        toolQuantityInputView.value = rentingAllowToolQuantity
+                        enteringUserToolQuantity = rentingAllowToolQuantity
+                    }
+                    else
+                    if(enteringUserToolQuantity < 0 || !enteringUserToolQuantity){
+                        toolQuantityInputView.value = 0
+                        enteringUserToolQuantity = 0
+                    }
+                    rentingToolTotalPriceGlobal = dataOneToolIsRented.donGiaThue * tinhKhoangCach(thoiGianBatDau, thoiGianKetThuc) * enteringUserToolQuantity
+                    toolRentingTotalPriceView.innerText = formatCurrency(rentingToolTotalPriceGlobal)
+                    totalPrice = rentingToolTotalPriceGlobal + rentingYardTotalPrice
+                    totalPriceView.innerText = formatCurrency(totalPrice)
+                    var payView = document.querySelector('.bound-pay');
+                    payView.classList.add('display-none')
+                })
     }
     // Validator
         var apiUser = 'http://127.0.0.1:8000/api/user'
@@ -861,7 +869,23 @@
                                     },10000)
                                 }
                                 else{
-                                    handleMoneyUser(data['tongTien']);
+                                    fetch("http://127.0.0.1:8000/api/dungcu/"+ toolListView.value)
+                                        .then(response => response.json())
+                                        .then(dungCu => {
+                                            let rentingAllowToolQuantity = dungCu.soLuongCon - dungCu.soLuongChoThue
+                                            if(parseInt(toolQuantityInputView.value) <= rentingAllowToolQuantity)
+                                                handleMoneyUser(data['tongTien']);
+                                            else{
+                                                toastr.warning("Số lượng thuê không phù hợp.");
+                                                subtitleMaxQuantity.innerText = rentingAllowToolQuantity
+                                                toolQuantityInputView.setAttribute('max',rentingAllowToolQuantity)
+                                                toolQuantityInputView.value = rentingAllowToolQuantity
+                                                rentingToolTotalPriceGlobal = dataOneToolIsRented.donGiaThue * tinhKhoangCach(thoiGianBatDau, thoiGianKetThuc) * rentingAllowToolQuantity
+                                                toolRentingTotalPriceView.innerText = formatCurrency(rentingToolTotalPriceGlobal)
+                                                totalPrice = rentingToolTotalPriceGlobal + rentingYardTotalPrice
+                                                totalPriceView.innerText = formatCurrency(totalPrice)
+                                            }
+                                        })
                                 }
                             })
                             .catch(error => {
