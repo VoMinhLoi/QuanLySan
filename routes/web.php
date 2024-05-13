@@ -26,7 +26,7 @@ Route::get('/', function () {
 
 
 Route::get('/lienhe', [App\Http\Controllers\User\ContactController::class, 'index']);
-Route::post('/lienhe', [App\Http\Controllers\User\ContactController::class, 'sendChat']);
+// Route::post('/lienhe', [App\Http\Controllers\User\ContactController::class, 'sendChat']);
 Route::get('/dieukhoanchinhsach', [App\Http\Controllers\User\PoliciesAndTermsController::class, 'index']);
 
 

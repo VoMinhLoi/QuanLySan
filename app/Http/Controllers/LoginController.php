@@ -159,7 +159,7 @@ class LoginController extends Controller
         $vnp_OrderInfo = "Nạp tiền qua ví điện tử VNPay";
 
         $vnp_Amount = 0;
-        $vnp_TxnRef = rand(1000, 99999);
+        $vnp_TxnRef = rand(10000000, 99999999999);
         if ($request->has('soTien')) {
             $vnp_Amount = $request->input('soTien') * 100;
         }
