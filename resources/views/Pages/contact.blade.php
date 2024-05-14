@@ -165,34 +165,39 @@
 
         //     })
         // }
-        var dataChiTietThueSanGlobal
         var dataChiTietThueSanString = ""
         var ngayHienTai = new Date()
 
         fetch("http://127.0.0.1:8000/api/chitietthuesan")
             .then(response => response.json())
             .then(CTTSs => {
-                dataChiTietThueSanGlobal = CTTSs
-                dataChiTietThueSanString += dataChiTietThueSanGlobal.reduce((initial, value, index)=>{
-                    // console.log(value.tenDungCu,value.trangThai)
-                    // if(value.trangThai){
-                        // let trangThaiString = " và sẩn phẩm này còn kinh doanh."
-                        // return initial + " " +value.tenDungCu + " có số lượng có thể thuê: " + (value.soLuongCon - value.soLuongChoThue) + " cái" + trangThaiString
-                        // return initial + " " +value.tenDungCu
-                    // }
+                dataChiTietThueSanString += CTTSs.reduce((initial, value, index)=>{
                     let formatThoiGianBatDau = new Date(value.thoiGianBatDau)
                     let formatThoiGianKetThuc = new Date(value.thoiGianKetThuc)
                     // console.table(formatThoiGianBatDau.getTime(), formatThoiGianKetThuc.getTime(), ngayHienTai.getTime())
                     if(ngayHienTai.getTime()< formatThoiGianBatDau.getTime() || ngayHienTai.getTime() < formatThoiGianKetThuc)
-                        return initial + (index+1) + ". " + value.thoiGianBatDau + value.thoiGianKetThuc + ". "
+                        return initial + (index+1) + ". " + value.thoiGianBatDau + value.thoiGianKetThuc
                     return initial
                 },"")
                 console.log(dataChiTietThueSanString)
             })
+        var dataToolsGlobalString = ""
+        fetch("http://127.0.0.1:8000/api/dungcu")
+            .then(response => response.json())
+            .then(tools => {
+                dataToolsGlobalString += tools.reduce((initial, value, index)=>{
+                    // console.log(value.tenDungCu,value.trangThai)
+                    if(value.trangThai){
+                        // let trangThaiString = " và sẩn phẩm này còn kinh doanh."
+                        // return initial + " " +value.tenDungCu + " có số lượng có thể thuê: " + (value.soLuongCon - value.soLuongChoThue) + " cái" + trangThaiString
+                        return initial +value.tenDungCu + ", "
+                    }
+                    return initial
+                },"")
+                console.log(dataToolsGlobalString)
+            })
         var i  = 1
-        var historyConversation
         async function hanldeCallApiGPT(text) {
-            // historyConversation += ". "+ text
             // let apiServerBorrow = 'http://103.20.97.118:5002/chat_stream/'
             let apiServerMinhHoang = "https://provider-obituaries-resolutions-entrepreneurs.trycloudflare.com/chat_stream/"
             const response = await fetch(apiServerMinhHoang, {
@@ -200,7 +205,7 @@
                 headers: {
                 'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ "text":text, "prompt": "Bạn là một trợ lý ảo, được tạo ra với mục đích hỗ trợ và tư vấn lịch đặt sân cho khách hàng. Đây là thông tin lịch đặt sân, bạn có thể sử dụng để tư vấn cho khách hàng: "+dataChiTietThueSanString+". Hãy trả lời câu hỏi sau dựa trên thông tin đã được cung cấp:" })
+                body: JSON.stringify({ "text":text, "prompt": "Bạn là một trợ lý ảo, được tạo ra với mục đích hỗ trợ và tư vấn dịch vụ đặt sân, thuê dụng cụ cho khách hàng. Tôi cung cấp thông tin lịch đặt sân cho bạn "+dataChiTietThueSanString+" và thông tin danh sách dụng cụ: "+dataToolsGlobalString+". Hãy trả lời câu hỏi sau dựa trên thông tin đã được cung cấp:" })
             });
 
             if (!response.ok) {
@@ -224,10 +229,8 @@
                 }
                 const decodedValue = decoder.decode(value);
                 // full_text += decodedValue
-                // console.log(full_text);
                 let messageChatBox = document.querySelector('.response-from-serve-'+i)
                 messageChatBox.innerText += " "+ decodedValue.replace("</s>", "");
-                // historyConversation +=". "+ messageChatBox.innerText
             }
             i++
         }
