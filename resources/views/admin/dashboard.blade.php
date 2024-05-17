@@ -228,34 +228,34 @@
                     <div class="tick">0%</div>
                   </div>
                   <div class="bars">
-                    <div class="bar" data-percentage="{{round($percentChuyen,2)}}"; style="height: {{ $percentChuyen }}; background-color: #ff6384;">
+                    <div class="bar" title="{{$percentChuyen}}%" data-percentage="{{round($percentChuyen,2)}}"; style="height: {{ $percentChuyen }}; background-color: #ff6384;">
                       {{-- <span class="bar-label">Bóng chuyền</span> --}}
                     </div>
-                    <div class="bar" data-percentage="{{round($percentChuyenCat,2)}}"; style="height: {{ $percentChuyenCat }}; background-color: #36a2eb;">
+                    <div class="bar" title="{{$percentChuyenCat}}%" data-percentage="{{round($percentChuyenCat,2)}}"; style="height: {{ $percentChuyenCat }}; background-color: #36a2eb;">
                       {{-- <span class="bar-label">Bóng chuyền cát</span> --}}
                     </div>
-                    <div class="bar" data-percentage="{{round($percentDa,2)}}"; style="height: {{ $percentDa }}; background-color: #cc65fe;">
+                    <div class="bar" title="{{$percentDa}}%" data-percentage="{{round($percentDa,2)}}"; style="height: {{ $percentDa }}; background-color: #cc65fe;">
                       {{-- <span class="bar-label">Bóng đá</span> --}}
                     </div>
-                    <div class="bar" data-percentage="{{round($percentRo,2)}}"; style="height: {{ $percentRo }}; background-color: #ffce56;">
+                    <div class="bar" title="{{$percentRo}}%" data-percentage="{{round($percentRo,2)}}"; style="height: {{ $percentRo }}; background-color: #ffce56;">
                       {{-- <span class="bar-label">Bóng rỗ</span> --}}
                     </div>
                   </div>
                 </div>
                   <div class="legend">
-                    <div class="legend-item">
+                    <div class="legend-item" title="{{$percentChuyen}}%">
                       <span class="legend-color" style="background-color: #ff6384;"></span>
                       <span class="legend-label">Bóng chuyền ({{ $bongChuyen }})</span>
                     </div>
-                    <div class="legend-item">
+                    <div class="legend-item" title="{{$percentChuyenCat}}%">
                       <span class="legend-color" style="background-color: #36a2eb;"></span>
                       <span class="legend-label">Bóng chuyền cát ({{ $bongChuyenCat }})</span>
                     </div>
-                    <div class="legend-item">
+                    <div class="legend-item" title="{{$percentDa}}%">
                       <span class="legend-color" style="background-color: #cc65fe;"></span>
                       <span class="legend-label">Bóng đá ({{ $bongDa }})</span>
                     </div>
-                    <div class="legend-item">
+                    <div class="legend-item" title="{{$percentRo}}%">
                       <span class="legend-color" style="background-color: #ffce56;"></span>
                       <span class="legend-label">Bóng rỗ ({{ $bongRo }})</span>
                     </div>
@@ -387,7 +387,7 @@
                   <div class="progress-group">
                     Dụng cụ
                     @php
-                        $toolTotal = App\Models\dungcu::all()->count();
+                        $toolTotal = App\Models\DungCu::all()->count();
                         $activeToolCount = App\Models\DungCu::whereRaw('soLuongCon - soLuongChoThue >= 1')->where('trangThai', 1)->count();
                         $ratioTool = $activeToolCount/$toolTotal;
                         $percentTool = $ratioTool * 100;

@@ -222,14 +222,15 @@
           const gioBatDau = parseInt(chiTietThueSan.thoiGianBatDau.split(" ")[1].split(":")[0])
           let gioKetThuc = parseInt(chiTietThueSan.thoiGianKetThuc.split(" ")[1].split(":")[0])-1 //Kết thúc: 2024-04-20 09:00:00 thì lấy 09:00:00 lấy 09 - 1 = 8 Thì người khác 9h bắt đầu vẫn được
           // console.log(gioKetThuc)
-          // if(gioKetThuc === 0)
-          //   gioKetThuc = 24
-          if(gioKetThuc - gioBatDau < 0){
-            renderBusyHour(1, gioKetThuc)
-          }
-          else{
-            renderBusyHour(gioBatDau, gioKetThuc)
-          }
+          // if(gioBatDau === 0 && gioKetThuc === 0) 
+          //   renderBusyHour(24, 24)
+          // else  
+            if(gioKetThuc - gioBatDau < 0){
+              renderBusyHour(1, gioKetThuc)
+            }
+            else{
+              renderBusyHour(gioBatDau, gioKetThuc)
+            // }
         })
       })
   }

@@ -592,7 +592,8 @@
                 }
                 else
                     toastr.error(data.error)
-                    updateToolRentingQuantity(data.chiTietThueSan)
+                    if(data.chiTietThueSan.maDungCu)
+                        updateToolRentingQuantity(data.chiTietThueSan)
             })
     }
     function updateToolRentingQuantity(chiTietThueSan){
