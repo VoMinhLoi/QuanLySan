@@ -494,7 +494,6 @@
                                 if(empty($idVeMoi)){
                                     $idVeMoi = rand(1000, 9999); // Thay 1000 và 9999 bằng khoảng giá trị bạn muốn
                                 }
-                                $maSan = $_GET['maSan'];
                                 $tenSanBong = App\Models\SanBong::where('maSan',$maSan)->first()->tenSan;
                                 $ndck = "Thanh toán tiền ".$tenSanBong;
                             @endphp
@@ -515,6 +514,9 @@
         
         @include('Components.footer')
     </div>
+    <input type="hidden" id="maSan" value="{{ $maSan }}"/>
+    <input type="hidden" id="thoiGianBatDau" value="{{ $thoiGianBatDau }}"/>
+    <input type="hidden" id="thoiGianKetThuc" value="{{ $thoiGianKetThuc }}"/>
 </body>
 <script>
     const queryString = window.location.search;
@@ -523,11 +525,11 @@
 
     // Lấy giá trị của các tham số truy vấn cần thiết
     const maNguoiDung = "{{ Auth::user()->maNguoiDung }}";
-    const maSan = urlParams.get('maSan');
-    const soLuong = urlParams.get('soLuong');
-    const thoiGianBatDau = urlParams.get('thoiGianBatDau');
-    const thoiGianKetThuc = urlParams.get('thoiGianKetThuc');
-    const trangThai = urlParams.get('trangThai');
+    const maSan = document.getElementById('maSan').value;
+    // const soLuong = document.getElementById('soLuong').value;
+    const thoiGianBatDau = document.getElementById('thoiGianBatDau').value;
+    const thoiGianKetThuc = document.getElementById('thoiGianKetThuc').value;
+    // const trangThai = document.getElementById('trangThai').value;
     const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
     // console.log(urlParams.get('thoiGianBatDau'),maNguoiDung)
     var tableBody = document.querySelector('#cartUpdate')
@@ -939,7 +941,7 @@
             dataVe["SDT"] = dataSDTMaPXDiaChihoTenNguoiDat.SDT
             dataVe["tongTien"] = pay
             dataVe["daThanhToan"] = 1
-            dataVe["trangThai"] = 0
+            // dataVe["trangThai"] = 1
             dataVe["hoTen"] = dataSDTMaPXDiaChihoTenNguoiDat.hoTen
             dataVe["_token"] = token
             fetch(apiVe, {
@@ -1012,7 +1014,7 @@
                 headers: {
                     // "Content-Type": "application/x-www-form-urlencoded", x-www-form-urlencoded: form data
                     "Content-Type": "application/json",
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'X-CSRF-TOKEN': token,
                 },
                 // body: JSON.stringify(data),
                 body: JSON.stringify({ soLuongChoThue: toolQuantityInputView.value }),
@@ -1036,7 +1038,7 @@
             dataLichSuGiaoDich['maNguoiDung'] = "{{ Auth::user()->maNguoiDung }}"
             dataLichSuGiaoDich['ndck'] = "Thanh toán tiền đặt " + getTenSanBong
             dataLichSuGiaoDich['soTien'] = -pay
-            dataLichSuGiaoDich['trangThai'] = 0
+            // dataLichSuGiaoDich['trangThai'] = 1
             dataLichSuGiaoDich['loaiGD'] = 2
             dataLichSuGiaoDich['thoiGian'] = getCurrentDateTime()
             dataLichSuGiaoDich['_token'] = token
@@ -1056,7 +1058,8 @@
                     toastr.error(data.error)
                 else{
                     toastr.success(data.success)
-                    updateMoneyUserByTriggerDatabase(data.idLichSuGiaoDich)
+                    // updateMoneyUserByTriggerDatabase()
+                    updateMoneyUser()
                     // window.location.href = "/tui";
                 }
             })
@@ -1081,16 +1084,15 @@
             const currentDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
             return currentDateTime;
         }
-        function updateMoneyUserByTriggerDatabase(idLichSuGiaoDich){
-            let dataTrangThai = {}
-            dataTrangThai['trangThai'] = 1
-            dataTrangThai['_token'] = token
-            fetch(apiLichSuGiaoDich+"/"+idLichSuGiaoDich, {
+        function updateMoneyUser(){
+            
+            fetch(apiUser+"/"+maNguoiDung, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": token,
                 },
-                body: JSON.stringify(dataTrangThai),
+                body: JSON.stringify({soDuTaiKhoan: -totalPrice}),
             })
             // Trả về promise
             .then(response => {

@@ -45,7 +45,7 @@ Route::get('/tintuc/{tintuc}', [TinTucController::class, 'formTinTuc'])->name('f
 
 Route::group(['middleware' => 'userLogin'], function () {
     Route::get('/sanbong', [App\Http\Controllers\SanBongController::class, 'interface']);
-    Route::get('/thuesan', [BookController::class, 'interface']);
+    Route::post('/sanbong', [App\Http\Controllers\SanBongController::class, 'formCheckout']);
     Route::get('/hosocanhan', [LoginController::class, 'formProfile']);
     Route::get('/tui', [ChiTietThueSanController::class, 'formVe']);
     Route::get('/chitietthuesan/{chitietthuesan}', [ChiTietThueSanController::class, 'formDetail']);

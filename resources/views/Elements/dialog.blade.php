@@ -248,7 +248,10 @@
   }
   function renderBusyHour(gioBatDau, gioKetThuc){
     var allHours = document.querySelectorAll('.hourStart');
-
+    // if(gioBatDau === 0)
+    //   gioBatDau = 24
+    // if(gioKetThuc === 0)
+    //   gioKetThuc = 24
     allHours.forEach(function(input) {
         var hourValue = parseInt(input.value);
         if (hourValue >= gioBatDau && hourValue <= gioKetThuc) {
@@ -433,10 +436,10 @@
 }); //Thêm dấu ngoặc nhọn này để đóng hàm Validator
 function hanldeRentingYard(data){
   data["maSan"] = $('.overlay')[0].dataset.key,
-  data["soLuong"] = 1,
+  // data["soLuong"] = 1,
   data["thoiGianBatDau"] = getTimeStart(formatDateToYYYYMMDD(calendarChoosing),data.hourStart).toString(),
   data["thoiGianKetThuc"] = getTimeEnd(data["thoiGianBatDau"], data.borrowHour, data.hourStart).toString(),
-  data["trangThai"] = 0,
+  // data["trangThai"] = 0,
   // Kiểm tra giờ bắt đầu tới giờ kết thúc trong sân này thì có thể thuê bao nhiêu tiếng
   fetch("http://127.0.0.1:8000/api/chitietthuesan")
     .then(promise => promise.json())
@@ -477,12 +480,36 @@ function hanldeRentingYard(data){
     .catch(error => {
       toastr.error('Lỗi ràng buộc thời gian kết thúc vượt qua thời gian bắt đầu vé.')
     })
-  function transferDataToOtherPage(data){
-    var queryString = Object.keys(data).map(function(key) {
-      return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
-    }).join('&');
-    // console.log(queryString)
-    window.location.href = "/thuesan?" + queryString;
+    // Truyền trên thanh url
+  // function transferDataToOtherPage(data){
+  //   var queryString = Object.keys(data).map(function(key) {
+  //     return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+  //   }).join('&');
+  //   // console.log(queryString)
+  //   window.location.href = "/thuesan?" + queryString;
+  // }
+  function transferDataToOtherPage(data) {
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/sanbong';
+    form.style.display = 'none';
+    var csrfInput = document.createElement('input');
+  csrfInput.type = 'hidden';
+  csrfInput.name = '_token';  // Tên trường CSRF có thể khác nhau tùy thuộc vào framework backend bạn sử dụng
+  csrfInput.value = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  form.appendChild(csrfInput);
+    for (var key in data) {
+      if (data.hasOwnProperty(key)) {
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = data[key];
+        form.appendChild(input);
+      }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
   }
 }
 function formatDateToYYYYMMDD(calendar) {

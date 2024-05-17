@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\CoSo;
+use App\Models\DungCu;
 use App\Models\SanBong;
 use Exception;
 use Illuminate\Contracts\Debug\ExceptionHandler;
@@ -37,9 +38,13 @@ class SanBongController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function formCheckout(Request $request)
     {
-        //
+        $maSan = $request->maSan;
+        $thoiGianBatDau = $request->thoiGianBatDau;
+        $thoiGianKetThuc = $request->thoiGianKetThuc;
+        $dungCus = DungCu::whereRaw('soLuongCon - soLuongChoThue >= 1')->where('trangThai', 1)->get();
+        return view('Pages.checkout', compact('maSan', 'thoiGianBatDau', 'thoiGianKetThuc', 'dungCus'));
     }
 
     /**
