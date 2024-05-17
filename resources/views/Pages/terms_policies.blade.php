@@ -39,7 +39,7 @@
                                 
                                 Website của chúng tôi có thể chứa các liên kết đến các trang web khác do các tổ chức khác điều hành có điều khoản sử dụng và chính sách quyền riêng tư của riêng họ. Vui lòng đảm bảo bạn đọc kỹ các điều khoản, điều kiện và chính sách quyền riêng tư trước khi cung cấp bất kỳ dữ liệu cá nhân nào trên trang web vì chúng tôi không chấp nhận bất kỳ trách nhiệm hoặc nghĩa vụ pháp lý nào đối với trang web của các tổ chức khác.
                                 
-                                Đôi khi, chính sách này có thể thay đổi nên bạn sẽ muốn kiểm tra để đảm bảo rằng bạn hài lòng với những thay đổi của chúng tôi. Các câu hỏi về chính sách này hoặc các vấn đề khác liên quan đến quyền riêng tư có thể được gửi tới cskh@daiduong.com. Số điện thoại liên hệ của chúng tôi là +84 (0)869 622 389.</div>
+                                Đôi khi, chính sách này có thể thay đổi nên bạn sẽ muốn kiểm tra để đảm bảo rằng bạn hài lòng với những thay đổi của chúng tôi. Các câu hỏi về chính sách này hoặc các vấn đề khác liên quan đến quyền riêng tư có thể được gửi tới minhloi1131130@gmail.com. Số điện thoại liên hệ của chúng tôi là +84 (0)899 378 634.</div>
                         </div>
                     </div>
                     
@@ -94,7 +94,7 @@
                             <div class="content__heading">6. Quyền lợi của bạn</div>
                             <div class="content__description">Bạn có quyền xem dữ liệu cá nhân mà chúng tôi lưu giữ về bạn. Mọi yêu cầu phải được thực hiện bằng văn bản và chúng tôi sẽ trả lời trong vòng một tuần. Chúng tôi không tính phí cho dịch vụ này.
 
-                                Nếu bạn muốn có bản sao dữ liệu cá nhân mà chúng tôi lưu giữ về bạn, vui lòng gửi email cho chúng tôi theo địa chỉ cskh@daiduong.com
+                                Nếu bạn muốn có bản sao dữ liệu cá nhân mà chúng tôi lưu giữ về bạn, vui lòng gửi email cho chúng tôi theo địa chỉ minhloi1131130@gmail.com
                                 Chúng tôi muốn đảm bảo rằng dữ liệu cá nhân mà chúng tôi lưu giữ về bạn là chính xác và cập nhật. Nếu bất kỳ chi tiết nào không chính xác, vui lòng cho chúng tôi biết và chúng tôi sẽ sửa đổi chúng.</div>
                         </div>
                     </div>
