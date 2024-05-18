@@ -254,7 +254,7 @@
             width: fit-content;
         }
         .tool-img {
-            width: 70px;
+            width: 84px;
         }
         .tool-action {
             position: relative;

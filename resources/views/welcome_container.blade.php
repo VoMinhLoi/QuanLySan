@@ -23,7 +23,8 @@
     }
     
     .new-extension__img {
-        width: 100%;
+        /* width: 100%; */
+        width: 900px;
         object-fit: cover;
         
     }

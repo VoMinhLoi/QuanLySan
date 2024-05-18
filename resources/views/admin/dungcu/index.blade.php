@@ -336,7 +336,7 @@
                                                         ${news.soLuongChoThue }
                                                     </td>
                                                     <td class="project-actions column-time-close">
-                                                        <img alt="img" style="width: 100%; object-fit: cover;" src="assets/img/${news.hinhAnh1}">
+                                                        <img alt="img" style="width: 92px; object-fit: cover;" src="assets/img/${news.hinhAnh1}">
                                                     </td>
                                                     <td class="column-tool-price">
                                                         ${formatCurrency(news.donGiaGoc)}
