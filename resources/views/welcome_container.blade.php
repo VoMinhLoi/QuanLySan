@@ -108,8 +108,10 @@
             @php
                 $author = App\Models\User::where('maNguoiDung', $item->maNguoiDang)->first();
             @endphp
-            <a class="row no-gutters" href="{{ route('formTinTuc', $item->id) }}">
-                {{--C2: <a class="row no-gutters" href="{{ url('/tintuc', $item->id) }}"> --}}
+            {{-- <a class="row no-gutters" href="{{ route('formTinTuc', $item->id) }}"> --}}
+            <form class="row no-gutters" action="{{ route('formTinTuc') }}" method="POST">
+                @csrf
+                <input type="hidden" name="id" value="{{ $item->id }}">
                 <div class="new">
                     <div class="new-extension col l-5 m-5 c-12">
                         <img src="assets/img/{{ $item->hinhAnh }}" alt="news" class="new-extension__img">
@@ -130,7 +132,7 @@
                         <p class="new-infor__date">{{\DateTime::createFromFormat('Y-m-d H:i:s',  $item->thoiGian)->format('d-m-Y H:i:s') }} - <span class="new-infor__auth">Tác giả: {{ $author->ho ." ". $author->ten }}</span></p>
                     </div>
                 </div>
-            </a>
+            </form>
         @endforeach
 
     </div>

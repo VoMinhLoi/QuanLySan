@@ -39,7 +39,7 @@ Route::get('/quenmatkhau', [LoginController::class, 'formForgot']);
 Route::post('/quenmatkhau', [LoginController::class, 'forgot'])->name('user.forgot');
 Route::get('/cailaimatkhau/{token}', [LoginController::class, 'formResetPassword']);
 Route::post('/cailaimatkhau', [LoginController::class, 'resetPassword'])->name('user.resetPassword');
-Route::get('/tintuc/{tintuc}', [TinTucController::class, 'formTinTuc'])->name('formTinTuc');
+Route::post('/cttintuc', [TinTucController::class, 'formTinTuc'])->name('formTinTuc');
 
 
 

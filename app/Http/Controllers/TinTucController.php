@@ -12,10 +12,10 @@ class TinTucController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function formTinTuc($maTin)
+    // public function formTinTuc($maTin)
+    public function formTinTuc(Request $request)
     {
-        // dd($maTin);
-        $tinTuc = TinTuc::where('id', $maTin)->first();
+        $tinTuc = TinTuc::where('id', $request->id)->first();
         $tinTuc->luotXem += 1;
         $tinTuc->save(); // Use save() to update the model
         return view('Pages.news', compact('tinTuc'));
