@@ -809,6 +809,10 @@
                     // console.log(rentingYardTotalPrice)
                     // console.log(rentingToolTotalPriceGlobal)
                     // console.log(totalPrice)
+                    if(!thoiGianKetThuc){
+                        window.location.href = "/sanbong";
+                        toastr.error("Thiết bị này không thể tính toán ngày kết thúc")
+                    }
                     data['tongTien'] = totalPrice;
                     dataSDTMaPXDiaChihoTenNguoiDat = data;
                     
