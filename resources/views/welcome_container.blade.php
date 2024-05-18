@@ -6,7 +6,6 @@
         display: flex;
         /* align-items: center; */
         transition: all ease 0.3s;
-        border: 1px solid #ccc;
         padding: 20px 24px;
         flex-wrap: wrap;
     }
