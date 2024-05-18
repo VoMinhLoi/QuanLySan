@@ -340,17 +340,17 @@
                     <div class="col l-9 m-9 c-12">
                         <div class="row sorting-search">
                             <div class="col l-9 m-9 c-12 sorting" style="height: 100%; " >
-                                <h2 class="sorting-view__heading" style="display: block">Tìm kiếm sân: </h2>
+                                <h2 class="sorting-view__heading" style="display: block">Tìm kiếm: </h2>
                                 <div class="sorting-view" style="flex: 1">
                                     <input type="text" class="sorting-view__search" id="name-search" placeholder="Tên sân, mô tả, vị trí">
                                 </div>
                                 <button class="button-search"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
-                            <div class="col l-3 m-3 c-0 sorting opacity-0">
-                                {{-- <label for="time">Thời gian thuê: </label>
+                            {{-- <div class="col l-3 m-3 c-0 sorting opacity-0">
+                                <label for="time">Thời gian thuê: </label>
                                 <input type="number" id="time" value="1" class="">
-                                <label for="time">Giờ</label> --}}
-                            </div>
+                                <label for="time">Giờ</label>
+                            </div> --}}
                         </div>
                         <div class="row">
                             <div class="col l-6 m-6 c-6 sorting ">

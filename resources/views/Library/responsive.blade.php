@@ -131,6 +131,9 @@
             .image-box {
                 /* height: unset; */
             }
+            div.sorting-search {
+                width: 100%;
+            }
         }
         .animationOverFlow {
             animation: OverFlow 0.2s linear 0s forwards;
