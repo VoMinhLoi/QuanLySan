@@ -34,8 +34,10 @@ class LoginController extends Controller
                     return redirect('/dashboard');
                 else
                     return redirect('/sanbong');
-            else
+            else {
+                Auth::logout();
                 return back()->withErrors(['message' => "Tài khoản đã bị vô hiệu hóa."]);
+            }
         } else
             return redirect()->back()->withErrors('Tài khoản, mật khẩu không chính xác.');
     }
@@ -59,8 +61,10 @@ class LoginController extends Controller
                     Auth::login($finduser);
                     if (Auth::user()->maQuyen == 1)
                         return redirect('/dashboard');
-                } else
+                } else {
+                    Auth::logout();
                     return redirect('/dangnhap')->withErrors(['message' => "Tài khoản đã bị vô hiệu hóa."]);
+                }
             } else {
                 $oldUserHasEmailLikeGmail = User::where('taiKhoan', $user->email)->first();
 
@@ -72,8 +76,10 @@ class LoginController extends Controller
                         Auth::login($oldUserHasEmailLikeGmail);
                         if (Auth::user()->maQuyen == 1)
                             return redirect('/dashboard');
-                    } else
+                    } else {
+                        Auth::logout();
                         return redirect('/dangnhap')->withErrors(['message' => "Tài khoản đã bị vô hiệu hóa."]);
+                    }
                 } else {
                     // Tạo người dùng mới nếu không có người dùng nào tồn tại với email tương tự
                     $newUser = User::create([
