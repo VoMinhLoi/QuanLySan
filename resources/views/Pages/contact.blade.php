@@ -117,7 +117,10 @@
         var buttonSendView = document.querySelector('.chat-bot-footer__send')
         var inputView = document.querySelector('.chat-bot-footer__input')
         var bodyConversationView  = document.querySelector('.chat-bot-body')
-        buttonSendView.onclick = () => { 
+        buttonSendView.onclick = () => {
+            buttonSendView.style.opacity = 0.5
+            buttonSendView.style.cursor = "not-allowed"
+            buttonSendView.disabled = true;
             if(inputView.value){
                 let dataUserMessage = inputView.value
                 let messageUserView = document.createElement('div')
@@ -131,6 +134,26 @@
                 inputView.value = ""
             }
         }
+        inputView.addEventListener('keypress',(e)=>{
+            if(e.key === "Enter"){
+                buttonSendView.style.opacity = 0.5
+                buttonSendView.style.cursor = "not-allowed"
+                buttonSendView.disabled = true;
+                inputView.disabled = true;
+                if(inputView.value){
+                    let dataUserMessage = inputView.value
+                    let messageUserView = document.createElement('div')
+                    messageUserView.innerHTML =     `
+                                                    <div class="chat-bot-body__user">
+                                                        <p>${dataUserMessage}</p>
+                                                    </div>
+                                                    `
+                    bodyConversationView.append(messageUserView)
+                    hanldeCallApiGPT(dataUserMessage)
+                    inputView.value = ""
+                }  
+            }
+        })
         bodyConversationView.addEventListener('scroll', function() {
             if (this.scrollHeight > this.clientHeight) {
                 this.classList.remove('hidden-scrollbar');
@@ -199,7 +222,8 @@
         var i  = 1
         async function hanldeCallApiGPT(text) {
             // let apiServerBorrow = 'http://103.20.97.118:5002/chat_stream/'
-            let apiServerMinhHoang = "https://provider-obituaries-resolutions-entrepreneurs.trycloudflare.com/chat_stream/"
+            // let apiServerMinhHoang = "https://provider-obituaries-resolutions-entrepreneurs.trycloudflare.com/chat_stream/"
+            let apiServerMinhHoang = "https://bc-marion-demanding-further.trycloudflare.com/chat_stream"
             const response = await fetch(apiServerMinhHoang, {
                 method: 'POST',
                 headers: {
@@ -233,6 +257,10 @@
                 messageChatBox.innerText += " "+ decodedValue.replace("</s>", "");
             }
             i++
+            buttonSendView.style.opacity = 1
+            buttonSendView.style.cursor = "pointer"
+            buttonSendView.disabled = false;
+            inputView.disabled = true;
         }
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
