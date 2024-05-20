@@ -118,11 +118,11 @@
         var inputView = document.querySelector('.chat-bot-footer__input')
         var bodyConversationView  = document.querySelector('.chat-bot-body')
         buttonSendView.onclick = () => {
-            buttonSendView.style.opacity = 0.5
-            buttonSendView.style.cursor = "not-allowed"
-            buttonSendView.disabled = true;
-            inputView.disabled = true;
             if(inputView.value){
+                buttonSendView.style.opacity = 0.5
+                buttonSendView.style.cursor = "not-allowed"
+                buttonSendView.disabled = true;
+                inputView.disabled = true;
                 let dataUserMessage = inputView.value
                 let messageUserView = document.createElement('div')
                 messageUserView.innerHTML =     `
