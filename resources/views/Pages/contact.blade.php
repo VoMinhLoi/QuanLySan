@@ -191,7 +191,7 @@
                     buttonSendView.style.opacity = 1
                     buttonSendView.style.cursor = "pointer"
                     buttonSendView.disabled = false;
-                    inputView.disabled = true;
+                    inputView.disabled = false;
                 }
 
             })
