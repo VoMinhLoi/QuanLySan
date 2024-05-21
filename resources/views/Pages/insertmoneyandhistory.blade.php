@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="./assets/img/vnpay.png" type="image/icon type">
 <title>Thông báo nạp tiền thành công</title>
 <link rel="stylesheet" href="styles.css">
 <style>
@@ -66,7 +67,7 @@
           echo  '   <h2>Thông báo</h2>
                     <p>Nạp tiền thành công!</p>
                     <img src="assets/img/iconCheck.jpg" alt="success" width="50px" height="50px">
-                    <p>Kính mời quý khách quay lại trang kiểm tra đặt sân ban đầu.</p>
+                    <p>Kính mời quý khách quay lại trang ban đầu.</p>
                 ';
         }
         else {
