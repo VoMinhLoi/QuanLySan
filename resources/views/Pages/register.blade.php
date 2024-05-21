@@ -38,7 +38,7 @@
             id="surname"
             name="ho"
             type="text"
-            placeholder="VD: Sơn Đặng"
+            placeholder="VD: Võ Minh Lợi"
             class="form-control"
           />
           <span class="form-message"></span>
@@ -49,7 +49,7 @@
             id="name"
             name="ten"
             type="text"
-            placeholder="VD: Sơn Đặng"
+            placeholder="VD: Lợi"
             class="form-control"
           />
           <span class="form-message"></span>
