@@ -41,7 +41,9 @@
 <div class="notification">
   <div class="notification-content">
     @php
-        if(isset($_GET['vnp_Amount'])){
+        $exist = App\Models\LichSuGiaoDich::where('transID', $_GET['vnp_TransactionNo'])->first();
+        if(empty($exist)){
+          if(isset($_GET['vnp_Amount'])){
             $soTienCanNap = $_GET['vnp_Amount']/100;
             $maNguoiDung = Auth::user()->maNguoiDung;
             $user = App\Models\User::where('maNguoiDung', $maNguoiDung)->first();
@@ -60,13 +62,26 @@
             $lsgd['loaiGD'] = 1;
             App\Models\LichSuGiaoDich::create($lsgd);
             session()->flash('json_message', 'Tiền đã được tính vào số dư tài khoản');
+          }
+          echo  '   <h2>Thông báo</h2>
+                    <p>Nạp tiền thành công!</p>
+                    <img src="assets/img/iconCheck.jpg" alt="success" width="50px" height="50px">
+                    <p>Kính mời quý khách quay lại trang kiểm tra đặt sân ban đầu.</p>
+                ';
+        }
+        else {
+          echo  '   <h2>Thông báo</h2>
+                    <p>Tiền của quý khách đã vào tài khoản, vui lòng kiểm tra lại ví. Nếu có sai sót xin liên hệ kỹ thuật: 0899378634!</p>
+                ';
         }
     @endphp
-    <h2>Thông báo</h2>
-    <p>Nạp tiền thành công!</p>
-    <img src="assets/img/iconCheck.jpg" alt="success" width="50px" height="50px">
-    <p>Kính mời quý khách quay lại trang kiểm tra đặt sân ban đầu.</p>
+
   </div>
 </div>
 </body>
+<script>
+    setTimeout(() => {
+      window.location.href = '/naptien'
+    }, 5000);
+</script>
 </html>
