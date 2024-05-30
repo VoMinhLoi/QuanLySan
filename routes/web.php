@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\ChiTietThueSanController;
+// use App\Http\Controllers\DungCuController;
 use App\Http\Controllers\TinTucController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,7 +27,7 @@ Route::get('/', function () {
 
 
 Route::get('/lienhe', [App\Http\Controllers\User\ContactController::class, 'index']);
-Route::post('/lienhe', [App\Http\Controllers\User\ContactController::class, 'sendChat']);
+Route::post('/lienhe', [App\Http\Controllers\User\ContactController::class, 'sendChat'])->name('chatbot');
 Route::get('/dieukhoanchinhsach', [App\Http\Controllers\User\PoliciesAndTermsController::class, 'index']);
 
 
@@ -46,6 +47,7 @@ Route::post('/cttintuc', [TinTucController::class, 'formTinTuc'])->name('formTin
 Route::group(['middleware' => 'userLogin'], function () {
     Route::get('/sanbong', [App\Http\Controllers\SanBongController::class, 'interface']);
     Route::post('/sanbong', [App\Http\Controllers\SanBongController::class, 'formCheckout']);
+    // Route::get('/muadungcu', [DungCuController::class, 'interface']);
     Route::get('/hosocanhan', [LoginController::class, 'formProfile']);
     Route::get('/tui', [ChiTietThueSanController::class, 'formVe']);
     Route::get('/chitietthuesan/{chitietthuesan}', [ChiTietThueSanController::class, 'formDetail']);
