@@ -164,21 +164,22 @@
 @endsection
 <script>
     var apiUser = "http://127.0.0.1:8000/api/user"
+    let dataUser = {}
     function disableUser(maNguoiDung){
-        let dataUser = {}
+
         dataUser['trangThai'] = 0
         updateUser(maNguoiDung, dataUser)
         setTimeout(handleRender(maNguoiDung), 1000)
     }
     function enableUser(maNguoiDung){
-        let dataUser = {}
+
         dataUser['trangThai'] = 1
         updateUser(maNguoiDung, dataUser)
         setTimeout(handleRender(maNguoiDung), 1000)
     }
     function grantPermissions(maNguoiDung){
         if(confirm("Bạn có chắc chắn muốn cấp quyền quản trị viên cho người dùng mã ND" + maNguoiDung)){
-            let dataUser = {}
+    
             dataUser['maQuyen'] = 1
             updateUser(maNguoiDung, dataUser)
             setTimeout(handleRender(maNguoiDung), 1000)
@@ -233,14 +234,14 @@
                                                     ${formatCurrency(user.soDuTaiKhoan)}
                                                 </td>
                                                 <td class="project_progress text-center">
-                                                    ${user.maQuyen == 1?"Quản trị viên":"Người dùng"}
+                                                    ${dataUser.maQuyen == 1?"Quản trị viên":"Người dùng"}
                                                 </td>
                                                 <td class="project-state">
-                                                    ${user.trangThai?`<span style="color: green">Hoạt động</span>`:`<span style="color: red">Khóa</span>`}
+                                                    ${dataUser.trangThai?`<span style="color: green">Hoạt động</span>`:`<span style="color: red">Khóa</span>`}
                                                 </td>
                                                 <td class="project-actions text-right">
-                                                    ${user.maQuyen == 2?`<a class="btn btn-primary btn-sm" onclick="grantPermissions('${ user.maNguoiDung }')">Cấp quyền</a>`:""}
-                                                    ${user.trangThai?`<a class="btn btn-danger btn-sm button-disable" onclick="disableUser('${ user.maNguoiDung }')"><i class="fas fa-trash"></i>Vô hiệu hóa</a>`:`<a class="btn btn-success btn-sm" onclick="enableUser('${ user.maNguoiDung }')"><i class="fas fa-folder"></i>Mở khóa</a>`}
+                                                    ${dataUser.maQuyen == 2?`<a class="btn btn-primary btn-sm" onclick="grantPermissions('${ user.maNguoiDung }')">Cấp quyền</a>`:""}
+                                                    ${dataUser.trangThai?`<a class="btn btn-danger btn-sm button-disable" onclick="disableUser('${ user.maNguoiDung }')"><i class="fas fa-trash"></i>Vô hiệu hóa</a>`:`<a class="btn btn-success btn-sm" onclick="enableUser('${ user.maNguoiDung }')"><i class="fas fa-folder"></i>Mở khóa</a>`}
                                                 </td>
                                             </tr>
                                         `
