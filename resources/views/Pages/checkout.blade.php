@@ -718,6 +718,7 @@
                     var payView = document.querySelector('.bound-pay');
                     payView.classList.add('display-none')
                 })
+                .catch(error => toastr.info("Sản phẩm có thể đã không còn kinh doanh"))
         }
         var toolsRentingCloseButtonView = document.querySelector('.tool-action')
         toolsRentingCloseButtonView.onclick = ()=>{
@@ -763,6 +764,7 @@
                     payView.classList.add('display-none')
 
                 })
+                .catch(error => toastr.info("Sản phẩm có thể đã không còn kinh doanh"))
         }
     toolQuantityInputView.onchange = ()=> {
         let enteringUserToolQuantity = parseInt(toolQuantityInputView.value)
@@ -788,6 +790,7 @@
                     var payView = document.querySelector('.bound-pay');
                     payView.classList.add('display-none')
                 })
+                .catch(error => toastr.info("Sản phẩm có thể đã không còn kinh doanh"))
     }
     // Validator
         var apiUser = 'http://127.0.0.1:8000/api/user'
@@ -892,6 +895,7 @@
                                                 totalPriceView.innerText = formatCurrency(totalPrice)
                                             }
                                         })
+                                        .catch(error => toastr.info("Sản phẩm có thể đã không còn kinh doanh"))
                                 }
                             })
                             .catch(error => {
