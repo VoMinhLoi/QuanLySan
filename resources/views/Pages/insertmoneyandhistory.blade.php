@@ -83,6 +83,6 @@
 <script>
     setTimeout(() => {
       window.location.href = '/naptien'
-    }, 5000);
+    }, 2000);
 </script>
 </html>
