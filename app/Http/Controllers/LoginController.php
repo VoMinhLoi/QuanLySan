@@ -175,9 +175,9 @@ class LoginController extends Controller
             // Lấy giá trị của 'idVe' và 'ndck' từ yêu cầu
             // $ndck = $request->input('ndck');
             // $vnp_OrderInfo = $ndck;
-            $idVe = $request->input('idVe');
             $totalPrice = $request->input('totalPrice');
-            $vnp_TxnRef = $idVe;
+            // $idVe = $request->input('idVe');
+            // $vnp_TxnRef = $idVe;
             $totalPriceNumeric = (int) str_replace(['.', ',', '₫', ' '], '', $totalPrice);
             $vnp_Amount = $totalPriceNumeric * 100;
         }
