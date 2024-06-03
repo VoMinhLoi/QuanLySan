@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Models\ChiTietThueSan;
+use App\Models\LichSuGiaoDich;
 use App\Models\Ve;
 use Illuminate\Http\Request;
 
@@ -15,6 +16,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        // Doanh thu từ việc đặt sân
         $chiTietThueSan = ChiTietThueSan::all();
         $veQuantity = ChiTietThueSan::count();
         $doanhThu = 0;
@@ -22,56 +24,18 @@ class DashboardController extends Controller
             $tongTienVe = Ve::where('id', $item->maVe)->first()->tongTien;
             $doanhThu += $tongTienVe;
         }
+
+        //Tính thêm lợi nhuận từ việc hủy vé
+        $chiTietThueSanDaXoa = ChiTietThueSan::onlyTrashed()->get();
+        $tongTienVeDaXoa = 0;
+        foreach ($chiTietThueSanDaXoa as $item) {
+            $tongTienVeDaXoa += Ve::where('id', $item->maVe)->first()->tongTien;
+        }
+        $loiNhuanTuHuyVe = $tongTienVeDaXoa - LichSuGiaoDich::where('loaiGD', 3)->get()->sum('soTien');
+
         $averagePrice = $doanhThu / $veQuantity;
+        $doanhThu += $loiNhuanTuHuyVe;
         $activeUsersCount = User::where('trangThai', '!=', 0)->count();
-        return view('Admin.dashboard', compact('activeUsersCount', 'veQuantity', 'doanhThu', 'averagePrice'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
-        //
+        return view('Admin.dashboard', compact('activeUsersCount', 'veQuantity', 'doanhThu', 'averagePrice', 'loiNhuanTuHuyVe'));
     }
 }

@@ -182,7 +182,7 @@
                   <p class="text-center">
                     <strong>Tỷ lệ đặt loại sân</strong>
                   </p>
-                  <div class="wrapper-chart" style="display: flex; height: 294px; align-items: center; justify-content: space-between">
+                  <div class="wrapper-chart" style="display: flex; height: 296px; align-items: center; justify-content: space-between">
                     @php
                         $sanBongs = App\Models\ChiTietThueSan::all()->pluck('maSan');
                         $total = $sanBongs->count();
@@ -304,9 +304,9 @@
               <div class="row">
                 <!-- /.col -->
                 <div class="col-md-12">
-                  <p class="text-center">
+                  {{-- <p class="text-center">
                     <strong>So sánh tổng hệ thống</strong>
-                  </p>
+                  </p> --}}
 
                   <div class="progress-group">
                     Dòng tiền
@@ -322,8 +322,16 @@
                   </div>
                   <!-- /.progress-group -->
                   <div class="progress-group">
-                    <span class="progress-text">Tỷ lệ giao dịch</span>
-                    <span class="float-right"><b>100</b>/100</span>
+                    <span class="progress-text">Lợi nhuận từ bán vé</span>
+                    <span class="float-right">{{ number_format($doanhThu - $loiNhuanTuHuyVe, 0, ',', '.') }}<sup>₫</sup></span>
+                    <div class="progress progress-sm" title="100%">
+                      <div class="progress-bar bg-primary" style="width: 100%"></div>
+                    </div>
+                  </div>
+                  <!-- /.progress-group -->
+                  <div class="progress-group">
+                    <span class="progress-text">Doanh thu từ hủy vé</span>
+                    <span class="float-right">{{ number_format($loiNhuanTuHuyVe, 0, ',', '.') }}<sup>₫</sup></span>
                     <div class="progress progress-sm" title="100%">
                       <div class="progress-bar bg-primary" style="width: 100%"></div>
                     </div>

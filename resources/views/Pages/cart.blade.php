@@ -302,7 +302,7 @@
                                     </div>
                                 </div>
                                 <p class="">
-                                    <strong>Lưu ý: </strong>Hủy sân trước <span style="color: red">1 tiếng</span> hoàn tiền lại 100% vào số dư tài khoản của bạn trên website. Sau <span style="color: red">1 tiếng</span> không thể hủy sân.
+                                    <strong>Lưu ý: </strong>Hủy sân trước <span style="color: red">1 tiếng thời gian bắt đầu</span> hoàn tiền lại 100% vào số dư tài khoản của bạn trên website. Còn nữa tiếng bắt đầu hoàn lại 50%. Qua <span style="color: red">nữa tiếng</span> không thể hủy sân.
                                 </p>
                             </form>
                         </div>
@@ -373,9 +373,10 @@
                         }
                     })
                 }
-    let tableBody = document.querySelector('#cartUpdate')
+    const tableBody = document.querySelector('#cartUpdate')
+    const thoiGianHienTai = layThoiGianHienTai();
+    
     function handleRenderTicket(dataCTTS){
-        let thoiGianHienTai = layThoiGianHienTai();
         // console.log("Thời điểm hiện tại: "+ thoiGianHienTai)
         dataCTTS.forEach(CTTS => {
             fetch("http://127.0.0.1:8000/api/sanbong/"+CTTS.maSan)
@@ -400,7 +401,7 @@
                                                 ${formatCurrency(sanBong.giaDichVu)}/h
                                             </td>
                                             <td style="flex-direction: column">
-                                                ${tinhKhoangCach(thoiGianHienTai, CTTS.thoiGianBatDau)>=1?`<a style="cursor: pointer" class="button-action button-action--delete" onclick="cancelCalendar('${CTTS.maCTTS}')" >Hủy</a>`:``}
+                                                ${tinhKhoangCach(thoiGianHienTai, CTTS.thoiGianBatDau)>=0.5?`<a style="cursor: pointer" class="button-action button-action--delete" onclick="cancelCalendar('${CTTS.maCTTS}')" >Hủy</a>`:``}
                                                 <a class="button-action button-action--infor" href="/chitietthuesan/${CTTS.maCTTS}" target="_blank">Chi tiết</a>
                                             </td>
                                             <td style="text-align: center">
@@ -455,17 +456,17 @@
     }
     // ${tinhKhoangCach(thoiGianHienTai, CTTS.thoiGianBatDau)<=0?'Đã sử dụng':''}
     function tinhKhoangCach(gioBatDau, gioKetThuc) {
-                // Chuyển đổi thời gian thành đối tượng Date
-                var batDau = new Date(gioBatDau);
-                var ketThuc = new Date(gioKetThuc);
-                
-                // Tính toán khoảng cách thời gian (tính bằng mili giây)
-                var khoangCachMiliseconds = ketThuc - batDau;
-                
-                // Chuyển đổi khoảng cách từ mili giây thành giờ
-                var khoangCachGio = khoangCachMiliseconds / (1000 * 60 * 60);
-                
-                return khoangCachGio;
+        // Chuyển đổi thời gian thành đối tượng Date
+        var batDau = new Date(gioBatDau);
+        var ketThuc = new Date(gioKetThuc);
+        
+        // Tính toán khoảng cách thời gian (tính bằng mili giây)
+        var khoangCachMiliseconds = ketThuc - batDau;
+        
+        // Chuyển đổi khoảng cách từ mili giây thành giờ
+        var khoangCachGio = khoangCachMiliseconds / (1000 * 60 * 60);
+        
+        return khoangCachGio;
     }
     function layThoiGianHienTai() {
         var now = new Date();
@@ -519,7 +520,7 @@
     }
     function cancelCalendar(value){
         
-        if(confirm("Bạn có chắc chắn muốn hủy vé này không?")){
+        if(confirm("Hủy sân trước 1 tiếng bắt đầu hoàn 100%, trước 30 phút thì hoàn 50%, vậy bạn có chắc chắn muốn hủy vé này không?")){
             deleteRowViewAndQuantityCart(value)
             handleDeleteChiTietThueSan(value)
         }
@@ -536,7 +537,14 @@
     function Refund(value){
         getOneChiTietThueSan(value, CTTS => 
             getVe(CTTS.maVe, ve => {
-                updateUserMoney(ve.tongTien, value)
+                let cancelHourBeforeDistance = tinhKhoangCach(thoiGianHienTai, CTTS.thoiGianBatDau)
+                if(cancelHourBeforeDistance >= 1)
+                    updateUserMoney(ve.tongTien, value)
+                else
+                    if(cancelHourBeforeDistance >= 0.5)
+                        updateUserMoney(parseFloat(ve.tongTien/2), value)
+                    else
+                        toastr.error("Không thể hủy sân vì đã qua giờ quy định.")
             })
         )
     }
@@ -553,7 +561,6 @@
     function updateUserMoney(money, maCTTS){
         var data = {}
         data['soDuTaiKhoan'] = money;
-        console.log(data)
         fetch("http://127.0.0.1:8000/api/user/"+parseInt("{{ Auth::user()->maNguoiDung }}"),{
             method: 'PUT',
             headers: {

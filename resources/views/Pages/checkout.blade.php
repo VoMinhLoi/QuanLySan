@@ -485,9 +485,12 @@
                                     </div>
                                 </div>
                             </div>
-                            
+                            <p class="" style="margin-top: 12px">
+                                <strong>Lưu ý: </strong>Hủy sân trước <span style="color: red">1 tiếng thời gian bắt đầu</span> hoàn tiền lại 100% vào số dư tài khoản của bạn trên website. Còn nữa tiếng bắt đầu hoàn lại 50%. Qua <span style="color: red">nữa tiếng</span> không thể hủy sân.
+                            </p>
                             <button class="btn btn-md btn-golden">Thanh toán</button>
                           </form>
+                          
                             @php
                                 // $veCuoiCung = App\Models\Ve::latest()->first();
                                 $idVeMoi = App\Models\Ve::orderBy('id', 'desc')->first()->id + 1;
@@ -851,20 +854,18 @@
                                     let formatThoiGianKetThucBooking = new Date(thoiGianKetThuc)
 
                                     let formatThoiGianBatDauVe = new Date(CTTS.thoiGianBatDau)
-                                    isSameDate =  formatThoiGianBatDauBooking<= formatThoiGianBatDauVe && formatThoiGianBatDauVe < formatThoiGianKetThucBooking?true:false
-                                    if(isSameDate)
-                                        break;
-
                                     let formatThoiGianKetThucVe = new Date(CTTS.thoiGianKetThuc)
-                                    isSameDate = formatThoiGianBatDauBooking < formatThoiGianKetThucVe && formatThoiGianKetThucVe <= formatThoiGianKetThucBooking?true:false
-                                    if(isSameDate)
+                                    if(formatThoiGianBatDauBooking<= formatThoiGianBatDauVe && formatThoiGianBatDauVe < formatThoiGianKetThucBooking || formatThoiGianBatDauBooking < formatThoiGianKetThucVe && formatThoiGianKetThucVe <= formatThoiGianKetThucBooking){
+                                        isSameDate = true;
                                         break;
-                                    // Còn 1 trường hợp vé đặt có khoảng thời gian nhỏ hơn vs vé đã đặt: 19 - 21 vs 18 - 22
+                                    }
+                                    // Còn 1 trường hợp vé đặt có khoảng thời gian nhỏ hơn vs vé đã đặt: 18 - 21 vs 16 - 22
                                     if(formatThoiGianBatDauVe<= formatThoiGianBatDauBooking  && formatThoiGianBatDauBooking < formatThoiGianKetThucVe || formatThoiGianBatDauVe< formatThoiGianKetThucBooking  && formatThoiGianKetThucBooking <= formatThoiGianKetThucVe){
                                         isSameDate = true;
                                         break;
                                     }
                                 }
+                                console.log(isSameDate)
                                 if(isSameDate){
                                     toastr.options = {
                                         "toastClass": "toast-style", // Đặt lớp CSS cho toast
@@ -878,24 +879,37 @@
                                     },10000)
                                 }
                                 else{
-                                    fetch("http://127.0.0.1:8000/api/dungcu/"+ toolListView.value)
-                                        .then(response => response.json())
-                                        .then(dungCu => {
-                                            let rentingAllowToolQuantity = dungCu.soLuongCon - dungCu.soLuongChoThue
-                                            if(parseInt(toolQuantityInputView.value) <= rentingAllowToolQuantity)
-                                                handleMoneyUser(data['tongTien']);
-                                            else{
-                                                toastr.warning("Số lượng thuê không phù hợp.");
-                                                subtitleMaxQuantity.innerText = rentingAllowToolQuantity
-                                                toolQuantityInputView.setAttribute('max',rentingAllowToolQuantity)
-                                                toolQuantityInputView.value = rentingAllowToolQuantity
-                                                rentingToolTotalPriceGlobal = dataOneToolIsRented.donGiaThue * tinhKhoangCach(thoiGianBatDau, thoiGianKetThuc) * rentingAllowToolQuantity
-                                                toolRentingTotalPriceView.innerText = formatCurrency(rentingToolTotalPriceGlobal)
-                                                totalPrice = rentingToolTotalPriceGlobal + rentingYardTotalPrice
-                                                totalPriceView.innerText = formatCurrency(totalPrice)
-                                            }
-                                        })
-                                        .catch(error => toastr.info("Sản phẩm có thể đã không còn kinh doanh"))
+                                    // fetch("http://127.0.0.1:8000/api/sanbong/"+maSan)
+                                    //     .then(response => response.json())
+                                    //     .then(dataSanBong => {
+                                    //         if(dataSanBong.trangThai){
+                                                    fetch("http://127.0.0.1:8000/api/dungcu/"+ toolListView.value)
+                                                        .then(response => response.json())
+                                                        .then(dungCu => {
+                                                            let rentingAllowToolQuantity = dungCu.soLuongCon - dungCu.soLuongChoThue
+                                                            if(parseInt(toolQuantityInputView.value) <= rentingAllowToolQuantity)
+                                                                handleMoneyUser(data['tongTien'])
+                                                            else{
+                                                                toastr.warning("Số lượng thuê không phù hợp.");
+                                                                subtitleMaxQuantity.innerText = rentingAllowToolQuantity
+                                                                toolQuantityInputView.setAttribute('max',rentingAllowToolQuantity)
+                                                                toolQuantityInputView.value = rentingAllowToolQuantity
+                                                                rentingToolTotalPriceGlobal = dataOneToolIsRented.donGiaThue * tinhKhoangCach(thoiGianBatDau, thoiGianKetThuc) * rentingAllowToolQuantity
+                                                                toolRentingTotalPriceView.innerText = formatCurrency(rentingToolTotalPriceGlobal)
+                                                                totalPrice = rentingToolTotalPriceGlobal + rentingYardTotalPrice
+                                                                totalPriceView.innerText = formatCurrency(totalPrice)
+                                                            }
+                                                        })
+                                                        .catch(error => toastr.info("Sản phẩm có thể đã không còn kinh doanh"))
+                                        //     }
+                                        //     else{
+                                        //         toastr.warning("Sân đã bảo trì.")
+                                        //         // setTimeout(()=> {
+                                        //         //     window.location.href = "/sanbong";
+                                        //         // },10000)
+                                        //     }
+                                        // })
+                                        // .catch(error => toastr.error("Sân đã không tồn tại."))
                                 }
                             })
                             .catch(error => {
@@ -911,7 +925,7 @@
             return parseFloat(input.replace(/[^\d]/g, ''));
         }
         function handleMoneyUser (pay){
-            fetch(apiUser+'/'+"{{ Auth::user()->maNguoiDung }}")
+            fetch(apiUser+'/'+maNguoiDung)
             .then(response => response.json())
             .then(data => {
                 var payView = document.querySelector('.bound-pay');
@@ -927,8 +941,6 @@
                             name: "totalPrice", // Assuming totalPrice is a variable containing the name
                             value: totalPrice - data.soDuTaiKhoan // Assuming totalPrice is a variable containing the value
                         });
-                        // console.log(input)
-                        // console.log(formRecharge)
                         formRecharge.appendChild(input);
                     }
                 }
