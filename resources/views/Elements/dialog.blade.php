@@ -230,7 +230,7 @@
             }
             else{
               renderBusyHour(gioBatDau, gioKetThuc)
-            // }
+            }
         })
       })
   }
