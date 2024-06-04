@@ -66,6 +66,9 @@
                         <th style="width: 10%">
                             Ghi chú
                         </th>
+                        <th style="width: 10%">
+                            Hành động
+                        </th>
                     </tr>
                 </thead>
                     <tbody >
@@ -74,8 +77,12 @@
                                 <td>
                                     {{'V'.$item->maVe }}
                                 </td>
-                                <td>
+                                <td id="td-maSan">
                                     {{$item->maSan }}
+                                    @php
+                                        $tenSan = App\Models\SanBong::where('maSan',$item->maSan)->first()->tenSan;
+                                    @endphp
+                                    {{ ' - '. $tenSan }}
                                 </td>
                                 @php
                                     $ve = App\Models\Ve::where('id',$item->maVe)->first();
@@ -151,6 +158,15 @@
                                     @endif
                                    
                                 </td>
+                                <td id="td-action">
+                                    @if (!empty($item->deleted_at))
+                                        
+                                    @else 
+                                        @if($tongSoGiay > 3600)
+                                            <button id="yard-change-button" onclick="updateChiTietThueSan('{{ $item->maCTTS }}', '{{ $item->maSan }}', '{{ $item->thoiGianBatDau }}', '{{ $item->thoiGianKetThuc }}')">Đổi sân</button>
+                                        @endif
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                         
@@ -159,6 +175,12 @@
             </div>
             <!-- /.card-body -->
         </div>
+        <div class="over-lay display-none">
+            @include('admin.chitietthuesan.update')
+        </div>
+        <p style="text-align: center">
+            <strong>Lưu ý: </strong>Đổi sân trước <span style="color: red">1 tiếng thời gian bắt đầu</span>. Qua <span style="color: red">1 tiếng trước thời gian bắt đầu</span> không thể đổi sân.
+        </p>
     </section>
 @endsection
 <script>
