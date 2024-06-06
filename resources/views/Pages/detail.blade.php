@@ -432,7 +432,7 @@
                                         <span class="form-message"></span>
                                     </div>
                                     <p class="">
-                                        <strong>Lưu ý: </strong>Hủy sân trước <span style="color: red">1 tiếng thời gian bắt đầu</span> hoàn tiền lại 100% vào số dư tài khoản của bạn trên website đồng thời trước 1 tiếng bắt đầu có thể đổi sân. Trước nữa tiếng bắt đầu hoàn lại 50%. Qua <span style="color: red">nữa tiếng</span> không thể hủy sân.
+                                        <strong>Lưu ý: </strong>Hủy sân trước <span style="color: red">1 tiếng thời gian bắt đầu</span> hoàn tiền lại 100% vào số dư tài khoản của bạn trên website đồng thời trước 1 tiếng bắt đầu có thể liện hệ admin để đổi sân, dời thời gian sân. Trước nữa tiếng bắt đầu hoàn lại 50%. Qua <span style="color: red">nữa tiếng</span> không thể hủy sân.
                                     </p>
                                 </form>
                             </div>

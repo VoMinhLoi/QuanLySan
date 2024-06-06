@@ -163,7 +163,7 @@
                                         
                                     @else 
                                         @if($tongSoGiay > 3600)
-                                            <button id="yard-change-button" onclick="updateChiTietThueSan('{{ $item->maCTTS }}', '{{ $item->maSan }}', '{{ $item->thoiGianBatDau }}', '{{ $item->thoiGianKetThuc }}')">Đổi sân</button>
+                                            <button id="yard-change-button" onclick="updateChiTietThueSan('{{ $item->maCTTS }}', '{{ $item->maSan }}', '{{ $item->thoiGianBatDau }}', '{{ $item->thoiGianKetThuc }}')">Sửa</button>
                                         @endif
                                     @endif
                                 </td>
@@ -179,7 +179,7 @@
             @include('admin.chitietthuesan.update')
         </div>
         <p style="text-align: center">
-            <strong>Lưu ý: </strong>Đổi sân trước <span style="color: red">1 tiếng thời gian bắt đầu</span>. Qua <span style="color: red">1 tiếng trước thời gian bắt đầu</span> không thể đổi sân.
+            Chỉnh sửa thông tin sân trước <span style="color: red">1 tiếng thời gian bắt đầu</span>. Qua <span style="color: red">1 tiếng trước thời gian bắt đầu</span> không thể thay đổi.
         </p>
     </section>
 @endsection
