@@ -265,7 +265,7 @@
     function Refund(maCTTS){
         getOneChiTietThueSan(maCTTS, CTTS => 
             getVe(CTTS.maVe, ve => {
-                updateUserMoney(ve.tongTien, maCTTS, ve.maNguoiDung)
+                updateUserMoney(ve.tongTien, maCTTS, ve.maNguoiDung, CTTS.maSan)
             })
         )
     }
@@ -279,7 +279,7 @@
             .then(response => response.json())
             .then(callback)
     }
-    function updateUserMoney(money, maCTTS, maNguoiDung){
+    function updateUserMoney(money, maCTTS, maNguoiDung, maSan){
         var data = {}
         data['soDuTaiKhoan'] = money;
         fetch("http://127.0.0.1:8000/api/user/"+maNguoiDung,{
@@ -295,8 +295,8 @@
                 if(data.success){
                     toastr.success(data.success)
                     deleteChiTietThueSan(maCTTS)
-                    createLichSuGiaoDich(money, maNguoiDung)
-                    createThongBaoHuy(maNguoiDung)
+                    createLichSuGiaoDich(money, maNguoiDung, maSan)
+                    createThongBaoHuy(maNguoiDung, maSan)
                 }
                 else
                     toastr.error(data.error)
@@ -349,10 +349,10 @@
                 console.error('Error:', error);
             });
         }
-    function createLichSuGiaoDich(money, maNguoiDung){
+    function createLichSuGiaoDich(money, maNguoiDung, maSan){
         let lsgd = {}
         lsgd['maNguoiDung'] = maNguoiDung;
-        lsgd['ndck'] = "Hoàn tiền hủy sân vì bảo trì";
+        lsgd['ndck'] = "Hoàn tiền hủy sân "+maSan+" vì đang bảo trì";
         lsgd['soTien'] = money;
         lsgd['thoiGian'] = layThoiGianHienTai();
         lsgd['trangThai'] = 1;
@@ -375,12 +375,12 @@
                     toastr.error(data.error)
             })
     }
-    function createThongBaoHuy(maNguoiDung){
+    function createThongBaoHuy(maNguoiDung, maSan){
         let dataThongBao = {}
         dataThongBao['loaiTB'] = 2
         dataThongBao['maNguoiDung'] = maNguoiDung
-        dataThongBao['tieuDe'] = "Sân bảo trì."
-        dataThongBao['noiDung'] = "Sân quý khách đặt hiện tại đang bảo trì để mang lại trải nghiệm tốt nhất. Số tiền đặt sân sẽ hoàn lại 100%."
+        dataThongBao['tieuDe'] = "Sân "+maSan+ " bảo trì."
+        dataThongBao['noiDung'] = "Sân quý khách đặt hiện tại đã hủy vì đang bảo trì để mang lại trải nghiệm tốt nhất. Số tiền đặt sân sẽ hoàn lại 100%."
         
         fetch("http://127.0.0.1:8000/api/thongbao", {
             method: "POST",

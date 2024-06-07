@@ -539,10 +539,10 @@
             getVe(CTTS.maVe, ve => {
                 let cancelHourBeforeDistance = tinhKhoangCach(thoiGianHienTai, CTTS.thoiGianBatDau)
                 if(cancelHourBeforeDistance >= 1)
-                    updateUserMoney(ve.tongTien, value)
+                    updateUserMoney(ve.tongTien, value, CTTS.maSan)
                 else
                     if(cancelHourBeforeDistance >= 0.5)
-                        updateUserMoney(parseFloat(ve.tongTien/2), value)
+                        updateUserMoney(parseFloat(ve.tongTien/2), value, CTTS.maSan)
                     else
                         toastr.error("Không thể hủy sân vì đã qua giờ quy định.")
             })
@@ -558,7 +558,7 @@
             .then(response => response.json())
             .then(callback)
     }
-    function updateUserMoney(money, maCTTS){
+    function updateUserMoney(money, maCTTS, maSan){
         var data = {}
         data['soDuTaiKhoan'] = money;
         fetch("http://127.0.0.1:8000/api/user/"+parseInt("{{ Auth::user()->maNguoiDung }}"),{
@@ -574,8 +574,8 @@
                 if(data.success){
                     toastr.success(data.success)
                     deleteChiTietThueSan(maCTTS)
-                    createLichSuGiaoDich(money)
-                    createThongBaoHuy()
+                    createLichSuGiaoDich(money, maSan)
+                    createThongBaoHuy(maSan)
                 }
                 else
                     toastr.error(data.error)
@@ -628,10 +628,10 @@
                 console.error('Error:', error);
             });
         }
-    function createLichSuGiaoDich(money){
+    function createLichSuGiaoDich(money, maSan){
         let lsgd = {}
         lsgd['maNguoiDung'] = "{{ Auth::user()->maNguoiDung }}";
-        lsgd['ndck'] = "Hoàn tiền hủy sân";
+        lsgd['ndck'] = "Hoàn tiền hủy sân " + maSan;
         lsgd['soTien'] = money;
         lsgd['thoiGian'] = layThoiGianHienTai();
         lsgd['trangThai'] = 1;
@@ -652,11 +652,11 @@
                     toastr.error(data.error)
             })
     }
-    function createThongBaoHuy(){
+    function createThongBaoHuy(maSan){
         let dataThongBao = {}
         dataThongBao['loaiTB'] = 2
         dataThongBao['maNguoiDung'] = "{{ Auth::user()->maNguoiDung }}"
-        dataThongBao['tieuDe'] = "Hủy sân thành công."
+        dataThongBao['tieuDe'] = "Hủy sân "+maSan+" thành công."
         dataThongBao['noiDung'] = "Việc hủy sân hợp lệ trước 1 tiếng bắt đầu."
         
         fetch("http://127.0.0.1:8000/api/thongbao", {
