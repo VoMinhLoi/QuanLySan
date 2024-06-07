@@ -56,7 +56,7 @@
     function updateChiTietThueSan(maCTTS, maSan, thoiGianBatDau, thoiGianKetThuc){
         document.querySelector('.over-lay').classList.remove('display-none')
         form.innerHTML = `  
-                                <h3 class="heading">Thay đổi thông tin sân `+maSan+`</h3>
+                                <h3 class="heading">Thay đổi thông tin sân chi tiết thuê sân `+maCTTS+`</h3>
                                 <div class="close-form" onclick="document.querySelector('.over-lay').classList.add('display-none')"><i class="fas fa-times"></i></div>
                                 <!-- /.card-body -->
                                 <div class="form-group">
@@ -105,6 +105,8 @@
             const option = document.createElement('option')
             option.value = dataLoaiSan[i].maSan
             option.innerText = dataLoaiSan[i].maSan +" "+ dataLoaiSan[i].tenSan
+            if(dataLoaiSan[i].maSan === maSan)
+                option.setAttribute('selected', 'selected');
             selectView.append(option)
 
         }

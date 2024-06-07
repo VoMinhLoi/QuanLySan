@@ -657,7 +657,7 @@
         dataThongBao['loaiTB'] = 2
         dataThongBao['maNguoiDung'] = "{{ Auth::user()->maNguoiDung }}"
         dataThongBao['tieuDe'] = "Hủy sân "+maSan+" thành công."
-        dataThongBao['noiDung'] = "Việc hủy sân hợp lệ trước 1 tiếng bắt đầu."
+        dataThongBao['noiDung'] = "Việc hủy sân hợp lệ trước giờ bắt đầu."
         
         fetch("http://127.0.0.1:8000/api/thongbao", {
             method: "POST",

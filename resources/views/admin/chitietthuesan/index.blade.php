@@ -75,7 +75,7 @@
                         @foreach ($chiTietThueSan as $item)
                             <tr class="{{ "row-".$item->id }} ">
                                 <td>
-                                    {{'V'.$item->maVe }}
+                                    {{'V'.$item->maVe . ' - CTTS'.$item->maCTTS }}
                                 </td>
                                 <td id="td-maSan">
                                     {{$item->maSan }}
