@@ -111,12 +111,19 @@
             </table>
         </div>
         <!-- /.card-body -->
+        <div style="margin: 12px auto 0" id="pagination">
+            {{ $lichSuGiaoDich->links() }}
+            {{-- {{ $chiTietThueSan->links('pagicustom') }} pagicustom: view --}}
+        </div>
     </div>
 @endsection
 <script>
+
     setTimeout(()=>{
         var filterView = document.querySelector('.filter')
         var tableLichSuGiaoDichView = document.getElementById('lichSuGiaoDich')
+
+
         handleFilter(filterView, tableLichSuGiaoDichView)
     }, 1000);
     function handleFilter(filterView, tableLichSuGiaoDichView){
@@ -127,19 +134,22 @@
         // console.log(filterView, tableLichSuGiaoDichView)
         filterView.onchange = ()=>{
             hanldeLichSuGiaoDich(filterView.value)
+            const paginationView = document.querySelector('#pagination')
+            paginationView.style.display = 'none'
         }
         function hanldeLichSuGiaoDich(value){
             tableLichSuGiaoDichView.innerHTML = ""
             switch(value){
                 case "Tất cả giao dịch":
-                    if(!dataLSDG){
-                        getLichSuGiaoDich(data => {
-                            dataLSDG = data
-                            renderLichSuGiaoDich(dataLSDG)
-                        });
-                    }
-                    else
-                        renderLichSuGiaoDich(dataLSDG)
+                    // if(!dataLSDG){
+                    //     getLichSuGiaoDich(data => {
+                    //         dataLSDG = data
+                    //         renderLichSuGiaoDich(dataLSDG)
+                    //     });
+                    // }
+                    // else
+                    //     renderLichSuGiaoDich(dataLSDG)
+                        window.location.href = '/history'
                     break;
                 case "Nạp tiền":
                     if(!dataNapTienLSGD){

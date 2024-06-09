@@ -13,7 +13,7 @@ class LichSuGiaoDichController extends Controller
      */
     public function index()
     {
-        $lichSuGiaoDich = LichSuGiaoDich::all();
+        $lichSuGiaoDich = LichSuGiaoDich::orderBy('id', 'desc')->paginate(7);
         return view('admin.lichsugiaodich.index', compact('lichSuGiaoDich'));
     }
 }
