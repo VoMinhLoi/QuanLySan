@@ -153,36 +153,51 @@
                     break;
                 case "Nạp tiền":
                     if(!dataNapTienLSGD){
-                            getLichSuGiaoDich(data => {
-                                dataNapTienLSGD = data.filter((LSGD)=>{
-                                    return LSGD.loaiGD === 1
-                                })
-                                renderLichSuGiaoDich(dataNapTienLSGD)
-                            });
+                        getLichSuGiaoDich(data => {
+                            data.sort((a,b)=>{
+                                let ADate = new Date(a.thoiGian)
+                                let BDate = new Date(b.thoiGian)
+                                return BDate - ADate
+                            })
+                            dataNapTienLSGD = data.filter((LSGD)=>{
+                                return LSGD.loaiGD === 1 
+                            })
+                            renderLichSuGiaoDich(dataNapTienLSGD)
+                        });
                     }
                     else
                         renderLichSuGiaoDich(dataNapTienLSGD)
                     break;
                 case "Thanh toán":
                     if(!dataThanhToanLSGD){
-                                getLichSuGiaoDich(data => {
-                                    dataThanhToanLSGD = data.filter((LSGD)=>{
-                                        return LSGD.loaiGD === 2
-                                    })
-                                    renderLichSuGiaoDich(dataThanhToanLSGD)
-                                });
+                        getLichSuGiaoDich(data => {
+                            data.sort((a,b)=>{
+                                let ADate = new Date(a.thoiGian)
+                                let BDate = new Date(b.thoiGian)
+                                return BDate - ADate
+                            })
+                            dataThanhToanLSGD = data.filter((LSGD)=>{
+                                return LSGD.loaiGD === 2
+                            })
+                            renderLichSuGiaoDich(dataThanhToanLSGD)
+                        });
                     }
                     else
                         renderLichSuGiaoDich(dataThanhToanLSGD)
                     break;
                 case "Hoàn tiền":
                     if(!dataHoanTienLSGD){
-                                getLichSuGiaoDich(data => {
-                                    dataHoanTienLSGD = data.filter((LSGD)=>{
-                                        return LSGD.loaiGD === 3
-                                    })
-                                    renderLichSuGiaoDich(dataHoanTienLSGD)
-                                });
+                        getLichSuGiaoDich(data => {
+                            data.sort((a,b)=>{
+                                let ADate = new Date(a.thoiGian)
+                                let BDate = new Date(b.thoiGian)
+                                return BDate - ADate
+                            })
+                            dataHoanTienLSGD = data.filter((LSGD)=>{
+                                return LSGD.loaiGD === 3
+                            })
+                            renderLichSuGiaoDich(dataHoanTienLSGD)
+                        });
                     }
                     else
                         renderLichSuGiaoDich(dataHoanTienLSGD)
