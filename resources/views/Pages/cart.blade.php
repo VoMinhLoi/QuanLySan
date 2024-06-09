@@ -257,6 +257,39 @@
             position: relative;
             left: 50%;
         }
+        .pagination {
+            display: flex;
+            padding-left: 0;
+            list-style: none;
+            border-radius: .25rem;
+        }
+        .page-link {
+            position: relative;
+            display: block;
+            padding: .5rem .75rem;
+            margin-left: -1px;
+            line-height: 1.25;
+            color: #007bff;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+        }
+        .page-item.disabled .page-link {
+            color: #6c757d;
+            pointer-events: none;
+            cursor: auto;
+            background-color: #fff;
+            border-color: #dee2e6;
+            width: 100%;
+            height: 100%;
+        }
+        .page-item.active .page-link {
+            z-index: 3;
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 <body>
@@ -296,9 +329,68 @@
                                             </tr>
                                             </thead>
                                             <tbody id="cartUpdate">
-                                                
+                                                @foreach ($chiTietThueSans as $CTTS)
+                                                    <tr id="item-{{$CTTS->maCTTS}}">
+                                                        <td>
+                                                            V{{$CTTS->maVe}}
+                                                        </td>
+                                                        @php
+                                                            $sanBong = App\Models\SanBong::where('maSan',$CTTS->maSan)->first();
+                                                        @endphp
+                                                        <td class="product_thumb">
+                                                            <a><img src="assets/img/{{$sanBong->hinhAnh}}" style="width: 100px; height: 66px; object-fit: cover;"></a>
+                                                        </td>
+                                                        <td class="product_name">
+                                                            <a href="/productDetails?id=">
+                                                                {{$sanBong->tenSan}}
+                                                            </a>
+                                                        </td>
+                                                        <td class="product-date">{{\DateTime::createFromFormat('Y-m-d H:i:s',  $CTTS->thoiGianBatDau)->format('d-m-Y H:i:s') }}</td>
+                                                        <td class="product-date">{{\DateTime::createFromFormat('Y-m-d H:i:s',  $CTTS->thoiGianKetThuc)->format('d-m-Y H:i:s') }}</td>
+                                                        <td class="product_total">
+                                                            {{ number_format($sanBong->giaDichVu, 0, ',', '.') }}/h <sup>₫</sup>
+                                                        </td>
+                                                        <td style="flex-direction: column">
+                                                            @php
+                                                                $timezone = new DateTimeZone('Asia/Ho_Chi_Minh');
+                                                                $hienTai = new DateTime('now', $timezone);
+                                                                $batDau = new DateTime($CTTS->thoiGianBatDau, $timezone);
+                                                                $khoangCach = $hienTai->diff($batDau); // This will give you the difference in days    
+                                                                $ngay = $khoangCach->days;
+                                                                $gio = $khoangCach->h;
+                                                                $phut = $khoangCach->i;
+                                                                $giay = $khoangCach->s;
+                            
+                                                                // Tính tổng số giây
+                                                                $tongSoGiay = $ngay * 86400 + $gio * 3600 + $phut * 60 + $giay;
+                                                                if ($khoangCach->invert === 1) {
+                                                                    $tongSoGiay *= -1;
+                                                                }
+                                                            @endphp
+                                                            @if($tongSoGiay >= 1800)
+                                                                <a style="cursor: pointer" class="button-action button-action--delete" onclick="cancelCalendar('{{$CTTS->maCTTS}}')">Hủy</a>
+                                                            @endif
+                                                            
+                                                            <a class="button-action button-action--infor" href="/chitietthuesan/{{$CTTS->maCTTS}}" target="_blank">Chi tiết</a>
+                                                        </td>
+                                                        <td style="text-align: center">
+                                                            @php
+                                                                $batDauNgay = $batDau->setTime(0, 0, 0); // Đặt thời gian về 0:00:00
+                                                                $hienTaiNgay = $hienTai->setTime(0, 0, 0); // Đặt thời gian về 0:00:00
+                                                                $isToday = $batDauNgay == $hienTaiNgay;
+                                                            @endphp
+                                                            @if($isToday)
+                                                                <strong style="color:red">Hôm nay <br/></strong>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
+                                        
+                                    </div>
+                                    <div id="paginate" style="margin: 12px auto 0; display:flex; justify-content: center">
+                                        {{ $chiTietThueSans->links() }}
                                     </div>
                                 </div>
                                 <p class="">
@@ -352,24 +444,14 @@
                         toastr.error(data.error)
                         else{
 
-                            data = data.filter(CTTS => {
-                                for (let i = 0; i < maVeOfmyTicketGlobal.length; i++) {
-                                    // console.log(maVeOfmyTicketGlobal[i]);
-                                    if (CTTS.maVe == maVeOfmyTicketGlobal[i]) {
-                                        return true;
-                                    }
-                                }
-                                return false;
-                            });
-                            data.sort(function(a, b) {
-                                // Chuyển đổi chuỗi thời gian bắt đầu thành đối tượng Date để so sánh
-                                var dateA = new Date(a.thoiGianBatDau);
-                                var dateB = new Date(b.thoiGianBatDau);
-                                return dateA - dateB;
-                            });
-                            dataChiTietThueSan = data
+                            let filteredData = data.filter(CTTS => maVeOfmyTicketGlobal.includes(CTTS.maVe));
 
-                            handleRenderTicket(data)
+                            // Sắp xếp filteredData theo maCTTS giảm dần
+                            filteredData.sort((a, b) => b.maCTTS - a.maCTTS);
+
+                            // Gán kết quả cho dataChiTietThueSan
+                            dataChiTietThueSan = filteredData;
+                            // handleRenderTicket(dataChiTietThueSan)
                         }
                     })
                 }
@@ -377,43 +459,44 @@
     const thoiGianHienTai = layThoiGianHienTai();
     
     function handleRenderTicket(dataCTTS){
-        // console.log("Thời điểm hiện tại: "+ thoiGianHienTai)
-        dataCTTS.forEach(CTTS => {
-            fetch("http://127.0.0.1:8000/api/sanbong/"+CTTS.maSan)
-                .then(response => response.json())
-                .then(sanBong => {
+        let promises = dataCTTS.map(CTTS => {
+            return fetch("http://127.0.0.1:8000/api/sanbong/"+CTTS.maSan)
+                .then(response => response.json());
+        });
+
+        Promise.all(promises)
+            .then(sanBongs => {
+                dataCTTS.forEach((CTTS, index) => {
+                    let sanBong = sanBongs[index];
                     tableBody.innerHTML +=   `
-                                        <tr id="item-${CTTS.maCTTS}">
-                                            <td>
-                                                V${CTTS.maVe}
-                                            </td>
-                                            <td class="product_thumb">
-                                                <a><img src="assets/img/${sanBong.hinhAnh}" style="width: 100px; height: 66px; object-fit: cover;"></a>
-                                            </td>
-                                            <td class="product_name">
-                                                <a href="/productDetails?id=">
-                                                    ${sanBong.tenSan}
-                                                </a>
-                                            </td>
-                                            <td class="product-date">${formatDate(CTTS.thoiGianBatDau)}</td>
-                                            <td class="product-date">${formatDate(CTTS.thoiGianKetThuc)}</td>
-                                            <td class="product_total">
-                                                ${formatCurrency(sanBong.giaDichVu)}/h
-                                            </td>
-                                            <td style="flex-direction: column">
-                                                ${tinhKhoangCach(thoiGianHienTai, CTTS.thoiGianBatDau)>=0.5?`<a style="cursor: pointer" class="button-action button-action--delete" onclick="cancelCalendar('${CTTS.maCTTS}')" >Hủy</a>`:``}
-                                                <a class="button-action button-action--infor" href="/chitietthuesan/${CTTS.maCTTS}" target="_blank">Chi tiết</a>
-                                            </td>
-                                            <td style="text-align: center">
-                                                <strong style="color:red">${isToday(CTTS.thoiGianBatDau)?'Hôm nay <br/>':''}</strong>
-                                            </td>
-                                        </tr>
-                                    `;
-                    // console.log("Thời điểm bat dau: "+ CTTS.thoiGianBatDau)
-                    // console.log("Thời điểm hiện tại: "+ thoiGianHienTai)
-                    
-                })
-        })
+                                                <tr id="item-${CTTS.maCTTS}">
+                                                    <td>
+                                                        V${CTTS.maVe}
+                                                    </td>
+                                                    <td class="product_thumb">
+                                                        <a><img src="assets/img/${sanBong.hinhAnh}" style="width: 100px; height: 66px; object-fit: cover;"></a>
+                                                    </td>
+                                                    <td class="product_name">
+                                                        <a href="/productDetails?id=">
+                                                            ${sanBong.tenSan}
+                                                        </a>
+                                                    </td>
+                                                    <td class="product-date">${formatDate(CTTS.thoiGianBatDau)}</td>
+                                                    <td class="product-date">${formatDate(CTTS.thoiGianKetThuc)}</td>
+                                                    <td class="product_total">
+                                                        ${formatCurrency(sanBong.giaDichVu)}/h
+                                                    </td>
+                                                    <td style="flex-direction: column">
+                                                        ${tinhKhoangCach(thoiGianHienTai, CTTS.thoiGianBatDau)>=0.5?`<a style="cursor: pointer" class="button-action button-action--delete" onclick="cancelCalendar('${CTTS.maCTTS}')" >Hủy</a>`:``}
+                                                        <a class="button-action button-action--infor" href="/chitietthuesan/${CTTS.maCTTS}" target="_blank">Chi tiết</a>
+                                                    </td>
+                                                    <td style="text-align: center">
+                                                        <strong style="color:red">${isToday(CTTS.thoiGianBatDau)?'Hôm nay <br/>':''}</strong>
+                                                    </td>
+                                                </tr>
+                    `;
+                });
+            });
     }
 
     function formatDate(dateTimeString) {
@@ -488,11 +571,12 @@
     filterView.onchange = ()=>{
         handleFilter(filterView.value)
     }
+    const paginationView = document.querySelector('#paginate')
     function handleFilter(value){
         tableBody.innerHTML = ""
         switch(value){
             case "Tất cả các vé":
-                handleRenderTicket(dataChiTietThueSan)
+                window.location.href ="/tui"
                 break;
             case "Những vé chưa sử dụng":
                 if(!dataChiTietThueSanNgayChuaSuDungGlobal)
@@ -501,6 +585,7 @@
                         let thoiGianBatDau = new Date(item.thoiGianBatDau);
                         return thoiGianBatDau >= ngayHienTai;
                     });
+                paginationView.classList.add('display-none')
                 handleRenderTicket(dataChiTietThueSanNgayChuaSuDungGlobal)
                 break;
             case "Những vé đã sử dụng":
@@ -510,6 +595,7 @@
                         let thoiGianBatDau = new Date(item.thoiGianBatDau);
                         return thoiGianBatDau < ngayHienTai;
                     });
+                paginationView.classList.add('display-none')
                 handleRenderTicket(dataChiTietThueSanNgayDaSuDungGlobal)
                 break;
         }

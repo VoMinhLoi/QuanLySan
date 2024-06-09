@@ -10,6 +10,7 @@ use DateTime;
 use DateTimeZone;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 
 class ChiTietThueSanController extends Controller
@@ -118,7 +119,11 @@ class ChiTietThueSanController extends Controller
     }
     public function formVe()
     {
-        return view('Pages.cart');
+        $userId = Auth::user()->maNguoiDung;
+        // Lấy mã vé từ bảng Ve theo mã người dùng
+        $maVeList = Ve::where('maNguoiDung', $userId)->pluck('id');
+        $chiTietThueSans = ChiTietThueSan::whereIn('maVe', $maVeList)->orderBy('maCTTS', 'desc')->paginate(5);
+        return view('Pages.cart', compact('chiTietThueSans'));
     }
     public function formDetail($maCTTS)
     {
