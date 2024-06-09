@@ -184,6 +184,11 @@
                     </tbody>
                 </table>
             </div>
+            <div style="margin: 12px auto 0">
+                {{-- class="pagination" --}}
+                {{ $chiTietThueSan->links() }}
+                {{-- {{ $chiTietThueSan->links('pagicustom') }} pagicustom: view --}}
+            </div>
             <!-- /.card-body -->
         </div>
         <div class="over-lay display-none">

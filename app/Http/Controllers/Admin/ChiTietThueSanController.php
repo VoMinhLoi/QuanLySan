@@ -13,9 +13,10 @@ class ChiTietThueSanController extends Controller
      */
     public function index()
     {
-        $chiTietThueSan = ChiTietThueSan::withTrashed()->get();
-
-        return view('admin.chitietthuesan.index', compact('chiTietThueSan'));
+        // $chiTietThueSan = ChiTietThueSan::withTrashed()->(desc)->paginate(5);
+        $chiTietThueSan = ChiTietThueSan::withTrashed()->orderBy('maCTTS', 'desc')->paginate(5);
+        return view('admin.chitietthuesan.index', compact('chiTietThueSan'))->with('i', (request()->input('page', 1) - 1) * 5);
+        // return view('admin.chitietthuesan.index', compact('chiTietThueSan'));
     }
 
     /**
