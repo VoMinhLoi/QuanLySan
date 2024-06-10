@@ -205,12 +205,12 @@
         <ul class="header-navigation">
             <li class="header-navigation-item"><a href="/" class="header-navigation-item__link">Trang chủ</a></li>
             <li class="header-navigation-item">
-                <a href="/sanbong" class="header-navigation-item__link">Đặt sân</a>
-                {{-- <p class="header-navigation-item__link">Dịch vụ</p>
+                {{-- <a href="/sanbong" class="header-navigation-item__link">Đặt sân</a> --}}
+                <p class="header-navigation-item__link">Dịch vụ</p>
                 <ul class="sub-nav">
                     <li class="sub-nav__item"><a href="/sanbong" class="sub-nav__item-link">Đặt sân</a></li>
-                    <li class="sub-nav__item"><a href="/sanbong" class="sub-nav__item-link">Thuê dụng cụ</a></li>
-                </ul> --}}
+                    <li class="sub-nav__item"><a href="/muadungcu" class="sub-nav__item-link">Dụng cụ</a></li>
+                </ul>
             </li>
             <li class="header-navigation-item"><a href="/lienhe" class="header-navigation-item__link">Liên hệ</a></li>
             <li class="header-navigation-item"><a href="/dieukhoanchinhsach" class="header-navigation-item__link">Điều khoản & chính sách</a></li>

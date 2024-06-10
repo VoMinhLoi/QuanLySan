@@ -10,25 +10,14 @@ use Illuminate\Http\Request;
 
 class DungCuController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function interface()
+    {
+        return view('Pages.tool');
+    }
     public function index()
     {
-        return DungCu::all();
+        return DungCu::where('trangThai', 1)->get();
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         if ($request->hasFile('hinhAnh1')) {
@@ -50,26 +39,10 @@ class DungCuController extends Controller
             return response()->json(['success' => 'Tạo dụng cụ mới thành công.', 'currentNews' => $currentNews]);
         }
     }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         return DungCu::where('maDungCu', $id)->first();
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         try {
