@@ -88,7 +88,7 @@
           <p class="calendar-action before-calendar calendar-action--disable">
             <i class="fa-solid fa-arrow-left"></i>
           </p>
-          <input type="text" name="calendar-date" id="calendar-date" style="text-align: center" readonly placeholder="dd-mm-yyyy"> 
+          <input type="text" name="calendar-date" id="calendar-date" style="text-align: center" placeholder="dd-mm-yyyy"> 
           <p class="calendar-action after-calendar">
             <i class="fa-solid fa-arrow-right"></i>
           </p>
@@ -270,7 +270,70 @@
   var currentDateGlobal; //Định dạng dd-mm-yyyy
   var calendarView = document.querySelector('#calendar-date');
   calendarView.value = calendarChoosing;
+  const ngayHienTai = new Date(layThoiGianHienTai())
+  calendarView.onchange = function() {
+    const thoiGianNgayBatDauNhapVao = calendarView.value
+    if(checkTwoHyphens(thoiGianNgayBatDauNhapVao)){
+      const ngayDaNhapVao = thoiGianNgayBatDauNhapVao.split('-')[0]
+      const thangDaNhapVao = thoiGianNgayBatDauNhapVao.split('-')[1]
+      const namDaNhapVao = thoiGianNgayBatDauNhapVao.split('-')[2]
+      if(ngayDaNhapVao <= 31){
+        if(ngayDaNhapVao.length === 2 && thangDaNhapVao.length === 2 && namDaNhapVao.length === 4){
+          if(thangDaNhapVao <= 12){
+            const ngayDangChonTrongInput = new Date(thangDaNhapVao+"-"+ngayDaNhapVao+"-"+namDaNhapVao+" 00:00:00")
+            if(ngayHienTai.getTime() <= ngayDangChonTrongInput.getTime()){
+              if( ngayDaNhapVao >= 28 ){
+                let stringNgay = ngayDangChonTrongInput.getDate().toString().padStart(2, '0');
+                let stringThang = (ngayDangChonTrongInput.getMonth() + 1).toString().padStart(2, '0');
+                calendarView.value = `${stringNgay}-${stringThang}-${ngayDangChonTrongInput.getFullYear()}`
+              }
+              calendarChoosing = calendarView.value;
+              console.log(calendarChoosing)
+              handleChangeCalendar()
+              deleteHourBusy()
+              handleHourBusy(maSanGlobal)
+            }
+            else hanldeErrorInputTimeStart('Quý khách đã nhập ngày của quá khứ')
+          }
+          else hanldeErrorInputTimeStart('Quý khách vui lòng nhập đúng định dạng dd-mm không phải mm-dd')
+        }
+        else hanldeErrorInputTimeStart('Quý khách vui lòng nhập đúng định dạng dd-mm-yyyy')
+      }
+      else hanldeErrorInputTimeStart('Quý khách nhập ngày không tồn tại')
+    }
+    else hanldeErrorInputTimeStart('Quý khách đã xóa ký tự -')
+  };
+  function hanldeErrorInputTimeStart(errorMessage){
+    if(document.querySelector('.hourStart:checked')) 
+        document.querySelector('.hourStart:checked').checked = false
+    calendarView.value = calendarChoosing
+    toastr.error(errorMessage)
+  }
+  function checkTwoHyphens(inputStr) {
+    // Sử dụng biểu thức chính quy để kiểm tra xem chuỗi có chứa đúng 2 dấu "-" hay không
+    var regex = /-/g;
+    var matches = inputStr.match(regex);
 
+    // Kiểm tra số lượng dấu "-" được tìm thấy
+    if (matches !== null && matches.length === 2) {
+        return true;
+    } else {
+        return false;
+    }
+  }
+  function layThoiGianHienTai() {
+    var now = new Date();
+
+    // Lấy thông tin ngày, tháng, năm, giờ, phút, giây
+    var year = now.getFullYear();
+    var month = String(now.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+    var date = String(now.getDate()).padStart(2, '0');
+
+    // Tạo chuỗi định dạng yyyy-mm-dd hh:mm:ss
+    var formattedTime = `${year}-${month}-${date} 00:00:00`;
+
+    return formattedTime;
+  }
   function getDate(changeNgay) {
       if (calendarChoosing) {
           var parts = calendarChoosing.split('-'); // Tách ngày, tháng và năm từ chuỗi
