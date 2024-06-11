@@ -11,7 +11,8 @@ use DateTimeZone;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Date;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
 
 class ChiTietThueSanController extends Controller
 {
@@ -146,13 +147,40 @@ class ChiTietThueSanController extends Controller
         if ($khoangCach->invert === 1) {
             $tongSoGiay *= -1;
         }
-        if ($tongSoGiay < 0)
-            return view('Pages.detail', ['chiTietThueSan' => $chiTietThueSan, 've' => $ve, 'sanBong' => $sanBong, "daSuDung" => "Đã sử dụng"]);
 
+        // phpinfo();
+        // Dữ liệu để chuyển vào mã QR
+        $data = [
+            "ve_id" => $ve->id,
+            "ho_ten" => $ve->hoTen,
+            "sdt" => $ve->SDT,
+            "dia_chi" => $ve->diaChi,
+            "tong_tien" => number_format($ve->tongTien, 0, ',', '.') . '₫',
+            "san_bong_ten" => $sanBong->tenSan,
+            "hinh_anh" => $sanBong->hinhAnh,
+            "thoi_gian_nhan" => $chiTietThueSan->thoiGianBatDau,
+            "thoi_gian_tra" => $chiTietThueSan->thoiGianKetThuc,
+        ];
+
+        $json_data = json_encode($data);
+
+        // Tạo mã QR
+        $qrCode = new QrCode($json_data);
+        $writer = new PngWriter();
+        $qrCode->setSize(200);
+
+        // Lưu mã QR vào file
+        $qrCodePath = 'qrcodes/qrcode_' . $ve->id . '.png';
+        $writer->write($qrCode)->saveToFile(public_path($qrCodePath));
+        if ($tongSoGiay < 0) {
+            $daSuDung = "Đã sử dụng";
+            return view('Pages.detail', compact('chiTietThueSan', 've', 'sanBong', 'daSuDung', 'qrCodePath'));
+        }
         return view('Pages.detail', [
             'chiTietThueSan' => $chiTietThueSan,
             've' => $ve,
             'sanBong' => $sanBong,
+            'qrCodePath' => $qrCodePath
         ]);
     }
 }

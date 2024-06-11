@@ -247,6 +247,10 @@
                             <div class="main" id="main">
                                 <form method="POST" class="form" id="form-infor">
                                     <h3 class="heading"><strong>Chi tiết thông tin mã vé {{ $ve->id }}</strong></h3>
+                                    <div class="qr-code" style="display: flex; justify-content: center; flex-direction: column; align-items:center">
+                                        <img src="{{ asset($qrCodePath) }}" alt="QR Code" width="200px" height="200px">
+                                        <h4>Mã QR vào cổng qua cảm biến hình ảnh cổng</h4>
+                                    </div>
                                     <div class="table_desc">
                                         <div class="table_page table-responsive">
                                             <table>
@@ -359,63 +363,32 @@
 
                                     <div class="form-group">
                                         <label for="maTT" class="form-label">Tỉnh thành</label>
-                                        <select class="form-control" id="maTT" disabled>
-                                            @php
-                                                if($ve->maPX){
-                                                    $maPXNow = $ve->maPX;
-                                                    $maQHNow = \App\Models\PhuongXa::where('maPhuongXa',$maPXNow)->first()['maQH'];
-                                                    $maTTNow = \App\Models\QuanHuyen::where('maQuanHuyen',$maQHNow)->first()['maTT'];
-                                                    $listTinhThanh = \App\Models\TinhThanh::all();
-                                                    foreach ($listTinhThanh as $tinhThanh) {
-                                                        if($maTTNow === $tinhThanh->maTinhThanh)
-                                                            echo '<option value="'. $tinhThanh->maTinhThanh .'" selected>'.$tinhThanh->tenTinhThanh.'</option>';
-                                                        else
-                                                            echo '<option value="'. $tinhThanh->maTinhThanh .'">'.$tinhThanh->tenTinhThanh.'</option>';
-                                                    }
-                                                }
-                                                // else
-                                                //     echo '<option value="">-- Hãy chọn tỉnh thành --</option>';
-                                            @endphp
-                                        </select>
+                                        @php
+                                            $maPXNow = $ve->maPX;
+                                            $maQHNow = \App\Models\PhuongXa::where('maPhuongXa',$maPXNow)->first()['maQH'];
+                                            $maTTNow = \App\Models\QuanHuyen::where('maQuanHuyen',$maQHNow)->first()['maTT'];
+                                            $tenTTNow = \App\Models\TinhThanh::where('maTinhThanh',$maTTNow)->first()['tenTinhThanh'];
+                                            // else
+                                            //     echo '<option value="">-- Hãy chọn tỉnh thành --</option>';
+                                        @endphp
+                                        <input type="text" value="{{$tenTTNow}}" disabled class="form-control">
                                     <span class="form-message"></span>
                                     </div>
                                     <div class="form-group">
                                         <label for="maQH" class="form-label">Quận huyện</label>
-                                        <select class="form-control" id="maQH" disabled>
-                                            @php
-                                                if($ve->maPX){
-                                                    $maPXNow = $ve->maPX;
-                                                    $maQHNow = \App\Models\PhuongXa::where('maPhuongXa',$maPXNow)->first()['maQH'];
-                                                    $maTT = \App\Models\QuanHuyen::where('maQuanHuyen',$maQHNow)->first()['maTT'];
-                                                    $listQuanHuyen = \App\Models\QuanHuyen::where('maTT',$maTT)->get();
-                                                    foreach ($listQuanHuyen as $quanHuyen) {
-                                                        if($maQHNow === $quanHuyen->maQuanHuyen)
-                                                            echo '<option value="'. $quanHuyen->maQuanHuyen .'" selected>'.$quanHuyen->tenQuanHuyen.'</option>';
-                                                        else
-                                                            echo '<option value="'. $quanHuyen->maQuanHuyen .'">'.$quanHuyen->tenQuanHuyen.'</option>';
-                                                    }
-                                                }
-                                            @endphp
-                                        </select>
+                                        @php
+                                            $maQHNow = \App\Models\PhuongXa::where('maPhuongXa',$maPXNow)->first()['maQH'];
+                                            $tenQHNow = \App\Models\QuanHuyen::where('maQuanHuyen',$maQHNow)->first()['tenQuanHuyen'];
+                                        @endphp
+                                        <input type="text" value="{{$tenQHNow}}" disabled class="form-control">
                                     <span class="form-message"></span>
                                     </div>
                                     <div class="form-group">
                                         <label for="maPX" class="form-label">Phường xã</label>
-                                        <select name="maPX" class="form-control" id="maPX" disabled>
-                                            @php
-                                                if($ve->maPX){
-                                                    $maPXNow = $ve->maPX;
-                                                    $maQH = \App\Models\PhuongXa::where('maPhuongXa',$maPXNow)->first()['maQH'];
-                                                    $listPhuongXa = \App\Models\PhuongXa::where('maQH',$maQH)->get();
-                                                    foreach ($listPhuongXa as $phuongXa) {
-                                                        if($maPXNow === $phuongXa->maPhuongXa)
-                                                            echo '<option value="'. $phuongXa->maPhuongXa .'" selected>'.$phuongXa->tenPhuongXa.'</option>';
-                                                        else
-                                                            echo '<option value="'. $phuongXa->maPhuongXa .'">'.$phuongXa->tenPhuongXa.'</option>';
-                                                    }
-                                                }
-                                            @endphp
-                                        </select>
+                                        @php
+                                            $tenPXNow = \App\Models\PhuongXa::where('maPhuongXa',$maPXNow)->first()['tenPhuongXa'];
+                                        @endphp
+                                        <input type="text" value="{{$tenPXNow}}" disabled class="form-control">
                                     <span class="form-message"></span>
                                     </div>
                                     <div class="form-group">
