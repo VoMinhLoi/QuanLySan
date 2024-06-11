@@ -230,6 +230,15 @@
             text-decoration: none; /* Loại bỏ gạch chân */
             margin-top: 10px; /* Khoảng cách giữa các phần tử con */
         }
+        .form-group-wrapper{
+            display: flex;
+        }
+        .form-group-wrapper .form-group {
+            flex: 1;
+        }
+        .form-group-wrapper .form-group + .form-group {
+            margin-left: 12px;
+        }
     </style>
 </head>
     <body>
@@ -248,7 +257,7 @@
                                 <form method="POST" class="form" id="form-infor">
                                     <h3 class="heading"><strong>Chi tiết thông tin mã vé {{ $ve->id }}</strong></h3>
                                     <div class="qr-code" style="display: flex; justify-content: center; flex-direction: column; align-items:center">
-                                        <img src="{{ asset($qrCodePath) }}" alt="QR Code" width="200px" height="200px">
+                                        <img src="{{ asset($mergedQrCodePath) }}" alt="QR Code" width="200px" height="200px">
                                         <h4>Mã QR vào cổng qua cảm biến hình ảnh cổng</h4>
                                     </div>
                                     <div class="table_desc">
@@ -336,60 +345,58 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="hoTen" class="form-label">Họ và tên</label>
-                                        <input
-                                            disabled
-                                            id="hoTen"
-                                            name="hoTen"
-                                            type="text"
-                                            value="{{ $ve->hoTen }}"
-                                            class="form-control"
-                                        />
-                                        <span class="form-message"></span>
-                                    </div>
-                                    <div class="form-group">
-                                    <label for="SDT" class="form-label">Số điện thoại</label>
-                                    <input
-                                        disabled
-                                        id="SDT"
-                                        name="SDT"
-                                        type="text"
-                                        value="{{ $ve->SDT }}"
-                                        class="form-control"
-                                    />
-                                    <span class="form-message"></span>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="maTT" class="form-label">Tỉnh thành</label>
-                                        @php
-                                            $maPXNow = $ve->maPX;
-                                            $maQHNow = \App\Models\PhuongXa::where('maPhuongXa',$maPXNow)->first()['maQH'];
-                                            $maTTNow = \App\Models\QuanHuyen::where('maQuanHuyen',$maQHNow)->first()['maTT'];
-                                            $tenTTNow = \App\Models\TinhThanh::where('maTinhThanh',$maTTNow)->first()['tenTinhThanh'];
-                                            // else
-                                            //     echo '<option value="">-- Hãy chọn tỉnh thành --</option>';
-                                        @endphp
-                                        <input type="text" value="{{$tenTTNow}}" disabled class="form-control">
-                                    <span class="form-message"></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="maQH" class="form-label">Quận huyện</label>
-                                        @php
-                                            $maQHNow = \App\Models\PhuongXa::where('maPhuongXa',$maPXNow)->first()['maQH'];
-                                            $tenQHNow = \App\Models\QuanHuyen::where('maQuanHuyen',$maQHNow)->first()['tenQuanHuyen'];
-                                        @endphp
-                                        <input type="text" value="{{$tenQHNow}}" disabled class="form-control">
-                                    <span class="form-message"></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="maPX" class="form-label">Phường xã</label>
-                                        @php
-                                            $tenPXNow = \App\Models\PhuongXa::where('maPhuongXa',$maPXNow)->first()['tenPhuongXa'];
-                                        @endphp
-                                        <input type="text" value="{{$tenPXNow}}" disabled class="form-control">
-                                    <span class="form-message"></span>
+                                    <div class="form-group-wrapper">
+                                        <div class="form-group">
+                                            <label for="hoTen" class="form-label">Họ và tên</label>
+                                            <input
+                                                disabled
+                                                id="hoTen"
+                                                name="hoTen"
+                                                type="text"
+                                                value="{{ $ve->hoTen }}"
+                                                class="form-control"
+                                            />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="SDT" class="form-label">Số điện thoại</label>
+                                            <input
+                                                disabled
+                                                id="SDT"
+                                                name="SDT"
+                                                type="text"
+                                                value="{{ $ve->SDT }}"
+                                                class="form-control"
+                                            />
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="maTT" class="form-label">Tỉnh thành</label>
+                                            @php
+                                                $maPXNow = $ve->maPX;
+                                                $maQHNow = \App\Models\PhuongXa::where('maPhuongXa',$maPXNow)->first()['maQH'];
+                                                $maTTNow = \App\Models\QuanHuyen::where('maQuanHuyen',$maQHNow)->first()['maTT'];
+                                                $tenTTNow = \App\Models\TinhThanh::where('maTinhThanh',$maTTNow)->first()['tenTinhThanh'];
+                                                // else
+                                                //     echo '<option value="">-- Hãy chọn tỉnh thành --</option>';
+                                            @endphp
+                                            <input type="text" value="{{$tenTTNow}}" disabled class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="maQH" class="form-label">Quận huyện</label>
+                                            @php
+                                                $maQHNow = \App\Models\PhuongXa::where('maPhuongXa',$maPXNow)->first()['maQH'];
+                                                $tenQHNow = \App\Models\QuanHuyen::where('maQuanHuyen',$maQHNow)->first()['tenQuanHuyen'];
+                                            @endphp
+                                            <input type="text" value="{{$tenQHNow}}" disabled class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="maPX" class="form-label">Phường xã</label>
+                                            @php
+                                                $tenPXNow = \App\Models\PhuongXa::where('maPhuongXa',$maPXNow)->first()['tenPhuongXa'];
+                                            @endphp
+                                            <input type="text" value="{{$tenPXNow}}" disabled class="form-control">
+                                        </div>
+                                        
                                     </div>
                                     <div class="form-group">
                                         <label for="diaChi" class="form-label">Địa chỉ</label>
@@ -402,7 +409,6 @@
                                             value="{{ $ve->diaChi }}"
                                             class="form-control"
                                         />
-                                        <span class="form-message"></span>
                                     </div>
                                     <p class="">
                                         <strong>Lưu ý: </strong>Hủy sân trước <span style="color: red">1 tiếng thời gian bắt đầu</span> hoàn tiền lại 100% vào số dư tài khoản của bạn trên website đồng thời trước 1 tiếng bắt đầu có thể liện hệ admin để đổi sân, dời thời gian sân. Trước nữa tiếng bắt đầu hoàn lại 50%. Qua <span style="color: red">nữa tiếng</span> không thể hủy sân.

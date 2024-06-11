@@ -172,15 +172,46 @@ class ChiTietThueSanController extends Controller
         // Lưu mã QR vào file
         $qrCodePath = 'qrcodes/qrcode_' . $ve->id . '.png';
         $writer->write($qrCode)->saveToFile(public_path($qrCodePath));
+        $avatarPath = public_path('Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png');
+
+        // Đọc hình ảnh avatar
+        $avatar = imagecreatefrompng($avatarPath);
+
+        // Đọc hình ảnh mã QR
+        $qrCodeImage = imagecreatefrompng(public_path($qrCodePath));
+
+        // Lấy kích thước của hình ảnh mã QR và avatar
+        $qrCodeWidth = imagesx($qrCodeImage);
+        $qrCodeHeight = imagesy($qrCodeImage);
+        $avatarWidth = imagesx($avatar);
+        $avatarHeight = imagesy($avatar);
+
+        // Tính toán vị trí để đặt avatar vào giữa mã QR
+        $x = ($qrCodeWidth - $avatarWidth) / 2;
+        $y = ($qrCodeHeight - $avatarHeight) / 2;
+
+        // Merge hình ảnh avatar vào mã QR
+        imagecopymerge($qrCodeImage, $avatar, $x, $y, 0, 0, $avatarWidth, $avatarHeight, 70);
+
+        // Lưu hình ảnh mã QR đã được merge vào file mới
+        $mergedQrCodePath = 'qrcodes/merged_qrcode_' . $ve->id . '.png';
+        imagepng($qrCodeImage, public_path($mergedQrCodePath));
+
+        // Giải phóng bộ nhớ
+        imagedestroy($qrCodeImage);
+        imagedestroy($avatar);
+
+        // Kết quả: Đường dẫn đến hình ảnh mã QR đã được merge
+        $mergedQrCodePath;
         if ($tongSoGiay < 0) {
             $daSuDung = "Đã sử dụng";
-            return view('Pages.detail', compact('chiTietThueSan', 've', 'sanBong', 'daSuDung', 'qrCodePath'));
+            return view('Pages.detail', compact('chiTietThueSan', 've', 'sanBong', 'daSuDung', 'mergedQrCodePath'));
         }
         return view('Pages.detail', [
             'chiTietThueSan' => $chiTietThueSan,
             've' => $ve,
             'sanBong' => $sanBong,
-            'qrCodePath' => $qrCodePath
+            'mergedQrCodePath' => $mergedQrCodePath
         ]);
     }
 }
