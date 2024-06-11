@@ -270,6 +270,15 @@
             margin: auto;
             cursor: pointer;
         }
+        .form-group-wrapper{
+            display: flex;
+        }
+        .form-group-wrapper .form-group {
+            flex: 1;
+        }
+        .form-group-wrapper .form-group + .form-group {
+            margin-left: 12px;
+        }
     </style>
 </head>
 <body>
@@ -307,89 +316,91 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="hoTen" class="form-label">Họ và tên</label>
-                                    <input
-                                    id="hoTen"
-                                    name="hoTen"
-                                    type="text"
-                                    value="{{ Auth::user()->ho .' ' .Auth::user()->ten }}"
-                                    class="form-control"
-                                    />
-                                    <span class="form-message"></span>
-                                </div>
-                                <div class="form-group">
-                                <label for="SDT" class="form-label">Số điện thoại</label>
-                                <input
-                                    id="SDT"
-                                    name="SDT"
-                                    type="text"
-                                    value="{{ Auth::user()->SDT }}"
-                                    class="form-control"
-                                />
-                                <span class="form-message"></span>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="maTT" class="form-label">Tỉnh thành</label>
-                                    <select class="form-control" id="maTT">
-                                        @php
-                                            if(Auth::user()->maPX){
-                                                $maPXNow = Auth::user()->maPX;
-                                                $maQHNow = \App\Models\PhuongXa::where('maPhuongXa',$maPXNow)->first()['maQH'];
-                                                $maTTNow = \App\Models\QuanHuyen::where('maQuanHuyen',$maQHNow)->first()['maTT'];
-                                                $listTinhThanh = \App\Models\TinhThanh::all();
-                                                foreach ($listTinhThanh as $tinhThanh) {
-                                                    if($maTTNow === $tinhThanh->maTinhThanh)
-                                                        echo '<option value="'. $tinhThanh->maTinhThanh .'" selected>'.$tinhThanh->tenTinhThanh.'</option>';
-                                                    else
-                                                        echo '<option value="'. $tinhThanh->maTinhThanh .'">'.$tinhThanh->tenTinhThanh.'</option>';
+                                <div class="form-group-wrapper">
+                                    <div class="form-group">
+                                        <label for="hoTen" class="form-label">Họ và tên</label>
+                                        <input
+                                        id="hoTen"
+                                        name="hoTen"
+                                        type="text"
+                                        value="{{ Auth::user()->ho .' ' .Auth::user()->ten }}"
+                                        class="form-control"
+                                        />
+                                        <span class="form-message"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="SDT" class="form-label">Số điện thoại</label>
+                                        <input
+                                            id="SDT"
+                                            name="SDT"
+                                            type="text"
+                                            value="{{ Auth::user()->SDT }}"
+                                            class="form-control"
+                                        />
+                                        <span class="form-message"></span>
+                                    </div>
+    
+                                    <div class="form-group">
+                                        <label for="maTT" class="form-label">Tỉnh thành</label>
+                                        <select class="form-control" id="maTT">
+                                            @php
+                                                if(Auth::user()->maPX){
+                                                    $maPXNow = Auth::user()->maPX;
+                                                    $maQHNow = \App\Models\PhuongXa::where('maPhuongXa',$maPXNow)->first()['maQH'];
+                                                    $maTTNow = \App\Models\QuanHuyen::where('maQuanHuyen',$maQHNow)->first()['maTT'];
+                                                    $listTinhThanh = \App\Models\TinhThanh::all();
+                                                    foreach ($listTinhThanh as $tinhThanh) {
+                                                        if($maTTNow === $tinhThanh->maTinhThanh)
+                                                            echo '<option value="'. $tinhThanh->maTinhThanh .'" selected>'.$tinhThanh->tenTinhThanh.'</option>';
+                                                        else
+                                                            echo '<option value="'. $tinhThanh->maTinhThanh .'">'.$tinhThanh->tenTinhThanh.'</option>';
+                                                    }
                                                 }
-                                            }
-                                            // else
-                                            //     echo '<option value="">-- Hãy chọn tỉnh thành --</option>';
-                                        @endphp
-                                    </select>
-                                <span class="form-message"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="maQH" class="form-label">Quận huyện</label>
-                                    <select class="form-control" id="maQH">
-                                        @php
-                                            if(Auth::user()->maPX){
-                                                $maPXNow = Auth::user()->maPX;
-                                                $maQHNow = \App\Models\PhuongXa::where('maPhuongXa',$maPXNow)->first()['maQH'];
-                                                $maTT = \App\Models\QuanHuyen::where('maQuanHuyen',$maQHNow)->first()['maTT'];
-                                                $listQuanHuyen = \App\Models\QuanHuyen::where('maTT',$maTT)->get();
-                                                foreach ($listQuanHuyen as $quanHuyen) {
-                                                    if($maQHNow === $quanHuyen->maQuanHuyen)
-                                                        echo '<option value="'. $quanHuyen->maQuanHuyen .'" selected>'.$quanHuyen->tenQuanHuyen.'</option>';
-                                                    else
-                                                        echo '<option value="'. $quanHuyen->maQuanHuyen .'">'.$quanHuyen->tenQuanHuyen.'</option>';
+                                                // else
+                                                //     echo '<option value="">-- Hãy chọn tỉnh thành --</option>';
+                                            @endphp
+                                        </select>
+                                        <span class="form-message"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="maQH" class="form-label">Quận huyện</label>
+                                        <select class="form-control" id="maQH">
+                                            @php
+                                                if(Auth::user()->maPX){
+                                                    $maPXNow = Auth::user()->maPX;
+                                                    $maQHNow = \App\Models\PhuongXa::where('maPhuongXa',$maPXNow)->first()['maQH'];
+                                                    $maTT = \App\Models\QuanHuyen::where('maQuanHuyen',$maQHNow)->first()['maTT'];
+                                                    $listQuanHuyen = \App\Models\QuanHuyen::where('maTT',$maTT)->get();
+                                                    foreach ($listQuanHuyen as $quanHuyen) {
+                                                        if($maQHNow === $quanHuyen->maQuanHuyen)
+                                                            echo '<option value="'. $quanHuyen->maQuanHuyen .'" selected>'.$quanHuyen->tenQuanHuyen.'</option>';
+                                                        else
+                                                            echo '<option value="'. $quanHuyen->maQuanHuyen .'">'.$quanHuyen->tenQuanHuyen.'</option>';
+                                                    }
                                                 }
-                                            }
-                                        @endphp
-                                    </select>
-                                <span class="form-message"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="maPX" class="form-label">Phường xã</label>
-                                    <select name="maPX" class="form-control" id="maPX">
-                                        @php
-                                            if(Auth::user()->maPX){
-                                                $maPXNow = Auth::user()->maPX;
-                                                $maQH = \App\Models\PhuongXa::where('maPhuongXa',$maPXNow)->first()['maQH'];
-                                                $listPhuongXa = \App\Models\PhuongXa::where('maQH',$maQH)->get();
-                                                foreach ($listPhuongXa as $phuongXa) {
-                                                    if($maPXNow === $phuongXa->maPhuongXa)
-                                                        echo '<option value="'. $phuongXa->maPhuongXa .'" selected>'.$phuongXa->tenPhuongXa.'</option>';
-                                                    else
-                                                        echo '<option value="'. $phuongXa->maPhuongXa .'">'.$phuongXa->tenPhuongXa.'</option>';
+                                            @endphp
+                                        </select>
+                                        <span class="form-message"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="maPX" class="form-label">Phường xã</label>
+                                        <select name="maPX" class="form-control" id="maPX">
+                                            @php
+                                                if(Auth::user()->maPX){
+                                                    $maPXNow = Auth::user()->maPX;
+                                                    $maQH = \App\Models\PhuongXa::where('maPhuongXa',$maPXNow)->first()['maQH'];
+                                                    $listPhuongXa = \App\Models\PhuongXa::where('maQH',$maQH)->get();
+                                                    foreach ($listPhuongXa as $phuongXa) {
+                                                        if($maPXNow === $phuongXa->maPhuongXa)
+                                                            echo '<option value="'. $phuongXa->maPhuongXa .'" selected>'.$phuongXa->tenPhuongXa.'</option>';
+                                                        else
+                                                            echo '<option value="'. $phuongXa->maPhuongXa .'">'.$phuongXa->tenPhuongXa.'</option>';
+                                                    }
                                                 }
-                                            }
-                                        @endphp
-                                    </select>
-                                <span class="form-message"></span>
+                                            @endphp
+                                        </select>
+                                        <span class="form-message"></span>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="diaChi" class="form-label">Địa chỉ</label>
