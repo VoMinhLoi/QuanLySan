@@ -50,6 +50,7 @@ Route::group(['middleware' => 'userLogin'], function () {
     // Route::get('/muadungcu', [DungCuController::class, 'interface']);
     Route::get('/hosocanhan', [LoginController::class, 'formProfile']);
     Route::get('/tui', [ChiTietThueSanController::class, 'formVe']);
+    Route::post('/tui', [ChiTietThueSanController::class, 'sendMail']);
     Route::get('/chitietthuesan/{chitietthuesan}', [ChiTietThueSanController::class, 'formDetail']);
     Route::get('/dangxuat', [LogoutController::class, 'index']);
     Route::post('/vnpay_payment', [LoginController::class, 'formRechargeVNPay']);

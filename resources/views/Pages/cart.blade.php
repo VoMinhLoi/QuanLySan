@@ -412,6 +412,7 @@
     var maNguoiDung = parseInt("{{ Auth::user()->maNguoiDung }}")
     // var myTicketsGlobal = []
     var maVeOfmyTicketGlobal = []
+    const globalToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
     start()
     function start(){
         getTickets()
@@ -625,10 +626,10 @@
             getVe(CTTS.maVe, ve => {
                 let cancelHourBeforeDistance = tinhKhoangCach(thoiGianHienTai, CTTS.thoiGianBatDau)
                 if(cancelHourBeforeDistance >= 1)
-                    updateUserMoney(ve.tongTien, value, CTTS.maSan)
+                    updateUserMoney(ve.tongTien, value, CTTS.maSan, CTTS.thoiGianBatDau, CTTS.thoiGianKetThuc)
                 else
                     if(cancelHourBeforeDistance >= 0.5)
-                        updateUserMoney(parseFloat(ve.tongTien/2), value, CTTS.maSan)
+                        updateUserMoney(parseFloat(ve.tongTien/2), value, CTTS.maSan, CTTS.thoiGianBatDau, CTTS.thoiGianKetThuc)
                     else
                         toastr.error("Không thể hủy sân vì đã qua giờ quy định.")
             })
@@ -644,14 +645,14 @@
             .then(response => response.json())
             .then(callback)
     }
-    function updateUserMoney(money, maCTTS, maSan){
+    function updateUserMoney(money, maCTTS, maSan, thoiGianBatDau, thoiGianKetThuc){
         var data = {}
         data['soDuTaiKhoan'] = money;
         fetch("http://127.0.0.1:8000/api/user/"+parseInt("{{ Auth::user()->maNguoiDung }}"),{
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'X-CSRF-TOKEN': globalToken,
             },
             body: JSON.stringify(data)
         })
@@ -662,6 +663,7 @@
                     deleteChiTietThueSan(maCTTS)
                     createLichSuGiaoDich(money, maSan)
                     createThongBaoHuy(maSan)
+                    sendMail(maCTTS, maSan, money, thoiGianBatDau, thoiGianKetThuc)
                 }
                 else
                     toastr.error(data.error)
@@ -675,7 +677,7 @@
         fetch("http://127.0.0.1:8000/api/chitietthuesan/"+maCTTS,{
                 method: 'DELETE',
                 headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    'X-CSRF-TOKEN': globalToken
                 }
             })
             .then(response => response.json())
@@ -695,7 +697,7 @@
                 headers: {
                     // "Content-Type": "application/x-www-form-urlencoded", x-www-form-urlencoded: form data
                     "Content-Type": "application/json",
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'X-CSRF-TOKEN': globalToken,
                 },
                 // body: JSON.stringify(data),
                 body: JSON.stringify({ soLuongChoThue: -chiTietThueSan.soLuong }),
@@ -726,7 +728,7 @@
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'X-CSRF-TOKEN': globalToken,
             },
             body: JSON.stringify(lsgd)
         })
@@ -750,7 +752,7 @@
             headers: {
                 // "Content-Type": "application/x-www-form-urlencoded", x-www-form-urlencoded: form data
                 "Content-Type": "application/json",
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'X-CSRF-TOKEN': globalToken,
             },
             // body: JSON.stringify(data),
             body: JSON.stringify(dataThongBao),
@@ -768,6 +770,24 @@
             .catch(error => {
                 console.error('Error:', error);
             });
+    }
+    const taiKhoan = "{{ Auth::user()->taiKhoan }}"
+    function sendMail(maCTTS, maSan, money, thoiGianBatDau, thoiGianKetThuc){
+        fetch('http://127.0.0.1:8000/tui',{
+            method: 'post',
+            headers: {
+                'Content-type': 'application/json',
+                'X-CSRF-TOKEN': globalToken
+            },
+            body: JSON.stringify({taiKhoan ,maCTTS,maSan, money, thoiGianBatDau, thoiGianKetThuc})
+        })
+            .then(promises => promises.json())
+            .then(data => {
+                if(data.success)
+                    toastr.success(data.success)
+                else
+                    toastr.error(data.error)
+            })
     }
 </script>
 
