@@ -240,6 +240,16 @@
             margin-left: 12px;
         }
     </style>
+    <style>
+        @media print {
+            .header, #scrollToTopBtn {
+                opacity: 0;
+            }
+            .breadcrumb, #print-wrapper, .footer {
+                display: none;
+            }
+        }
+    </style>
 </head>
     <body>
         <div class="grid">
@@ -254,11 +264,14 @@
                     <div class="row content no-gutters">
                         <div class="col l-12 m-12 c-12">
                             <div class="main" id="main">
-                                <form method="POST" class="form" id="form-infor">
+                                <div class="form" id="form-infor">
                                     <h3 class="heading"><strong>Chi tiết thông tin mã vé {{ $ve->id }}</strong></h3>
                                     <div class="qr-code" style="display: flex; justify-content: center; flex-direction: column; align-items:center">
                                         <img src="{{ asset($mergedQrCodePath) }}" alt="QR Code" width="200px" height="200px">
                                         <h4>Mã QR vào cổng qua cảm biến hình ảnh cổng</h4>
+                                    </div>
+                                    <div id="print-wrapper" style="text-align: right">
+                                        <button id="print" style="background: var(--primary-color); color: white; padding: 8px 12px; border-radius: 4px">Xuất file .pdf</button>
                                     </div>
                                     <div class="table_desc">
                                         <div class="table_page table-responsive">
@@ -413,8 +426,9 @@
                                     <p class="">
                                         <strong>Lưu ý: </strong>Hủy sân trước <span style="color: red">1 tiếng thời gian bắt đầu</span> hoàn tiền lại 100% vào số dư tài khoản của bạn trên website đồng thời trước 1 tiếng bắt đầu có thể liện hệ admin để đổi sân, dời thời gian sân. Trước nữa tiếng bắt đầu hoàn lại 50%. Qua <span style="color: red">nữa tiếng</span> không thể hủy sân.
                                     </p>
-                                </form>
+                                </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -422,4 +436,27 @@
             @include('Components.footer')
         </div>
     </body>
+    <script>
+        const printButtonView = document.querySelector('#print')
+        // Cách 1: 
+        // let temporary
+        // printButtonView.onclick = ()=>{
+        //     const inforFormView = document.querySelector('#form-infor')
+        //     const bodyTagView = document.querySelector('body')
+        //     const printWrapperView = document.querySelector('#print-wrapper')
+        //     if(!temporary){
+        //         const contentView = document.querySelector('.grid')
+        //         temporary = contentView.innerHTML
+        //     }
+        //     printWrapperView.remove()
+        //     bodyTagView.innerHTML = inforFormView.innerHTML
+        //     window.print()
+        //     bodyTagView.innerHTML = temporary
+        // }
+
+        // Cách 2:
+        printButtonView.onclick = ()=> {
+            window.print()
+        }
+    </script>
 </html>
