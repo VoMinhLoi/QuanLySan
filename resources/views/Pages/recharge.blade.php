@@ -240,6 +240,39 @@
             position: relative;
             left: 50%;
         }
+        .pagination {
+            display: flex;
+            padding-left: 0;
+            list-style: none;
+            border-radius: .25rem;
+        }
+        .page-link {
+            position: relative;
+            display: block;
+            padding: .5rem .75rem;
+            margin-left: -1px;
+            line-height: 1.25;
+            color: #007bff;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+        }
+        .page-item.disabled .page-link {
+            color: #6c757d;
+            pointer-events: none;
+            cursor: auto;
+            background-color: #fff;
+            border-color: #dee2e6;
+            width: 100%;
+            height: 100%;
+        }
+        .page-item.active .page-link {
+            z-index: 3;
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+            width: 100%;
+            height: 100%;
+        }
     </style>
 
 </head>
@@ -337,6 +370,9 @@
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <div style="margin: 12px auto 0; display: flex; justify-content: center" id="pagination">
+                                            {{ $lichSuGiaoDich->links() }}
+                                        </div>
                                     </div>
                                     <p class="">
                                         <strong>Lưu ý: </strong>Nếu giao dịch thất bại hãy liên hệ cho chúng tôi qua số điện thoại: <span style="color: var(--primary-color)">0899378634</span>
@@ -372,6 +408,7 @@
         var dataThanhToanLSGD
         var dataNapTienLSGD
         var dataHoanTienLSGD
+        const paginationView = document.querySelector('#pagination')
         filterView.onchange = ()=>{
             hanldeLichSuGiaoDich(filterView.value)
         }
@@ -379,50 +416,49 @@
             tableLichSuGiaoDichView.innerHTML = ""
             switch(value){
                 case "Tất cả giao dịch":
-                    if(!dataLSDG){
-                        getLichSuGiaoDich(data => {
-                            dataLSDG = data
-                            renderLichSuGiaoDich(dataLSDG)
-                        });
-                    }
-                    else
-                        renderLichSuGiaoDich(dataLSDG)
+                    window.location.href ="/naptien"
                     break;
                 case "Nạp tiền":
                     if(!dataNapTienLSGD){
-                            getLichSuGiaoDich(data => {
-                                dataNapTienLSGD = data.filter((LSGD)=>{
-                                    return LSGD.loaiGD === 1
-                                })
-                                renderLichSuGiaoDich(dataNapTienLSGD)
-                            });
+                        getLichSuGiaoDich(data => {
+                            dataNapTienLSGD = data.filter((LSGD)=>{
+                                return LSGD.loaiGD === 1
+                            })
+                            dataNapTienLSGD.sort((a, b) => b.id - a.id);
+                            renderLichSuGiaoDich(dataNapTienLSGD)
+                        });
                     }
                     else
                         renderLichSuGiaoDich(dataNapTienLSGD)
+                    paginationView.classList.add('display-none')
                     break;
                 case "Thanh toán":
                     if(!dataThanhToanLSGD){
-                                getLichSuGiaoDich(data => {
-                                    dataThanhToanLSGD = data.filter((LSGD)=>{
-                                        return LSGD.loaiGD === 2
-                                    })
-                                    renderLichSuGiaoDich(dataThanhToanLSGD)
-                                });
+                        getLichSuGiaoDich(data => {
+                            dataThanhToanLSGD = data.filter((LSGD)=>{
+                                return LSGD.loaiGD === 2
+                            })
+                            dataThanhToanLSGD.sort((a, b) => b.id - a.id);
+                            renderLichSuGiaoDich(dataThanhToanLSGD)
+                        });
                     }
                     else
                         renderLichSuGiaoDich(dataThanhToanLSGD)
+                    paginationView.classList.add('display-none')
                     break;
                 case "Hoàn tiền":
                     if(!dataHoanTienLSGD){
-                                getLichSuGiaoDich(data => {
-                                    dataHoanTienLSGD = data.filter((LSGD)=>{
-                                        return LSGD.loaiGD === 3
-                                    })
-                                    renderLichSuGiaoDich(dataHoanTienLSGD)
-                                });
+                        getLichSuGiaoDich(data => {
+                            dataHoanTienLSGD = data.filter((LSGD)=>{
+                                return LSGD.loaiGD === 3
+                            })
+                            dataHoanTienLSGD.sort((a, b) => b.id - a.id);
+                            renderLichSuGiaoDich(dataHoanTienLSGD)
+                        });
                     }
                     else
                         renderLichSuGiaoDich(dataHoanTienLSGD)
+                    paginationView.classList.add('display-none')
                     break;
             }
         }

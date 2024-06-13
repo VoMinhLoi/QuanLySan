@@ -261,7 +261,7 @@ class LoginController extends Controller
     }
     public function formRecharge()
     {
-        $lichSuGiaoDich = LichSuGiaoDich::where('maNguoiDung', Auth::user()->maNguoiDung)->get();
+        $lichSuGiaoDich = LichSuGiaoDich::where('maNguoiDung', Auth::user()->maNguoiDung)->orderBy('id', 'desc')->paginate(5);
         return view('Pages.recharge', ['lichSuGiaoDich' => $lichSuGiaoDich]);
     }
 }
