@@ -141,13 +141,13 @@
                             <div class="chat-bot">
                                 <div class="chat-bot-heading">
                                     <img style="margin-left: 8px" class="header-logo__image" src="assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="logo trường đại học thể dục thể thao">
-                                    <p style="margin-left: 8px">Tư vấn tự động</p>
+                                    <p style="margin-left: 8px">Chatbot</p>
                                 </div>
                                 <div class="chat-bot-body hidden-scrollbar">
                                     
                                 </div>
                                 <div class="chat-bot-footer">
-                                    <input type="text" class="chat-bot-footer__input" required>
+                                    <input type="text" class="chat-bot-footer__input" required placeholder="Những điều cần biết về thể thao hay vấn đề, tình trạng chuấn thương của bạn?">
                                     <button  class="chat-bot-footer__send"><i class="fa-solid fa-paper-plane"></i></button>
                                     <button  class="chat-bot-footer__send--stop display-none"><i class="fa-solid fa-pause fa-fw"></i></button>
                                 </div>
