@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\PusherController;
 use App\Http\Controllers\User\BookController;
 
 Route::get('/', function () {
@@ -56,6 +57,10 @@ Route::group(['middleware' => 'userLogin'], function () {
     Route::post('/vnpay_payment', [LoginController::class, 'formRechargeVNPay']);
     Route::get('/redirect_vnpay_payment', [LoginController::class, 'formRedirectVNPay']);
     Route::get('/naptien', [LoginController::class, 'formRecharge']);
+
+    Route::get('/trochuyen', [PusherController::class, 'index']);
+    Route::post('/broadcast', [PusherController::class, 'broadcast']);
+    Route::post('/receive', [PusherController::class, 'receive']);
 });
 
 Route::group(['middleware' => 'adminLogin'], function () {
