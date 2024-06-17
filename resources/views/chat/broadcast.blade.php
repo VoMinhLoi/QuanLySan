@@ -1,4 +1,10 @@
 <div class="right message">
-    <p>{{$message}}</p>
-    <img src="https://assets.edlin.app/images/rossedlin/03/rossedlin-03-100.jpg" alt="Profile picture">
-  </div>
+  {{-- @if($authCode == 1)
+    <p title="{{ $timestamp }}">{{"Quản trị viên: ".$message}}</p>
+    <img src="assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="Profile picture">
+  @else
+    <p title="{{ $timestamp }}">{{$account.": ".$message}}</p>
+    <img src="assets/img/avatarmacdinh.jpg" alt="Profile picture">
+  @endif --}}
+  <p title="{{ $timestamp }}">{{$message}}</p>
+</div>

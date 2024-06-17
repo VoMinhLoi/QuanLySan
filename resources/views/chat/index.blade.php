@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Chat Laravel Pusher | Edlin App</title>
-  <link rel="icon" href="https://assets.edlin.app/favicon/favicon.ico"/>
+<title>Sân đại học Thể Dục Thể Thao Đà Nẵng</title>
+<link rel="icon" href="./assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" type="image/icon type">
+  {{-- <link rel="icon" href="https://assets.edlin.app/favicon/favicon.ico"/> --}}
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- JavaScript -->
@@ -14015,7 +14016,14 @@
 /*# sourceMappingURL=style.css.map */
   </style>
   <!-- End CSS -->
-
+  <style>
+    .button-booking-sport-field {
+        background: #7fb0ec;
+    }
+    .button-booking-sport-field:hover {
+        background: blue;
+    }
+  </style>
 </head>
 
 <body>
@@ -14023,18 +14031,24 @@
 
   <!-- Header -->
   <div class="top">
-    <img src="https://assets.edlin.app/images/rossedlin/03/rossedlin-03-100.jpg" alt="Avatar">
+    <a href="/"><img src="assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="Avatar" width="100px" height="100px"></a>
     <div>
-      <p>Ross Edlin</p>
-      <small>Online</small>
+        <p>Phòng chat trực tuyến</p>
+        @if (Auth::user()->maQuyen == 1)
+        <h5 style="margin-top: 4px;">Quản trị viên</h5>
+        @endif
+        <small>Online 24/7</small>
     </div>
+    @if (Auth::user()->maQuyen == 2)
+        <a class="button-booking-sport-field" href="/sanbong" style="text-decoration: none; color: white; border-radius: 4px; float: right; padding: 14px" target="_blank">Đặt sân</a>
+    @else
+        <a class="button-booking-sport-field" href="/dashboard" style="text-decoration: none; color: white; border-radius: 4px; float: right; padding: 14px" target="_blank">Quản lý</a>
+    @endif
   </div>
   <!-- End Header -->
 
   <!-- Chat -->
   <div class="messages">
-    @include('chat.receive', ['message' => "Hey! What's up!  👋"])
-    @include('chat.receive', ['message' => "Ask a friend to open this link and you can chat with them!"])
   </div>
   <!-- End Chat -->
 
@@ -14051,41 +14065,54 @@
 </body>
 
 <script>
-  const pusher  = new Pusher('{{config('broadcasting.connections.pusher.key')}}', {cluster: 'ap1'});
-  const channel = pusher.subscribe('public');
+    const pusher = new Pusher('{{ config('broadcasting.connections.pusher.key') }}', { cluster: 'ap1' });
+    const channel = pusher.subscribe('public');
 
-  //Receive messages
-  channel.bind('chat', function (data) {
-    $.post("/receive", {
-      _token:  '{{csrf_token()}}',
-      message: data.message,
-    })
-     .done(function (res) {
-       $(".messages > .message").last().after(res);
-       $(document).scrollTop($(document).height());
-     });
-  });
-
-  //Broadcast messages
-  $("form").submit(function (event) {
-    event.preventDefault();
-
-    $.ajax({
-      url:     "/broadcast",
-      method:  'POST',
-      headers: {
-        'X-Socket-Id': pusher.connection.socket_id
-      },
-      data:    {
-        _token:  '{{csrf_token()}}',
-        message: $("form #message").val(),
-      }
-    }).done(function (res) {
-      $(".messages > .message").last().after(res);
-      $("form #message").val('');
-      $(document).scrollTop($(document).height());
+    // Receive messages
+    channel.bind('chat', function (data) {
+        $.post("/receive", {
+            _token:  '{{ csrf_token() }}',
+            message: data.message,
+            account: data.account,
+            authCode: data.authCode,
+            timestamp: data.timestamp,
+        }).done(function (res) {
+            const html = res.html;
+            $(".messages").append(html);
+            $(document).scrollTop($(document).height());
+        });
     });
-  });
+
+    // Broadcast messages
+    $("form").submit(function (event) {
+        event.preventDefault();
+
+        const message = $("form #message").val();
+        const account = '{{ Auth::user()->taiKhoan }}';
+        const authCode = '{{ Auth::user()->maQuyen }}';
+        const timestamp = new Date().toISOString();
+
+        $.ajax({
+            url:     "/broadcast",
+            method:  'POST',
+            headers: {
+                'X-Socket-Id': pusher.connection.socket_id
+            },
+            data:    {
+                _token:  '{{ csrf_token() }}',
+                message: message,
+                account: account,
+                authCode: authCode,
+                timestamp: timestamp
+            }
+        }).done(function (res) {
+            const html = res.html;
+            $(".messages").append(html);
+            $("form #message").val('');
+            $(document).scrollTop($(document).height());
+        });
+    });
+
 
 </script>
 </html>

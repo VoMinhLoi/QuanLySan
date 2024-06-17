@@ -154,6 +154,11 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row no-gutters" style="margin: 24px 0; ">
+                        <div class="col l-12 m-12 c-12" style="text-align: center">
+                            <a id="" href="/trochuyen" style="background-color: var(--primary-color); color: white; padding: 8px 12px; border-radius: 4px; cursor: pointer" target="_blank">Phòng chat trực tuyến</a>
+                        </div>
+                    </div>
                     <div class="row  no-gutters" style="display: flex; justify-content: center; align-items: center">
                         Hỗ trợ kỹ thuật: minhloi1131130@gmail.com - <svg xmlns="http://www.w3.org/2000/svg" width="50" height="20" viewBox="0 0 30 20" version="1.1">
                             <rect width="30" height="20" fill="#da251d"></rect>

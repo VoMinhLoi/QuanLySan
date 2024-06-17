@@ -1,4 +1,9 @@
 <div class="left message">
-    <img src="https://assets.edlin.app/images/rossedlin/03/rossedlin-03-100.jpg" alt="Avatar">
-    <p>{{$message}}</p>
-  </div>
+  @if($authCode == 1)
+  <img src="assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="Profile picture">
+  <p title="{{ $timestamp }}">{{"Quản trị viên: ".$message}}</p>
+  @else
+  <img src="assets/img/avatarmacdinh.jpg" alt="Profile picture">
+  <p title="{{ $timestamp }}">{{$account.": ".$message}}</p>
+  @endif
+</div>

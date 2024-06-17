@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Events\PusherBroadcast;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class PusherController extends Controller
 {
@@ -17,13 +16,35 @@ class PusherController extends Controller
 
     public function broadcast(Request $request)
     {
-        broadcast(new PusherBroadcast($request->get('message')))->toOthers();
+        $account = Auth::user()->taiKhoan;
+        $authCode = Auth::user()->maQuyen;
+        $timestamp = Carbon::now()->setTimezone('Asia/Ho_Chi_Minh')->toDateTimeString();
 
-        return view('chat.broadcast', ['message' => $request->get('message')]);
+        broadcast(new PusherBroadcast(
+            $request->get('message'),
+            $account,
+            $authCode,
+            $timestamp
+        ))->toOthers();
+        return response()->json([
+            'html' => view('chat.broadcast', [
+                'message' => $request->get('message'),
+                'account' => $account,
+                'authCode' => $authCode,
+                'timestamp' => $timestamp
+            ])->render()
+        ]);
     }
 
     public function receive(Request $request)
     {
-        return view('chat.receive', ['message' => $request->get('message')]);
+        return response()->json([
+            'html' => view('chat.receive', [
+                'message' => $request->get('message'),
+                'account' => $request->get('account'),
+                'authCode' => $request->get('authCode'),
+                'timestamp' => $request->get('timestamp')
+            ])->render()
+        ]);
     }
 }
