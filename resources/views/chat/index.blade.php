@@ -14033,13 +14033,18 @@
   <div class="top">
     <a href="/"><img src="assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="Avatar" width="100px" height="100px"></a>
     <div>
-        <p>Phòng chat trực tuyến</p>
-        @if (Auth::user()->maQuyen == 1)
-        <h5 style="margin-top: 4px;">Quản trị viên</h5>
-        @endif
-        <small>Online 24/7</small>
+        @php
+            $account = Auth::user();
+        @endphp
+        <p>Phòng chat trực tuyến
+            @if ($account->maQuyen == 1)
+                (Quản trị viên)
+            @endif 
+        </p>
+
+        <small>{{ $account->ho . " " . $account->ten }} Online</small>
     </div>
-    @if (Auth::user()->maQuyen == 2)
+    @if ($account->maQuyen == 2)
         <a class="button-booking-sport-field" href="/sanbong" style="text-decoration: none; color: white; border-radius: 4px; float: right; padding: 14px" target="_blank">Đặt sân</a>
     @else
         <a class="button-booking-sport-field" href="/dashboard" style="text-decoration: none; color: white; border-radius: 4px; float: right; padding: 14px" target="_blank">Quản lý</a>
