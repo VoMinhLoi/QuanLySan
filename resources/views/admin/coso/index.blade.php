@@ -160,11 +160,11 @@
                                     <a class="btn btn-info btn-sm" onclick="handleUpdatedCoSo({{ $item }})">
                                         Sửa
                                     </a>
-                                    <a class="btn btn-danger btn-sm button-disable" onclick="handleDeleteCoSo('{{ $item->maCoSo }}')">
+                                    {{-- <a class="btn btn-danger btn-sm button-disable" onclick="handleDeleteCoSo('{{ $item->maCoSo }}')">
                                         <i class="fas fa-trash">
                                         </i>
                                         Xóa
-                                    </a>
+                                    </a> --}}
                                 </td>
                             </tr>
                         @endforeach
