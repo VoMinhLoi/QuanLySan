@@ -11,6 +11,14 @@
     flex-grow: 1;
     align-items: flex-end;
   }
+  @keyframes reduceFromFullHeight {
+    from {
+      height: 100;
+    }
+    to {
+      height: var(--progress-height);
+    }
+  }
 
   .bar {
     width: 50px;
@@ -18,6 +26,7 @@
     background-color: #4CAF50;
     position: relative;
     color: white;
+    animation: reduceFromFullHeight 2s forwards;
   }
 
   .bar::after {
@@ -71,7 +80,18 @@
   .legend-label {
     font-size: 14px;
   }
+  @keyframes reduceFromFull {
+    from {
+      width: 100%;
+    }
+    to {
+      width: var(--progress-width);
+    }
+  }
 
+  .progress-bar {
+    animation: reduceFromFull 2s forwards;
+  }
 </style>
 @section('contents')
   <div class="content-header">
@@ -228,16 +248,16 @@
                     <div class="tick">0%</div>
                   </div>
                   <div class="bars">
-                    <div class="bar" title="{{$percentChuyen}}%" data-percentage="{{round($percentChuyen,2)}}"; style="height: {{ $percentChuyen }}; background-color: #ff6384;">
+                    <div class="bar" title="{{$percentChuyen}}%" data-percentage="{{ round($percentChuyen, 2) }}" style="--progress-height: {{ $percentChuyen }}; background-color: #ff6384;">
                       {{-- <span class="bar-label">Bóng chuyền</span> --}}
                     </div>
-                    <div class="bar" title="{{$percentChuyenCat}}%" data-percentage="{{round($percentChuyenCat,2)}}"; style="height: {{ $percentChuyenCat }}; background-color: #36a2eb;">
+                    <div class="bar" title="{{$percentChuyenCat}}%" data-percentage="{{ round($percentChuyenCat, 2) }}" style="--progress-height: {{ $percentChuyenCat }}; background-color: #36a2eb;">
                       {{-- <span class="bar-label">Bóng chuyền cát</span> --}}
                     </div>
-                    <div class="bar" title="{{$percentDa}}%" data-percentage="{{round($percentDa,2)}}"; style="height: {{ $percentDa }}; background-color: #cc65fe;">
+                    <div class="bar" title="{{$percentDa}}%" data-percentage="{{ round($percentDa, 2) }}" style="--progress-height: {{ $percentDa }}; background-color: #cc65fe;">
                       {{-- <span class="bar-label">Bóng đá</span> --}}
                     </div>
-                    <div class="bar" title="{{$percentRo}}%" data-percentage="{{round($percentRo,2)}}"; style="height: {{ $percentRo }}; background-color: #ffce56;">
+                    <div class="bar" title="{{$percentRo}}%" data-percentage="{{ round($percentRo, 2) }}" style="--progress-height: {{ $percentRo }}; background-color: #ffce56;">
                       {{-- <span class="bar-label">Bóng rỗ</span> --}}
                     </div>
                   </div>
@@ -317,7 +337,7 @@
                     @endphp
                     <span class="float-right"><b>{{ number_format($doanhThu, 0, ',', '.') }}</b>/{{ number_format($totalRevenue, 0, ',', '.') }}<sup>₫</sup></span>
                     <div class="progress progress-sm" title="{{ $percentRevenue }}%">
-                      <div class="progress-bar bg-primary" style="width: {{ $percentRevenue }}%"></div>
+                      <div class="progress-bar bg-primary" style="--progress-width: {{ $percentRevenue }}%;"></div>
                     </div>
                   </div>
                   <!-- /.progress-group -->
@@ -325,7 +345,7 @@
                     <span class="progress-text">Lợi nhuận từ bán vé</span>
                     <span class="float-right">{{ number_format($doanhThu - $loiNhuanTuHuyVe, 0, ',', '.') }}<sup>₫</sup></span>
                     <div class="progress progress-sm" title="100%">
-                      <div class="progress-bar bg-primary" style="width: 100%"></div>
+                      <div class="progress-bar bg-primary" style="--progress-width: 100%;"></div>
                     </div>
                   </div>
                   <!-- /.progress-group -->
@@ -333,7 +353,7 @@
                     <span class="progress-text">Doanh thu từ hủy vé</span>
                     <span class="float-right">{{ number_format($loiNhuanTuHuyVe, 0, ',', '.') }}<sup>₫</sup></span>
                     <div class="progress progress-sm" title="100%">
-                      <div class="progress-bar bg-primary" style="width: 100%"></div>
+                      <div class="progress-bar bg-primary" style="--progress-width: 100%;"></div>
                     </div>
                   </div>
                   <!-- /.progress-group -->
@@ -347,7 +367,7 @@
                     @endphp
                     <span class="float-right"><b>{{ $veQuantity}}</b>/{{ $ticketTotal }}</span>
                     <div class="progress progress-sm" title=" {{ $percentTicket  }}%">
-                      <div class="progress-bar bg-success" style="width: {{ $percentTicket }}%"></div>
+                      <div class="progress-bar bg-success" style="--progress-width: {{ $percentTicket }}%;"></div>
                     </div>
                   </div>
 
@@ -363,7 +383,7 @@
                     @endphp
                     <span class="float-right"><b>{{ $activeUsersCount }}</b>/{{ $userTotal }}</span>
                     <div class="progress progress-sm" title="{{ $percentUser }}%">
-                      <div class="progress-bar bg-warning" style="width: {{ $percentUser }}%"></div>
+                      <div class="progress-bar bg-warning" style="--progress-width: {{ $percentUser }}%;"></div>
                     </div>
                   </div>
                   <div class="progress-group">
@@ -376,7 +396,7 @@
                     @endphp
                     <span class="float-right"><b>{{ $activeBranchCount }}</b>/{{ $branchTotal }}</span>
                     <div class="progress progress-sm" title="{{ $percentBranch }}%">
-                      <div class="progress-bar" style="width: {{ $percentBranch }}%; background: purple"></div>
+                      <div class="progress-bar" style="--progress-width: {{ $percentBranch }}%; background: purple"></div>
                     </div>
                   </div>
                   <div class="progress-group">
@@ -389,7 +409,7 @@
                     @endphp
                     <span class="float-right"><b>{{ $activeYardCount }}</b>/{{ $yardTotal }}</span>
                     <div class="progress progress-sm" title="{{ $percentYard }}%">
-                      <div class="progress-bar" style="width: {{ $percentYard }}%; background: pink"></div>
+                      <div class="progress-bar" style="--progress-width: {{ $percentYard }}%; background: pink"></div>
                     </div>
                   </div>
                   <div class="progress-group">
@@ -402,7 +422,7 @@
                     @endphp
                     <span class="float-right"><b>{{ $activeToolCount }}</b>/{{ $toolTotal }}</span>
                     <div class="progress progress-sm" title="{{ $percentTool }}%">
-                      <div class="progress-bar" style="width: {{ $percentTool }}%; background: orange"></div>
+                      <div class="progress-bar" style="--progress-width: {{ $percentTool }}%; background: orange"></div>
                     </div>
                   </div>
 
