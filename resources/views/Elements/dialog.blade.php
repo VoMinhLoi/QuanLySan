@@ -291,6 +291,7 @@
               console.log(calendarChoosing)
               handleChangeCalendar()
               deleteHourBusy()
+              disableHourInCurrentDate()
               handleHourBusy(maSanGlobal)
             }
             else hanldeErrorInputTimeStart('Quý khách đã nhập ngày của quá khứ')
