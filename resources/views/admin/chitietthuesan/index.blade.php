@@ -215,27 +215,34 @@
             Chỉnh sửa thông tin sân trước <span style="color: red">1 tiếng thời gian bắt đầu</span>. Qua <span style="color: red">1 tiếng trước thời gian bắt đầu</span> không thể thay đổi.
         </p>
         <div class="over-wrapper display-none"
-        style="    position: fixed;
-        padding-top: 12px;
-        top: 50%;
-        background: white;
-        text-align: center;
-        width: 500px;
-        border: 1px solid black;
-        border-radius: 4px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 3;
-        ">
-        <div class="hour-start-wrapper"
-            style="display: flex;
-            flex-wrap:wrap;
-            justify-content: center">
-            @for ($i = 1; $i <= 24; $i++)
-                <p id=".hour-start-{{ $i }}" class="hourStart" style="border: 1px solid black; width: 50px; height: 50px; margin-left: 4px; text-align: center; line-height: 50px">{{ $i  }}</p>
-            @endfor
-        </div>
-        <button id="hidden-calendar" class="btn-primary" style="margin-bottom: 12px" onclick="hanldeCloseCalendar()">Đóng</button>
+            style="    position: fixed;
+            padding-top: 12px;
+            top: 30%;
+            background: white;
+            text-align: center;
+            width: 500px;
+            border: 1px solid black;
+            border-radius: 4px;
+            left: 40%;
+            z-index: 3;
+            ">
+            <h1>Bảng lịch đặt sân vé</h1>
+            <div class="hour-start-wrapper"
+                style="display: flex;
+                flex-wrap:wrap;
+                justify-content: center">
+                @for ($i = 1; $i <= 24; $i++)
+                    <a id=".hour-start-{{ $i }}" class="hourStart" style="    border: 1px solid black;
+                    width: 60px;
+                    height: 60px;
+                    margin: 4px;
+                    text-align: center;
+                    line-height: 60px;
+                    display: block;
+                    font-size: 9px;" target="_blank" href="#">{{ $i  }}</a>
+                @endfor
+            </div>
+            <button id="hidden-calendar" class="btn-primary" style="margin-bottom: 12px" onclick="hanldeCloseCalendar()">Đóng</button>
     </div>
     </section>
 @endsection
@@ -469,7 +476,9 @@
         const thoiGianBatDau = document.querySelector('#thoiGianBatDau').value;
 
         var allHours = document.querySelectorAll('.hourStart');
-        allHours.forEach(function(p) {
+        allHours.forEach(function(p, index) {
+            p.href = "#"
+            p.innerText = index + 1
             p.classList.remove('hour-start--busy')
         });
         // Example usage of dataChiTietThueSansGlobal
@@ -499,6 +508,8 @@
                         allHours.forEach(function(p) {
                             var hourValue = parseInt(p.innerText);
                             if (hourValue === hourStart){
+                                p.href = "http://127.0.0.1:8000/booking/" + sanBong.maCTTS
+                                p.innerText += " - CTTS"+sanBong.maCTTS
                                 p.classList.add('hour-start--busy')
                             }
                         });
@@ -506,6 +517,8 @@
                         allHours.forEach(function(p) {
                             var hourValue = parseInt(p.innerText);
                             if (hourStart <= hourValue && hourValue < hourEnd){
+                                p.href = "http://127.0.0.1:8000/booking/" + sanBong.maCTTS
+                                p.innerText += " - CTTS"+sanBong.maCTTS
                                 p.classList.add('hour-start--busy')
                             }
                         });
@@ -514,6 +527,8 @@
                     allHours.forEach(function(p) {
                         var hourValue = parseInt(p.innerText);
                         if (hourStart <= hourValue && hourValue <= 24){
+                            p.href = "http://127.0.0.1:8000/booking/" + sanBong.maCTTS
+                            p.innerText += " - CTTS"+sanBong.maCTTS
                             p.classList.add('hour-start--busy')
                         }
                     });
@@ -529,6 +544,8 @@
                 allHours.forEach(function(p) {
                     var hourValue = parseInt(p.innerText);
                     if (1 <= hourValue && hourValue < hourEnd){
+                        p.href = "http://127.0.0.1:8000/booking/" + sanBong.maCTTS
+                        p.innerText += " - CTTS"+sanBong.maCTTS
                         p.classList.add('hour-start--busy')
                     }
                 });
@@ -541,7 +558,9 @@
         const overWrapper = document.querySelector('.over-wrapper')
         overWrapper.classList.add('display-none')
         var allHours = document.querySelectorAll('.hourStart');
-        allHours.forEach(function(p) {
+        allHours.forEach(function(p, index) {
+            p.href = "#"
+            p.innerText = index + 1
             p.classList.remove('hour-start--busy')
         });
     }
