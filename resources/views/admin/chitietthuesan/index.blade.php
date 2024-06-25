@@ -1,4 +1,10 @@
 
+<style>
+    .hour-start--busy{
+        background: red;
+        color: white;
+    }
+</style>
 @extends('admin.layout.layout')
 @section('contents')
     <section class="content-header">
@@ -17,7 +23,18 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
-
+    <form style="margin-left: 12px" onsubmit="seeCalendar(event)">
+        <select name="maSan" id="maSan" required style="height: 29px">
+            @php
+                $sanBongs = App\Models\SanBong::all();
+            @endphp
+            @foreach($sanBongs as $item)
+                <option value="{{ $item->maSan }}">{{ $item->maSan . " - " . $item->tenSan }}</option>
+            @endforeach
+        </select>
+        <input type="date" name="thoiGianBatDau" id="thoiGianBatDau" required>
+        <button type="submit" id="btn-see-calendar" class="btn-primary">Xem lịch</button>
+    </form>
     <section class="content">
         <div class="card">
             <div class="card-header">
@@ -197,6 +214,29 @@
         <p style="text-align: center">
             Chỉnh sửa thông tin sân trước <span style="color: red">1 tiếng thời gian bắt đầu</span>. Qua <span style="color: red">1 tiếng trước thời gian bắt đầu</span> không thể thay đổi.
         </p>
+        <div class="over-wrapper display-none"
+        style="    position: fixed;
+        padding-top: 12px;
+        top: 50%;
+        background: white;
+        text-align: center;
+        width: 500px;
+        border: 1px solid black;
+        border-radius: 4px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 3;
+        ">
+        <div class="hour-start-wrapper"
+            style="display: flex;
+            flex-wrap:wrap;
+            justify-content: center">
+            @for ($i = 1; $i <= 24; $i++)
+                <p id=".hour-start-{{ $i }}" class="hourStart" style="border: 1px solid black; width: 50px; height: 50px; margin-left: 4px; text-align: center; line-height: 50px">{{ $i  }}</p>
+            @endfor
+        </div>
+        <button id="hidden-calendar" class="btn-primary" style="margin-bottom: 12px" onclick="hanldeCloseCalendar()">Đóng</button>
+    </div>
     </section>
 @endsection
 <script>
@@ -410,5 +450,99 @@
             .catch(error => {
                 console.error('Error:', error);
             });
+    }
+    let dataChiTietThueSansGlobal;
+
+    fetch('http://127.0.0.1:8000/api/chitietthuesan')
+        .then(response => response.json())
+        .then(data => { 
+            dataChiTietThueSansGlobal = data;
+            // console.log(dataChiTietThueSansGlobal);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+
+    function seeCalendar(e) {
+        const overWrapper = document.querySelector('.over-wrapper')
+        overWrapper.classList.remove('display-none')
+        e.preventDefault();
+        const maSanView = document.querySelector('#maSan').value;
+        const thoiGianBatDau = document.querySelector('#thoiGianBatDau').value;
+
+        var allHours = document.querySelectorAll('.hourStart');
+        allHours.forEach(function(p) {
+            p.classList.remove('hour-start--busy')
+        });
+        // Example usage of dataChiTietThueSansGlobal
+        if (dataChiTietThueSansGlobal) {
+            
+            const filteredDataBatDau = dataChiTietThueSansGlobal.filter(item => {
+                const formatThoiGianBatDau = item.thoiGianBatDau.split(" ")[0];
+                return item.maSan === maSanView && formatThoiGianBatDau === thoiGianBatDau;
+            });
+            filteredDataBatDau.forEach(sanBong => {
+                
+                // const wrapperHourStartView = document.querySelector('.hour-start-wrapper')
+                // const formatThoiGianBatDauYYYYMMDD = sanBong.thoiGianBatDau.split(" ")[0]
+                // const formatThoiGianKetThucYYYYMMDD = sanBong.thoiGianKetThuc.split(" ")[0]
+                let hourStart = parseInt(sanBong.thoiGianBatDau.split(" ")[1].split(":")[0])
+                let hourEnd = parseInt(sanBong.thoiGianKetThuc.split(" ")[1].split(":")[0])
+                if(hourStart === 0){
+                    hourStart = 24
+                }
+                if(hourEnd === 0){
+                    hourEnd = 24
+                }
+
+                const hourBorrow = hourEnd - hourStart
+                if(hourBorrow >= 0){
+                    if(hourBorrow === 1)
+                        allHours.forEach(function(p) {
+                            var hourValue = parseInt(p.innerText);
+                            if (hourValue === hourStart){
+                                p.classList.add('hour-start--busy')
+                            }
+                        });
+                    else
+                        allHours.forEach(function(p) {
+                            var hourValue = parseInt(p.innerText);
+                            if (hourStart <= hourValue && hourValue < hourEnd){
+                                p.classList.add('hour-start--busy')
+                            }
+                        });
+                }
+                else {
+                    allHours.forEach(function(p) {
+                        var hourValue = parseInt(p.innerText);
+                        if (hourStart <= hourValue && hourValue <= 24){
+                            p.classList.add('hour-start--busy')
+                        }
+                    });
+                }
+            })
+            const filteredDataKetThuc = dataChiTietThueSansGlobal.filter(item=> {
+                const formatThoiGianBatDau = item.thoiGianBatDau.split(" ")[0];
+                const formatThoiGianKetThuc = item.thoiGianKetThuc.split(" ")[0];
+                return item.maSan === maSanView && formatThoiGianKetThuc === thoiGianBatDau && formatThoiGianBatDau !== thoiGianBatDau;
+            })
+            filteredDataKetThuc.forEach(sanBong => {
+                let hourEnd = parseInt(sanBong.thoiGianKetThuc.split(" ")[1].split(":")[0])
+                allHours.forEach(function(p) {
+                    var hourValue = parseInt(p.innerText);
+                    if (1 <= hourValue && hourValue < hourEnd){
+                        p.classList.add('hour-start--busy')
+                    }
+                });
+            })
+        } else {
+            console.error('Data is not yet loaded');
+        }
+    }
+    function hanldeCloseCalendar(){
+        const overWrapper = document.querySelector('.over-wrapper')
+        overWrapper.classList.add('display-none')
+        var allHours = document.querySelectorAll('.hourStart');
+        allHours.forEach(function(p) {
+            p.classList.remove('hour-start--busy')
+        });
     }
 </script>
