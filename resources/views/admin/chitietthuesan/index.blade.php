@@ -231,7 +231,7 @@
                 style="display: flex;
                 flex-wrap:wrap;
                 justify-content: center">
-                @for ($i = 1; $i <= 24; $i++)
+                @for ($i = 0; $i <= 23; $i++)
                     <a id=".hour-start-{{ $i }}" class="hourStart" style="    border: 1px solid black;
                     width: 60px;
                     height: 60px;
@@ -478,7 +478,7 @@
         var allHours = document.querySelectorAll('.hourStart');
         allHours.forEach(function(p, index) {
             p.href = "#"
-            p.innerText = index + 1
+            p.innerText = index
             p.classList.remove('hour-start--busy')
         });
         // Example usage of dataChiTietThueSansGlobal
@@ -495,12 +495,6 @@
                 // const formatThoiGianKetThucYYYYMMDD = sanBong.thoiGianKetThuc.split(" ")[0]
                 let hourStart = parseInt(sanBong.thoiGianBatDau.split(" ")[1].split(":")[0])
                 let hourEnd = parseInt(sanBong.thoiGianKetThuc.split(" ")[1].split(":")[0])
-                if(hourStart === 0){
-                    hourStart = 24
-                }
-                if(hourEnd === 0){
-                    hourEnd = 24
-                }
 
                 const hourBorrow = hourEnd - hourStart
                 if(hourBorrow >= 0){
@@ -560,7 +554,7 @@
         var allHours = document.querySelectorAll('.hourStart');
         allHours.forEach(function(p, index) {
             p.href = "#"
-            p.innerText = index + 1
+            p.innerText = index
             p.classList.remove('hour-start--busy')
         });
     }
