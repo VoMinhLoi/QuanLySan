@@ -265,7 +265,7 @@
                         <div class="col l-12 m-12 c-12">
                             <div class="main" id="main">
                                 <div class="form" id="form-infor">
-                                    <h3 class="heading"><strong>Chi tiết thông tin mã vé {{ $ve->id }}</strong></h3>
+                                    <h3 class="heading"><strong>Mã vé {{ $ve->id }} - CTTS{{ $chiTietThueSan->maCTTS }}</strong></h3>
                                     <div class="qr-code" style="display: flex; justify-content: center; flex-direction: column; align-items:center">
                                         <img src="{{ asset($mergedQrCodePath) }}" alt="QR Code" width="200px" height="200px">
                                         <h4>Mã QR vào cổng qua cảm biến hình ảnh cổng</h4>
