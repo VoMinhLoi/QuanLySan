@@ -18,7 +18,7 @@ class Ve extends Model
         'daThanhToan',
         'trangThai',
         'hoTen',
-
+        'taiKhoan'
     ];
     protected $primaryKey = 'id';
     public function chiTietThueSans()

@@ -970,6 +970,7 @@
             dataVe["diaChi"] = dataSDTMaPXDiaChihoTenNguoiDat.diaChi
             dataVe["maPX"] = dataSDTMaPXDiaChihoTenNguoiDat.maPX
             dataVe["SDT"] = dataSDTMaPXDiaChihoTenNguoiDat.SDT
+            dataVe["taiKhoan"] = "{{ Auth::user()->taiKhoan }}"
             dataVe["tongTien"] = pay
             dataVe["daThanhToan"] = 1
             // dataVe["trangThai"] = 1

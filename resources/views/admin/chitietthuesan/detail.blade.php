@@ -68,6 +68,16 @@
                 <td>
                     @if(!isset($daSuDung))
                         <button id="yard-change-button" class="btn-success" onclick="updateChiTietThueSan('{{ $chiTietThueSan->maCTTS }}', '{{ $chiTietThueSan->maSan }}', '{{ $chiTietThueSan->thoiGianBatDau }}', '{{ $chiTietThueSan->thoiGianKetThuc }}')" style="margin-bottom: 8px">Sửa</button>
+                        
+                        @php
+                            $existBaoTri = App\Models\SanBong::where('maSan',$chiTietThueSan->maSan)->where('trangThai',0)->first();
+                            $existChuaXoa = App\Models\ChiTietThueSan::withoutTrashed()->where('maCTTS',$chiTietThueSan->maCTTS)->first();
+                        @endphp
+                        @if(!empty($existBaoTri))
+                            @if(!empty($existChuaXoa))
+                                <button class="btn-danger" onclick="handleDeleteChiTietThueSan('{{ $chiTietThueSan->maCTTS }}')">Bảo trì</button>
+                            @endif
+                        @endif
                     @endif
                 </td>
             </tr>
@@ -155,3 +165,186 @@
         @include('admin.chitietthuesan.update')
     </div>
 @endsection
+<script>
+    function layThoiGianHienTai() {
+        var now = new Date();
+
+        // Lấy thông tin ngày, tháng, năm, giờ, phút, giây
+        var year = now.getFullYear();
+        var month = String(now.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+        var date = String(now.getDate()).padStart(2, '0');
+        var hours = String(now.getHours()).padStart(2, '0');
+        var minutes = String(now.getMinutes()).padStart(2, '0');
+        var seconds = String(now.getSeconds()).padStart(2, '0');
+
+        // Tạo chuỗi định dạng yyyy-mm-dd hh:mm:ss
+        var formattedTime = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
+
+        return formattedTime;
+    }
+    function handleDeleteChiTietThueSan(maCTTS){
+        Refund(maCTTS)
+    }
+    function Refund(maCTTS){
+        getOneChiTietThueSan(maCTTS, CTTS => 
+            getVe(CTTS.maVe, ve => {
+                updateUserMoney(ve.tongTien, maCTTS, ve.maNguoiDung, CTTS.maSan, CTTS.thoiGianBatDau, CTTS.thoiGianKetThuc, ve.taiKhoan)
+            })
+        )
+    }
+    function getOneChiTietThueSan(maCTTS, callback){
+        fetch("http://127.0.0.1:8000/api/chitietthuesan/"+maCTTS)
+            .then(response => response.json())
+            .then(callback)
+    }
+    function getVe(maVe, callback){
+        fetch("http://127.0.0.1:8000/api/ve/"+maVe)
+            .then(response => response.json())
+            .then(callback)
+    }
+    function updateUserMoney(money, maCTTS, maNguoiDung, maSan, thoiGianBatDau, thoiGianKetThuc, taiKhoan){
+        var data = {}
+        data['soDuTaiKhoan'] = money;
+        fetch("http://127.0.0.1:8000/api/user/"+maNguoiDung,{
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success){
+                    toastr.success(data.success)
+                    deleteChiTietThueSan(maCTTS)
+                    createLichSuGiaoDich(money, maNguoiDung, maSan)
+                    createThongBaoHuy(maNguoiDung, maSan)
+                    sendMail(maCTTS, maSan, money, thoiGianBatDau, thoiGianKetThuc, taiKhoan)
+                }
+                else
+                    toastr.error(data.error)
+            })
+            .catch(error => {
+                toastr.error("Lỗi hoàn tiền");
+                console.error('Error:', error);
+            });
+    }
+    function deleteChiTietThueSan(maCTTS){
+        fetch("http://127.0.0.1:8000/api/chitietthuesan/"+maCTTS,{
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+            .then(response => response.json())
+            .then(data=> {
+                if(data.success){
+                    toastr.success(data.success)
+                }
+                else
+                    toastr.error(data.error)
+                if(data.chiTietThueSan.maDungCu)
+                    updateToolRentingQuantity(data.chiTietThueSan)
+            })
+    }
+    function updateToolRentingQuantity(chiTietThueSan){
+            fetch("http://127.0.0.1:8000/api/dungcu/"+chiTietThueSan.maDungCu, {
+                method: "PUT",
+                headers: {
+                    // "Content-Type": "application/x-www-form-urlencoded", x-www-form-urlencoded: form data
+                    "Content-Type": "application/json",
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                },
+                // body: JSON.stringify(data),
+                body: JSON.stringify({ soLuongChoThue: -chiTietThueSan.soLuong }),
+            })
+            .then(response => {
+                return response.json(); // Chuyển đổi phản hồi sang JSON
+            })
+            .then(data => {
+                if(data.error)
+                    toastr.error(data.error)
+                else{
+                    toastr.success(data.success)
+                }// Dữ liệu JSON trả về từ function store
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    function createLichSuGiaoDich(money, maNguoiDung, maSan){
+        let lsgd = {}
+        lsgd['maNguoiDung'] = maNguoiDung;
+        lsgd['ndck'] = "Hoàn tiền hủy sân "+maSan+" vì đang bảo trì";
+        lsgd['soTien'] = money;
+        lsgd['thoiGian'] = layThoiGianHienTai();
+        lsgd['trangThai'] = 1;
+        lsgd['loaiGD'] = 3;
+        fetch('http://127.0.0.1:8000/api/lichsugiaodich',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            },
+            body: JSON.stringify(lsgd)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success){
+                    toastr.success(data.success)
+                    window.location.href = "/booking"
+                }
+                else
+                    toastr.error(data.error)
+            })
+    }
+    function createThongBaoHuy(maNguoiDung, maSan){
+        let dataThongBao = {}
+        dataThongBao['loaiTB'] = 2
+        dataThongBao['maNguoiDung'] = maNguoiDung
+        dataThongBao['tieuDe'] = "Sân "+maSan+ " bảo trì."
+        dataThongBao['noiDung'] = "Sân quý khách đặt hiện tại đã hủy vì đang bảo trì để mang lại trải nghiệm tốt nhất. Số tiền đặt sân sẽ hoàn lại 100%."
+        
+        fetch("http://127.0.0.1:8000/api/thongbao", {
+            method: "POST",
+            headers: {
+                // "Content-Type": "application/x-www-form-urlencoded", x-www-form-urlencoded: form data
+                "Content-Type": "application/json",
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            },
+            // body: JSON.stringify(data),
+            body: JSON.stringify(dataThongBao),
+            })
+            .then(response => {
+                return response.json(); // Chuyển đổi phản hồi sang JSON
+            })
+            .then(data => {
+                if(data.error)
+                    toastr.error(data.error)
+                else{
+                    toastr.success(data.success)
+                }// Dữ liệu JSON trả về từ function store
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+    function sendMail(maCTTS, maSan, money, thoiGianBatDau, thoiGianKetThuc, taiKhoan){
+        fetch('http://127.0.0.1:8000/booking',{
+            method: 'post',
+            headers: {
+                'Content-type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({taiKhoan ,maCTTS,maSan, money, thoiGianBatDau, thoiGianKetThuc})
+        })
+            .then(promises => promises.json())
+            .then(data => {
+                if(data.success)
+                    toastr.success(data.success)
+                else
+                    toastr.error(data.error)
+            })
+    }
+</script>
