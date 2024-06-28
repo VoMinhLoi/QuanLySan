@@ -53,7 +53,7 @@
     const maSanPanelView = document.querySelector('#td-maSan')
     const actionPanelView = document.querySelector('#td-action')
     const thoiDiemHienTai = new Date();
-    function updateChiTietThueSan(maCTTS, maSan, thoiGianBatDau, thoiGianKetThuc){
+    function updateChiTietThueSan(maCTTS, maSan, thoiGianBatDau, thoiGianKetThuc, giaDichVu){
         document.querySelector('.over-lay').classList.remove('display-none')
         form.innerHTML = `  
                                 <h3 class="heading">Thay đổi thông tin sân chi tiết thuê sân `+maCTTS+`</h3>
@@ -68,38 +68,9 @@
         selectView.setAttribute('id','maSan')
         selectView.setAttribute('name','maSan')
         formGroupView.append(selectView)
-
-        switch(maSan){
-            case "SB00001":
-            case "SB00002":
-            case "SB00003":
-                dataLoaiSan = dataSanBongGlobal.filter((sanbong)=>{
-                    return sanbong.loaiSan === "Bóng đá"
-                })
-                break;
-            case "SB00004":
-            case "SB00005":
-            case "SB00006":
-                dataLoaiSan = dataSanBongGlobal.filter((sanbong)=>{
-                    return sanbong.loaiSan === "Chuyền"
-                })
-                break;
-            case "SB00007":
-            case "SB00008":
-            case "SB00009":
-                dataLoaiSan = dataSanBongGlobal.filter((sanbong)=>{
-                    return sanbong.loaiSan === "Chuyền cát"
-                })
-                break;
-            case "SB00010":
-            case "SB00011":
-            case "SB00012":
-                dataLoaiSan = dataSanBongGlobal.filter((sanbong)=>{
-                    return sanbong.loaiSan === "Bóng rỗ"
-                })
-                break;
-            
-        }
+        dataLoaiSan = dataSanBongGlobal.filter((sanbong)=>{
+            return sanbong.giaDichVu == giaDichVu
+        })
         
         for(let i = 0; i<dataLoaiSan.length;i++){
             const option = document.createElement('option')

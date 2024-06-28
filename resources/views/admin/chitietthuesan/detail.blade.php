@@ -67,7 +67,7 @@
                 </td>
                 <td>
                     @if(!isset($daSuDung))
-                        <button id="yard-change-button" class="btn-success" onclick="updateChiTietThueSan('{{ $chiTietThueSan->maCTTS }}', '{{ $chiTietThueSan->maSan }}', '{{ $chiTietThueSan->thoiGianBatDau }}', '{{ $chiTietThueSan->thoiGianKetThuc }}')" style="margin-bottom: 8px">Sửa</button>
+                        <button id="yard-change-button" class="btn-success" onclick="updateChiTietThueSan('{{ $chiTietThueSan->maCTTS }}', '{{ $chiTietThueSan->maSan }}', '{{ $chiTietThueSan->thoiGianBatDau }}', '{{ $chiTietThueSan->thoiGianKetThuc }}', '{{ $sanBong->giaDichVu }}')" style="margin-bottom: 8px">Sửa</button>
                         
                         @php
                             $existBaoTri = App\Models\SanBong::where('maSan',$chiTietThueSan->maSan)->where('trangThai',0)->first();

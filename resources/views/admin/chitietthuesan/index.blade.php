@@ -180,7 +180,7 @@
                                         
                                     @else 
                                         @if($tongSoGiay > 3600)
-                                            <button id="yard-change-button" class="btn-success" onclick="updateChiTietThueSan('{{ $item->maCTTS }}', '{{ $item->maSan }}', '{{ $item->thoiGianBatDau }}', '{{ $item->thoiGianKetThuc }}')" style="margin-bottom: 8px">Sửa</button>
+                                            <button id="yard-change-button" class="btn-success" onclick="updateChiTietThueSan('{{ $item->maCTTS }}', '{{ $item->maSan }}', '{{ $item->thoiGianBatDau }}', '{{ $item->thoiGianKetThuc }}', '{{ $giaDichVu = App\Models\SanBong::where('maSan',$item->maSan)->first()->giaDichVu; }}')" style="margin-bottom: 8px">Sửa</button>
                                         @endif
                                     @endif
                                     @php

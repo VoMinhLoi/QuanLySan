@@ -18,14 +18,6 @@ class CoSoController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -36,30 +28,14 @@ class CoSoController extends Controller
             $credentials['diaChi'] = $request->diaChi;
             $credentials['moTa'] = $request->moTa;
             $credentials['maPX'] = $request->maPX;
-            $credentials['thoiGianMoCua'] = $request->thoiGianMoCua;
-            $credentials['thoiGianDongCua'] = $request->thoiGianDongCua;
+            // $credentials['thoiGianMoCua'] = $request->thoiGianMoCua;
+            // $credentials['thoiGianDongCua'] = $request->thoiGianDongCua;
             CoSo::create($credentials);
             $newCoSo = CoSo::orderBy('maCoSo', 'desc')->first();
             return response()->json(['success' => 'Tạo cơ sở thành công.', 'newCoSo' => $newCoSo]);
         } catch (Exception $e) {
             return response()->json(['error' => 'Tạo cơ sở thất bại.', 'message' => $e->getMessage()]);
         }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**

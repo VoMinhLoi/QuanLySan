@@ -65,7 +65,7 @@
                     </div>
                     <div class="form-group">
                         <label for="maPitch">Cơ sở</label>
-                        <select name="maPitch" id="maPitch">
+                        <select name="maCoSo" id="maPitch">
                             @php
                                 $branchs = App\Models\CoSo::all();
                             @endphp
@@ -254,7 +254,7 @@
                 formData.append('giaDichVu', dataValid.giaDichVu)
                 formData.append('loaiSan', dataValid.loaiSan)
                 formData.append('hinhAnh', dataValid.hinhAnh[0])
-                formData.append('maPitch', dataValid.maPitch)
+                formData.append('maCoSo', dataValid.maCoSo)
 
                 fetch("http://127.0.0.1:8000/api/sanbong", {
                     method: "POST",

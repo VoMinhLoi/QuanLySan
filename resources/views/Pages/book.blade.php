@@ -453,7 +453,7 @@
                                                     </div>
                                                     <div class="fg-infor col l-6 m-6 c-12">
                                                         <a href="#" class="fg-infor__name">${sanbong.tenSan}</a>
-                                                        <p class="fg-infor__price fg-infor__location-price"><span style="color: black">Vị trí: ${sanbong.viTri}</span><span>${formattedPriceString}/h</span></p>
+                                                        <p class="fg-infor__price fg-infor__location-price"><span style="color: black">Vị trí: ${sanbong.maCoSo} ${sanbong.viTri}</span><span>${formattedPriceString}/h</span></p>
                                                         <p class="fg-infor__description">${sanbong.moTa}</p>
                                                         <div class="fg-infor__action">
                                                             <p class="fg-infor__action-item fg-infor__action-improve" onclick="showImproveDialog('${sanbong.maSan}')">Đặt sân</p>
@@ -495,7 +495,7 @@
                                                     </div>
                                                     <div class="fg-infor col l-6 m-6 c-12">
                                                         <a href="#" class="fg-infor__name">${sanbong.tenSan}</a>
-                                                        <p class="fg-infor__price fg-infor__location-price"><span style="color: black">Vị trí: ${sanbong.viTri}</span><span>${formattedPriceString}/h</span></p>
+                                                        <p class="fg-infor__price fg-infor__location-price"><span style="color: black">Vị trí: ${sanbong.maCoSo} ${sanbong.viTri}</span><span>${formattedPriceString}/h</span></p>
                                                         <p class="fg-infor__description">${sanbong.moTa}</p>
                                                     </div>
                                                 </div>

@@ -40,11 +40,6 @@
                         <span class="form-message"></span>
                     </div>
                     <div class="form-group">
-                        <label for="diaChi">Địa chỉ</label>
-                        <input name="diaChi" type="text" class="form-control" id="diaChi" >
-                        <span class="form-message"></span>
-                    </div>
-                    <div class="form-group">
                         <label for="maTT" class="form-label">Tỉnh thành</label>
                         <select class="form-control" id="maTT">
                         </select>
@@ -63,6 +58,11 @@
                     <span class="form-message"></span>
                     </div>
                     <div class="form-group">
+                        <label for="diaChi">Địa chỉ</label>
+                        <input name="diaChi" type="text" class="form-control" id="diaChi" >
+                        <span class="form-message"></span>
+                    </div>
+                    {{-- <div class="form-group">
                         <label for="thoiGianMoCua">Thời gian mở cửa</label>
                         <input name="thoiGianMoCua" type="number" class="form-control" id="thoiGianMoCua" placeholder="1-23">
                         <span class="form-message"></span>
@@ -71,7 +71,7 @@
                         <label for="thoiGianDongCua">Thời gian đóng cửa</label>
                         <input name="thoiGianDongCua" type="number" class="form-control" id="thoiGianDongCua" placeholder="2-25">
                         <span class="form-message"></span>
-                    </div>
+                    </div> --}}
                 </div>
                 <!-- /.card-body -->
 
@@ -299,13 +299,13 @@
                 Validator.isRequired("#moTa"),
                 Validator.isRequired("#diaChi"),
                 Validator.isRequired("#maPX"),
-                Validator.isRequired("#thoiGianMoCua"),
+                // Validator.isRequired("#thoiGianMoCua"),
                 // Validator.isNumber("#thoiGianMoCua"),
-                Validator.isAllowHour("#thoiGianMoCua",1,23),
-                Validator.isRequired("#thoiGianDongCua"),
+                // Validator.isAllowHour("#thoiGianMoCua",1,23),
+                // Validator.isRequired("#thoiGianDongCua"),
                 // Validator.isNumber("#thoiGianDongCua"),
-                Validator.isAllowHour("#thoiGianDongCua",2,25),
-                Validator.mustHigherOpen("#thoiGianDongCua","#thoiGianMoCua"),
+                // Validator.isAllowHour("#thoiGianDongCua",2,25),
+                // Validator.mustHigherOpen("#thoiGianDongCua","#thoiGianMoCua"),
             ],
             errorSelector: ".form-message",
             buttonSubmitSelector: ".form-submit",
