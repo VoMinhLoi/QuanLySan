@@ -70,7 +70,7 @@
                                 $branchs = App\Models\CoSo::all();
                             @endphp
                             @foreach ($branchs as $item)
-                                <option value="{{ $item->maCoSo }}">{{ $item->tenCoSo }}</option>
+                                <option value="{{ $item->maCoSo }}"> {{ $item->maCoSo }} {{ $item->tenCoSo }}</option>
                             @endforeach
                         </select>
                         <span class="form-message"></span>

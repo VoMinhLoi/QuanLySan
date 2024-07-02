@@ -157,7 +157,7 @@
             name="diaChi"
             type="text"
             placeholder="Số đường, tổ, xóm, thôn, làng"
-            value="{{ $ve->diaChi }}"
+            value="{{ $ve->diaChi }} - {{ $ve->taiKhoan }} "
             class="form-control"
         />
     </div>

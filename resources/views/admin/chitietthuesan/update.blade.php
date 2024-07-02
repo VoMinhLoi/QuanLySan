@@ -180,7 +180,7 @@
                                         .then(response => response.json())
                                         .then(data =>{
                                             toastr.success(data.success)
-                                            window.location.href = "/booking"
+                                            window.location.href = "/booking/"+maCTTS
                                         })
                                 }
                             })

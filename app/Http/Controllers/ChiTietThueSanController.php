@@ -148,7 +148,7 @@ class ChiTietThueSanController extends Controller
                         <body>
                             <p>Chúng tôi rất tiếc phải thông báo với bạn rằng đặt lịch của bạn với các chi tiết:</p>
                             <ul>
-                                <li>ID:  $request->maCTTS đã hủy.</li>
+                                <li>ID:  CTTS $request->maCTTS đã hủy.</li>
                                 <li>Mã sân:  $request->maSan </li>
                                 <li>Thời gian bắt đầu: từ $request->thoiGianBatDau đến $request->thoiGianKetThuc</li>
                                 <li>Tổng tiền: " . number_format($request->money, 0, ',', '.') . " <sup>₫</sup> đã được hoàn lại vào số dư tài khoản ngay từ thời điểm gửi mail.</li>
