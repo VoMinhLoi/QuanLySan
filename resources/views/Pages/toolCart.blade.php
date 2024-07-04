@@ -241,7 +241,7 @@
                                                     <img class="product-infor__img" src="{{ asset('assets/img/' . $product->hinhAnh1) }}" alt="img">
                                                     
                                                     <div class="name-desc" style="margin-left: 8px">
-                                                        <a class="name" href="/product/{{ $product->maDungCu }}" target="_blank">{{ $product->tenDungCu }}</a>
+                                                        <a class="name" href="/dungcu/{{ $product->maDungCu }}" target="_blank">{{ $product->tenDungCu }}</a>
                                                         <p class="desc">{{ $product->moTa }}</p>
                                                     </div>
                                                 </td>

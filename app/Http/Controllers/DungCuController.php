@@ -77,4 +77,9 @@ class DungCuController extends Controller
             return response()->json(['error' => 'Xóa dụng cụ thất bại.', 'message' => $e->getMessage()]);
         }
     }
+    public function formToolDetail(string $id)
+    {
+        $dungCu = DungCu::where('maDungCu', $id)->first();
+        return view('Pages.toolDetail', compact('dungCu'));
+    }
 }

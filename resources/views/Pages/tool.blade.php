@@ -441,7 +441,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="fg-infor">
-                                                    <a href="#" class="fg-infor__name">${sanbong.tenDungCu}</a>
+                                                    <a href="/dungcu/${sanbong.maDungCu}" class="fg-infor__name">${sanbong.tenDungCu}</a>
                                                     
                                                 </div>
                                                 <div class="fg-infor">
@@ -462,7 +462,7 @@
                                                 
                                             </div>
                                             <div class="fg-infor col l-6 m-6 c-12">
-                                                <a href="#" class="fg-infor__name">${sanbong.tenDungCu}</a>
+                                                <a href="/dungcu/${sanbong.maDungCu}" class="fg-infor__name">${sanbong.tenDungCu}</a>
                                                 <p class="fg-infor__price fg-infor__location-price"><span style=""><span>${formattedPriceString}</span></p>
                                                 <p class="fg-infor__description">${sanbong.moTa}</p>
                                                 <div class="fg-infor__action">

@@ -63,6 +63,7 @@ Route::group(['middleware' => 'userLogin'], function () {
     Route::post('/broadcast', [PusherController::class, 'broadcast']);
     Route::post('/receive', [PusherController::class, 'receive']);
     Route::get('/giohang', [GioHangController::class, 'formCart']);
+    Route::get('/dungcu/{dungcu}', [DungCuController::class, 'formToolDetail']);
 });
 
 Route::group(['middleware' => 'adminLogin'], function () {

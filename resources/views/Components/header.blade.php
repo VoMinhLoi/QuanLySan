@@ -201,7 +201,7 @@
     </style>
 
     <header class="header">
-        <a href="/" class="header-logo"><img class="header-logo__image" src="assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="logo trường đại học thể dục thể thao"></a>
+        <a href="/" class="header-logo"><img class="header-logo__image" src="https://minhloiiot.id.vn/assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="logo trường đại học thể dục thể thao"></a>
         <ul class="header-navigation">
             <li class="header-navigation-item"><a href="/" class="header-navigation-item__link">Trang chủ</a></li>
             <li class="header-navigation-item">
@@ -221,7 +221,7 @@
                         @if(Auth::user()->hinhDaiDien == null)
                             <i class="fa-solid fa-user" style="margin-left: 4px"></i>                            
                         @else
-                            <img src="assets/img/{{ Auth::user()->hinhDaiDien }}" alt="avatar" class="header-navigation-item__link-img">
+                            <img src="https:/minhloiiot.id.vn/assets/img/{{ Auth::user()->hinhDaiDien }}" alt="avatar" class="header-navigation-item__link-img">
                         @endif
                     </p>
                     <ul class="sub-nav">
@@ -293,7 +293,7 @@
                                 <li class="header-notify__item header-notify__item--viewed">
                             @endif 
                                     <a href="#" class="header-notify-item__link">
-                                        <img class="header-notify-item-link__img" src="./assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="ASUS">
+                                        <img class="header-notify-item-link__img" src="https://minhloiiot.id.vn/assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="ASUS">
                                         <div class="header-notify-item__info">
                                             <span class="header-notify-item-link__name">{{ $item->tieuDe }}</span>
                                             <span class="header-notify-item-link__description">{{ \DateTime::createFromFormat('Y-m-d H:i:s', $item->thoiGian)->format('d-m-Y H:i:s') }}</span>
