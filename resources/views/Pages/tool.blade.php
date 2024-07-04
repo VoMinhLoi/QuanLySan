@@ -467,7 +467,6 @@
                                                 <p class="fg-infor__description">${sanbong.moTa}</p>
                                                 <div class="fg-infor__action">
                                                     <p class="fg-infor__action-item fg-infor__action-improve" onclick="addToCart('${sanbong.maDungCu}')">Thêm vào giỏ</p>
-                                                    <p class="fg-infor__action-item fg-infor__action-improve" onclick="buyAndPay('${sanbong.maDungCu}')">Mua</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -579,6 +578,37 @@
                 handleFilter(dataAllSanBongFollowFilter)
             }
         });
+        const apiGioHang = 'http://127.0.0.1:8000/api/giohang'
+        const maNguoiDung = "{{ Auth::user()->maNguoiDung }}"
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        function addToCart(maDungCu){
+            fetch(apiGioHang)
+                .then(promise => promise.json())
+                .then(data => {
+                    data = data.filter((giohang)=> {
+                        return giohang.maNguoiDung == maNguoiDung
+                    })
+                    console.log(data)
+                    let isExistTool = data.every((giohang)=>{
+                        return giohang.maDungCu !== maDungCu 
+                    })
+                    if(isExistTool){
+                        fetch(apiGioHang,{
+                            method: "post",
+                            headers: {
+                                "Content-type": 'application/json',
+                                "X-csrf-token": token
+                            },
+                            body: JSON.stringify({"maNguoiDung": maNguoiDung, "maDungCu": maDungCu, "soLuong": 1})
+                        })
+                            .then(promise => {
+                                toastr.success("Sản phẩm đã được thêm vào giỏ hàng.");
+                            })
+                    }
+                    else
+                        toastr.error("Sản phẩm đã tồn tại trong giỏ hàng.");
+                })
+        }
     </script>
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -592,4 +622,5 @@
             "timeOut": 0 // Không tự động tắt
         };
     </script>
+
 </html>

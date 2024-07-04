@@ -76,7 +76,7 @@
         .header-private {
             display: flex;
             position: relative;
-            width: 110px;
+            width: 150px;
         }
 
 
@@ -119,7 +119,7 @@
             z-index: 2;
             background-color: white;
             top: calc(100% + 8px);
-            right: 0;
+            right: 42px;
             width: 404px;
             border-radius: 2px;
             border: 1px solid rgba(0, 0, 0, 0.1);
@@ -254,7 +254,7 @@
                 @endif
             </label>
             
-            <a href="/tui" class="header-private-item">
+            <a href="/tui" class="header-private-item" title="Vé sân, dụng cụ thuê">
                 <i class="fa-solid fa-volleyball"></i>
                 @if(Auth::check())
                     @php
@@ -264,6 +264,16 @@
                                                 ->count();
                     @endphp
                     <span class="header-private-item__quantity header-private-item__quantity--in-bag">{{ $sportFieldQuantity }}</span>
+                @endif
+            </a>
+            <a href="/giohang" class="header-private-item" title="Đơn hàng mua">
+                <i class="fa-solid fa-cart-shopping"></i>
+                @if(Auth::check())
+                    @php
+                        $cartQuantity = App\Models\GioHang::where('maNguoiDung', $maNguoiDung)
+                                                ->count();
+                    @endphp
+                    <span class="header-private-item__quantity header-private-item__quantity--in-bag">{{ $cartQuantity }}</span>
                 @endif
             </a>
             @if(Auth::check())

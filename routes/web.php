@@ -2,6 +2,8 @@
 
 
 use App\Http\Controllers\ChiTietThueSanController;
+use App\Http\Controllers\DungCuController;
+use App\Http\Controllers\GioHangController;
 // use App\Http\Controllers\DungCuController;
 use App\Http\Controllers\TinTucController;
 use Illuminate\Support\Facades\Route;
@@ -20,7 +22,6 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\PusherController;
-use App\Http\Controllers\User\BookController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -48,7 +49,7 @@ Route::post('/cttintuc', [TinTucController::class, 'formTinTuc'])->name('formTin
 Route::group(['middleware' => 'userLogin'], function () {
     Route::get('/sanbong', [App\Http\Controllers\SanBongController::class, 'interface']);
     Route::post('/sanbong', [App\Http\Controllers\SanBongController::class, 'formCheckout']);
-    // Route::get('/muadungcu', [DungCuController::class, 'interface']);
+    Route::get('/muadungcu', [DungCuController::class, 'interface']);
     Route::get('/hosocanhan', [LoginController::class, 'formProfile']);
     Route::get('/tui', [ChiTietThueSanController::class, 'formVe']);
     Route::post('/tui', [ChiTietThueSanController::class, 'sendMail']);
@@ -61,6 +62,7 @@ Route::group(['middleware' => 'userLogin'], function () {
     Route::get('/trochuyen', [PusherController::class, 'index']);
     Route::post('/broadcast', [PusherController::class, 'broadcast']);
     Route::post('/receive', [PusherController::class, 'receive']);
+    Route::get('/giohang', [GioHangController::class, 'formCart']);
 });
 
 Route::group(['middleware' => 'adminLogin'], function () {
