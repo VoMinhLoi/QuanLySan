@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\PayController;
 use App\Http\Controllers\PusherController;
 
 Route::get('/', function () {
@@ -64,6 +65,7 @@ Route::group(['middleware' => 'userLogin'], function () {
     Route::post('/receive', [PusherController::class, 'receive']);
     Route::get('/giohang', [GioHangController::class, 'formCart']);
     Route::get('/dungcu/{dungcu}', [DungCuController::class, 'formToolDetail']);
+    Route::get('/thanhtoan', [PayController::class, 'formPay']);
 });
 
 Route::group(['middleware' => 'adminLogin'], function () {
