@@ -4,6 +4,7 @@
 use App\Http\Controllers\ChiTietThueSanController;
 use App\Http\Controllers\DungCuController;
 use App\Http\Controllers\GioHangController;
+use App\Http\Controllers\KhuyenMaiController;
 // use App\Http\Controllers\DungCuController;
 use App\Http\Controllers\TinTucController;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,7 @@ Route::post('/quenmatkhau', [LoginController::class, 'forgot'])->name('user.forg
 Route::get('/cailaimatkhau/{token}', [LoginController::class, 'formResetPassword']);
 Route::post('/cailaimatkhau', [LoginController::class, 'resetPassword'])->name('user.resetPassword');
 Route::post('/cttintuc', [TinTucController::class, 'formTinTuc'])->name('formTinTuc');
+Route::get('/discountlist', [KhuyenMaiController::class, 'formKhuyenMai']);
 
 
 

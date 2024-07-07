@@ -9,33 +9,11 @@ use Illuminate\Http\Request;
 
 class KhuyenMaiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function formKhuyenMai()
     {
-        //
+        $khuyenMais = KhuyenMai::where('trangThai', 1)->get();
+        return view('Pages.discount', compact('khuyenMais'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         try {
@@ -44,29 +22,5 @@ class KhuyenMaiController extends Controller
         } catch (Exception $e) {
             return response()->json(['error' => 'Mã khuyến mãi không tồn tại.', 'message' => $e->getMessage()], 500);
         }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(KhuyenMai $khuyenMai)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, KhuyenMai $khuyenMai)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(KhuyenMai $khuyenMai)
-    {
-        //
     }
 }

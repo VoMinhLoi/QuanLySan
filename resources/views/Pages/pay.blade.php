@@ -220,7 +220,7 @@
                             </div>
                             <div class="row">
                                 <div class="col l-12 m-12 c-12">
-                                    <label for="maKhuyenMai">Nhập mã khuyến mãi</label>
+                                    <label for="maKhuyenMai">Nhập mã khuyến mãi <a href="/discountlist" style="color: red" target="_blank">Lấy mã</a></label>
                                     <br>
                                     <input type="text" name="maKhuyenMai" id="maKhuyenMai" placeholder="A2CFCCM" style="width: fit-content" minlength="7" maxlength="7"> 
                                     <button class="btn" style="background: var(--primary-color)" id="discount_btn">Sử dụng</button>
