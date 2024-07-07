@@ -45,7 +45,11 @@
                                     <p>Mall</p>
                                 </div>
                                 <div class="col l-9 m-9 c-9 coupon-infor">
-                                    <h1>Mã giảm giá</h1>
+                                    @if($item->gia > 1)
+                                        <h1>Mã giảm {{ number_format($item->gia/1000, 0, ',', '.') }}k</h1>
+                                    @else
+                                        <h1>Mã giảm {{ $item->gia *100 }}%</h1>
+                                    @endif
                                     <ul>
                                         @if (empty($item->dieuKienGia))
                                             ĐH tối thiểu: 0 <sup>₫</sup>
