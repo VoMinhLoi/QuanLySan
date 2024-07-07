@@ -197,25 +197,25 @@
                             <div class="row bill-infor-wrapper">
                                 <div class="col l-12 m-12 c-12 bill-infor">
                                     <h1>Tổng cộng</h1>
-                                    <p>1.250.000VND</p>
+                                    <p id="totalPrice">1.250.000 <sup>₫</sup></p>
                                 </div>
                             </div>
                             <div class="row bill-infor-wrapper">
                                 <div class="col l-12 m-12 c-12 bill-infor">
                                     <h1>Phí ship</h1>
-                                    <p>0VND</p>
+                                    <p>0 <sup>₫</sup></p>
                                 </div>
                             </div>
                             <div class="row bill-infor-wrapper">
                                 <div class="col l-12 m-12 c-12 bill-infor">
                                     <h1>Mã giảm giá</h1>
-                                    <p>0VND</p>
+                                    <p id="discountPrice">0 <sup>₫</sup></p>
                                 </div>
                             </div>
                             <div class="row bill-infor-wrapper">
                                 <div class="col l-12 m-12 c-12 bill-infor">
                                     <h1>Cần thanh toán</h1>
-                                    <p>1.250.000VND</p>
+                                    <p id="payTotalPrice">1.250.000 <sup>₫</sup></p>
                                 </div>
                             </div>
                             <div class="row">
@@ -247,6 +247,9 @@
     </div>
 </body>
 <script>
+    var tongTienGlobal = 1000000
+    var tongTienPhaiTraGlobal
+    var tienKhuyenMaiGlobal 
     var apiProvince = 'http://127.0.0.1:8000/api/tinhthanh'
     var apiDistrict = 'http://127.0.0.1:8000/api/quanhuyen'
     var apiWard = 'http://127.0.0.1:8000/api/phuongxa'
@@ -319,7 +322,62 @@
                 wardList.appendChild(option)
             })
         }
+        const discountButtonView = document.querySelector('#discount_btn')
+        const discountCodeInputView = document.querySelector('#maKhuyenMai')
+        const discountPriceView = document.querySelector('#discountPrice')
+        const payMustToTalPricePriceView = document.querySelector('#payTotalPrice')
+        const apiKhuyenMai = "http://127.0.0.1:8000/api/khuyenmai"
+        discountButtonView.onclick = () => {
+            const maKhuyenMai = discountCodeInputView.value;
+            if(maKhuyenMai.length === 7){
+                const intTypeNgayHienTai = new Date()
+                fetch(apiKhuyenMai + "/" + maKhuyenMai)
+                    .then(promise => promise.json())
+                    .then(khuyenMai => {
+                        if (!khuyenMai.thoiGianBatDau || !khuyenMai.thoiGianKetThuc) {
+                            throw new Error('Missing required date fields');
+                        }
+                        const intTypeNgayBatDau = new Date(khuyenMai.thoiGianBatDau);
+                        const intTypeNgayKetThuc = new Date(khuyenMai.thoiGianKetThuc);
 
+                        console.log("Parsed dates:", intTypeNgayBatDau, intTypeNgayKetThuc); // Debugging line
+
+                        if (intTypeNgayBatDau.getTime() <= intTypeNgayHienTai.getTime() && intTypeNgayHienTai.getTime() <= intTypeNgayKetThuc.getTime()) {
+                            if(khuyenMai.dieuKienGia)
+                                if(tongTienGlobal >= khuyenMai.dieuKienGia){
+                                    if(khuyenMai.gia > 1)
+                                        tongTienPhaiTraGlobal = tongTienGlobal - khuyenMai.gia
+                                    else
+                                        tongTienPhaiTraGlobal = tongTienGlobal * (1 - parseFloat(khuyenMai.gia))
+                                    tienKhuyenMaiGlobal = tongTienGlobal - tongTienPhaiTraGlobal
+                                    discountPriceView.innerText = formatCurrency(tienKhuyenMaiGlobal)
+                                    payMustToTalPricePriceView.innerText = formatCurrency(tongTienPhaiTraGlobal)
+                                }
+                                else 
+                                    toastr.error('Không đủ điều kiện.');
+                            else{
+                                if(khuyenMai.gia > 1)
+                                        tongTienPhaiTraGlobal = tongTienGlobal - khuyenMai.gia
+                                else
+                                    tongTienPhaiTraGlobal = tongTienGlobal * (1 - parseFloat(khuyenMai.gia))
+                                tienKhuyenMaiGlobal = tongTienGlobal - tongTienPhaiTraGlobal
+                                discountPriceView.innerText = formatCurrency(tienKhuyenMaiGlobal)
+                                payMustToTalPricePriceView.innerText = formatCurrency(tongTienPhaiTraGlobal)
+                            }
+                        } else {
+                            toastr.error('Thời gian sử dụng không hợp lệ.');
+                        }
+                    })
+                    .catch(error => {
+                        toastr.error('Mã không tồn tại.');
+                    })
+            }
+            else
+                toastr.error('Mã không hợp lệ.');
+        }
+        function formatCurrency(input) {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(input);
+        }
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
