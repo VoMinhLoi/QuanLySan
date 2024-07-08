@@ -318,12 +318,8 @@
             <li class="menu-mobile-item"><a href="/" class="menu-mobile-item__link">Trang chủ</a></li>
             <li class="menu-mobile-item">
                 <a href="/sanbong" class="menu-mobile-item__link">Đặt sân</a>
-                {{-- <p class="menu-mobile-item__link">Dịch vụ</p>
-                <ul class="sub-nav">
-                    <li class="sub-nav__item"><a href="/sanbong" class="sub-nav__item-link">Đặt sân</a></li>
-                    <li class="sub-nav__item"><a href="/sanbong" class="sub-nav__item-link">Thuê dụng cụ</a></li>
-                </ul> --}}
             </li>
+            <li class="menu-mobile-item"><a href="/muadungcu" class="menu-mobile-item__link">Dụng cụ</a></li>
             <li class="menu-mobile-item"><a href="/lienhe" class="menu-mobile-item__link">Liên hệ</a></li>
             <li class="menu-mobile-item"><a href="/dieukhoanchinhsach" class="menu-mobile-item__link">Điều khoản & chính sách</a></li>
             @if(Auth::check())
