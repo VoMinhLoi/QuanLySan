@@ -89,7 +89,7 @@ class GioHangController extends Controller
     public function destroy(string $id)
     {
         try {
-            DB::table('gioHang')->where('id', $id)->delete();
+            DB::table('giohang')->where('id', $id)->delete();
             return response()->json(['success' => 'Xóa món hàng thành công.']);
         } catch (Exception $e) {
             return response()->json(['error' => 'Xóa món hàng thất bại.', 'message' => $e->getMessage()], 500);

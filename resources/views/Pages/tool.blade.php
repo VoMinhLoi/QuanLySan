@@ -426,6 +426,7 @@
         function renderSanBong(sanbongs){
             sportsFieldQuantity.innerHTML = sanbongs.length + " dụng cụ"
             sanbongs.forEach((sanbong)=>{
+                let CTDH = JSON.stringify(sanbong)
                 let formattedPriceString = formatCurrency(sanbong.donGiaGoc.toString())
                 gridMode.innerHTML +=    `
                                         <div class="col l-3 m-3 c-12">
@@ -437,7 +438,7 @@
                                                     </div>
                                                     <p class="image-status">Chính hãng</p>
                                                     <div class="image-action">
-                                                        <p class="image-action__item" onclick="buyAndPay('${sanbong.maDungCu}')">Mua</p>
+                                                        <p class="image-action__item" onclick='transferDataToPayInterface([${CTDH}],${sanbong.donGiaGoc})'>Mua</p>
                                                     </div>
                                                 </div>
                                                 <div class="fg-infor">
@@ -467,6 +468,7 @@
                                                 <p class="fg-infor__description">${sanbong.moTa}</p>
                                                 <div class="fg-infor__action">
                                                     <p class="fg-infor__action-item fg-infor__action-improve" onclick="addToCart('${sanbong.maDungCu}')">Thêm vào giỏ</p>
+                                                    <p class="fg-infor__action-item fg-infor__action-improve" onclick='transferDataToPayInterface([${CTDH}],${sanbong.donGiaGoc})'>Mua ngay</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -588,7 +590,7 @@
                     data = data.filter((giohang)=> {
                         return giohang.maNguoiDung == maNguoiDung
                     })
-                    console.log(data)
+                    // console.log(data)
                     let isExistTool = data.every((giohang)=>{
                         return giohang.maDungCu !== maDungCu 
                     })
@@ -608,6 +610,14 @@
                     else
                         toastr.error("Sản phẩm đã tồn tại trong giỏ hàng.");
                 })
+        }
+        function transferDataToPayInterface(donHangCTDHDataGlobal, totalPriceGlobal){
+            donHangCTDHDataGlobal[0]['soLuong'] = 1
+            donHangCTDHDataGlobal[0]['tongTien'] = totalPriceGlobal
+            // console.log(donHangCTDHDataGlobal, totalPriceGlobal)
+            const donHangDataGlobalString = encodeURIComponent(JSON.stringify(donHangCTDHDataGlobal));
+            const totalPrice = encodeURIComponent(totalPriceGlobal)
+            window.location.href = `/thanhtoan?data=${donHangDataGlobalString}&price=${totalPrice}`
         }
     </script>
     </body>

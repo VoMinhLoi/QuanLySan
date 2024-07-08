@@ -223,49 +223,49 @@
                                     <?php
                                         $totalPay = 0;
                                     ?>
-                                        @foreach ($gioHang as $item)
-                                            @php
-                                                $product = \App\Models\DungCu::where('maDungCu', $item->maDungCu)->first();
+                                    @foreach ($gioHang as $item)
+                                        @php
+                                            $product = \App\Models\DungCu::where('maDungCu', $item->maDungCu)->first();
+                                            
+                                            $numericPriceString = preg_replace("/[^0-9]/", "", $product->donGiaGoc);
+                                            $totalPrice = intval($numericPriceString)*$item->soLuong;
+                                        @endphp
+                        
+                                        <tr class="product" style="align-items: center">
+                                            <td style="flex: 1">
+                                                <input type="checkbox" class="checkbox_item" data-maGioHang="{{ $item->id }}" data-maDung="{{ $item->maDungCu }}" data-donGiaGoc="{{ $product->donGiaGoc }}" data-tenDungCu="{{ $product->tenDungCu }}" data-hinhAnh1="{{ $product->hinhAnh1 }}" data-set="{{ $totalPrice }}" onclick="calculatorMoney(this,{{ $totalPrice }})">
+                                            </td>
+                                            {{-- <a href="{{ route('product.detail',$item->id) }}" class="product-infor"> --}}
+                                                {{-- <input type="checkbox" class="product-checkbox" onclick="choosePay()"> --}}
+                                            <td style="flex: 1">
+                                                <img class="product-infor__img" src="{{ asset('assets/img/' . $product->hinhAnh1) }}" alt="img">
                                                 
-                                                $numericPriceString = preg_replace("/[^0-9]/", "", $product->donGiaGoc);
-                                                $totalPrice = intval($numericPriceString)*$item->soLuong;
-                                            @endphp
-                            
-                                            <tr class="product" style="align-items: center">
-                                                <td style="flex: 1">
-                                                    <input type="checkbox" class="checkbox_item" data-set="{{ $totalPrice }}" onclick="calculatorMoney(this,{{ $totalPrice }})">
-                                                </td>
-                                                {{-- <a href="{{ route('product.detail',$item->id) }}" class="product-infor"> --}}
-                                                    {{-- <input type="checkbox" class="product-checkbox" onclick="choosePay()"> --}}
-                                                <td style="flex: 1">
-                                                    <img class="product-infor__img" src="{{ asset('assets/img/' . $product->hinhAnh1) }}" alt="img">
-                                                    
-                                                    <div class="name-desc" style="margin-left: 8px">
-                                                        <a class="name" href="/dungcu/{{ $product->maDungCu }}" target="_blank">{{ $product->tenDungCu }}</a>
-                                                        <p class="desc">{{ $product->moTa }}</p>
-                                                    </div>
-                                                </td>
-                                                    {{-- <p class="product__price">{{ number_format( intval($product->price), 0, ',', '.') }}</p> --}}
-                                                <td class="product__price" style="flex: 1">{{number_format($product->donGiaGoc, 0, ',', '.')}}<sup>₫</sup></td>
-                                                <td class="" style="flex: 1">
-                                                    @if($item->soLuong === 1)
-                                                        <button class="product__quantity-number--descrease product__quantity-number--descrease-disable" onclick="descreaseQuantity(this,'{{ $item->id }}')">-</button>
-                                                    @else
-                                                        <button class="product__quantity-number--descrease" onclick="descreaseQuantity(this,'{{ $item->id }}')">-</button>
-                                                    @endif
-                                                    <input class="product__quantity-number" type="text" name="quantity" value="{{ $item->soLuong }}" onchange="enterQuantity(this,'{{ $item->id }}')">
-                                                    <button class="product__quantity-number--increase" onclick="increaseQuantity(this,'{{ $item->id }}')">+</button>
-                                                </td>
-                                                {{-- <td class="product__money" style="flex: 1">{{ number_format($totalPrice, 0, ',', '.') }}<sup>₫</sup></td> --}}
-                                                <td class="product__money" style="flex: 1">{{ number_format($totalPrice, 0, ',', '.') }}<sup>₫</sup></td>
-                                                
-                                                {{-- <a href="{{ route('deleteCart',$item->id) }}"><i class="fa-solid fa-trash-can"></i></a> --}}
-                                                <td onclick="deleteItem('{{ $item->id }}')" style="flex: 1"><i class="fa-solid fa-trash-can"></i></td>
-                                            </tr>
-                                            <?php 
-                                            // $totalPay += $totalPrice
-                                            ?>
-                                        @endforeach
+                                                <div class="name-desc" style="margin-left: 8px">
+                                                    <a class="name" href="/dungcu/{{ $product->maDungCu }}" target="_blank">{{ $product->tenDungCu }}</a>
+                                                    <p class="desc">{{ $product->moTa }}</p>
+                                                </div>
+                                            </td>
+                                                {{-- <p class="product__price">{{ number_format( intval($product->price), 0, ',', '.') }}</p> --}}
+                                            <td class="product__price" style="flex: 1">{{number_format($product->donGiaGoc, 0, ',', '.')}}<sup>₫</sup></td>
+                                            <td class="" style="flex: 1">
+                                                @if($item->soLuong === 1)
+                                                    <button class="product__quantity-number--descrease product__quantity-number--descrease-disable" onclick="descreaseQuantity(this,'{{ $item->id }}')">-</button>
+                                                @else
+                                                    <button class="product__quantity-number--descrease" onclick="descreaseQuantity(this,'{{ $item->id }}')">-</button>
+                                                @endif
+                                                <input class="product__quantity-number" type="text" name="quantity" id="quantity" value="{{ $item->soLuong }}" onchange="enterQuantity(this,'{{ $item->id }}')">
+                                                <button class="product__quantity-number--increase" onclick="increaseQuantity(this,'{{ $item->id }}')">+</button>
+                                            </td>
+                                            {{-- <td class="product__money" style="flex: 1">{{ number_format($totalPrice, 0, ',', '.') }}<sup>₫</sup></td> --}}
+                                            <td class="product__money" style="flex: 1"><span id="totalPrice" data-set="{{ $totalPrice }}">{{ number_format($totalPrice, 0, ',', '.') }}</span><sup>₫</sup></td>
+                                            
+                                            {{-- <a href="{{ route('deleteCart',$item->id) }}"><i class="fa-solid fa-trash-can"></i></a> --}}
+                                            <td onclick="deleteItem('{{ $item->id }}')" style="flex: 1"><i class="fa-solid fa-trash-can"></i></td>
+                                        </tr>
+                                        <?php 
+                                        // $totalPay += $totalPrice
+                                        ?>
+                                    @endforeach
                                 </tbody>
                             </table>
                             <div class="col l-3 m-3 c-12" style="margin-top: 12px">
@@ -282,9 +282,9 @@
                                             </div>
                                         </div>
                                         <div class="action">
-                                            <a class="action__pay" style="text-align: center; cursor: pointer">
+                                            <button onclick="transferDataToPayInterface()" class="action__pay" style="text-align: center; cursor: pointer">
                                                 Mua ngay
-                                            </a>
+                                            </button>
                                             {{-- <button class="action__buy"  onclick="showLogin()">
                                                 Mua trả góp - trả sau
                                             </button> --}}
@@ -307,28 +307,72 @@
         const priceTotalView = document.querySelector('.price__total')
         let totalPriceGlobal = 0
         let allChecked = false;
+        var donHangDataGlobal = []
         allCheckboxView.onclick = ()=>{
             allChecked = !allChecked
             checkboxItemsView.forEach(element => {
                 if(allCheckboxView.checked !== element.checked){
                     element.checked = allChecked;
-                    if(allChecked)
+                    const tableRowView = element.parentElement.parentElement
+                    const quantityInputView = tableRowView.querySelector('#quantity')
+                    if(allChecked){
+                        let donHang = {}
+                        donHang['maGioHang'] = element.getAttribute('data-magiohang')
+                        donHang['maDungCu'] = element.getAttribute('data-maDung')
+                        donHang['tenDungCu'] = element.getAttribute('data-tenDungCu')
+                        donHang['hinhAnh1'] = element.getAttribute('data-hinhAnh1')
+                        donHang['donGiaGoc'] = element.getAttribute('data-donGiaGoc')
+                        donHang['soLuong'] = quantityInputView.value
+                        donHang['tongTien'] = parseFloat(element.dataset.set) // totalPriceView.dataset.set
+                        donHangDataGlobal.push(donHang)
                         totalPriceGlobal += parseInt(element.dataset.set)
-                    else
+                    }
+                    else{
+                        donHangDataGlobal = donHangDataGlobal.filter((donHang)=>{
+                            return donHang.maDungCu !== element.getAttribute('data-maDung')
+                        })
                         totalPriceGlobal -= parseInt(element.dataset.set)
+                    }
                 }
             });
             priceTotalView.innerText = formatCurrency(totalPriceGlobal)
+            // console.log(donHangDataGlobal)
         }
         function formatCurrency(input) {
-        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(input);
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(input);
         }
         function calculatorMoney(input, totalPriceOfItem){
-            if(input.checked)
+            const tableRowView = input.parentElement.parentElement
+            const quantityInputView = tableRowView.querySelector('#quantity')
+            if(input.checked){
+                let donHang = {}
+                donHang['maGioHang'] = input.getAttribute('data-magiohang')
+                donHang['maDungCu'] = input.getAttribute('data-maDung')
+                donHang['tenDungCu'] = input.getAttribute('data-tenDungCu')
+                donHang['hinhAnh1'] = input.getAttribute('data-hinhAnh1')
+                donHang['donGiaGoc'] = input.getAttribute('data-donGiaGoc')
+                donHang['soLuong'] = quantityInputView.value
+                donHang['tongTien'] = totalPriceOfItem // totalPriceView.dataset.set
+                donHangDataGlobal.push(donHang)
                 totalPriceGlobal += totalPriceOfItem
-            else
+            }
+            else{
+                donHangDataGlobal = donHangDataGlobal.filter((donHang)=>{
+                    return donHang.maDungCu !== input.getAttribute('data-maDung')
+                })
                 totalPriceGlobal -= totalPriceOfItem
+            }
             priceTotalView.innerText = formatCurrency(totalPriceGlobal)
+            // console.log(donHangDataGlobal)
+        }
+        function transferDataToPayInterface(){
+            if(totalPriceGlobal > 0){
+                const donHangDataGlobalString = encodeURIComponent(JSON.stringify(donHangDataGlobal));
+                const totalPrice = encodeURIComponent(totalPriceGlobal)
+                window.location.href = `/thanhtoan?data=${donHangDataGlobalString}&price=${totalPrice}`
+            }
+            else
+                toastr.error('Vui lòng chọn những món hàng muốn thanh toán.')
         }
         function descreaseQuantity(buttonDescreaseView, maGioHang){
             const quantityInput = buttonDescreaseView.nextElementSibling

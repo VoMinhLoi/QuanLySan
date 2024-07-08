@@ -171,7 +171,7 @@ class LoginController extends Controller
         }
         // dd($request->input('totalPrice'));
         // Sử dụng dd để kiểm tra giá trị của 'idVe' và 'ndck'
-        if ($request->has('idVe')) {
+        if ($request->has('totalPrice')) {
             // Lấy giá trị của 'idVe' và 'ndck' từ yêu cầu
             // $ndck = $request->input('ndck');
             // $vnp_OrderInfo = $ndck;

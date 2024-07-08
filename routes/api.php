@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\ChiTietDonHangController;
 use App\Http\Controllers\ChiTietThueSanController;
 use App\Http\Controllers\CoSoController;
+use App\Http\Controllers\DonHangController;
 use App\Http\Controllers\DungCuController;
 use App\Http\Controllers\GioHangController;
 use App\Http\Controllers\KhuyenMaiController;
@@ -47,3 +49,5 @@ Route::apiResource('thongbao', ThongBaoController::class);
 Route::apiResource('dungcu', DungCuController::class);
 Route::apiResource('giohang', GioHangController::class);
 Route::apiResource('khuyenmai', KhuyenMaiController::class);
+Route::apiResource('donhang', DonHangController::class);
+Route::apiResource('chitietdonhang', ChiTietDonHangController::class);

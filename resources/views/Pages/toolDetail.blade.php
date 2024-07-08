@@ -8,6 +8,7 @@
     @include('Library.variable')
     @include('Library.validator')
     <style>
+
         .image-description, .product, .address, .trade, .infor-supplemnet {
             background-color: white;
             border-radius: 8px;
@@ -548,6 +549,9 @@
                                     <input type="text" name="maDungCu" value="{{ $dungCu->maDungCu }}" style="display: none">
                                     <input type="text" name="maNguoiDung" value=" {{ Auth::user()->maNguoiDung }} " style="display: none">
                                     <input class="action__cart form-submit" type="submit" value="Thêm vào giỏ" style="background: white; color: var(--primary-color)">
+                                    {{-- <input class="action__cart form-submit" type="submit" value="Mua ngay" style="background: red; color: white" onclick='transferDataToPayInterface([{{ json_encode($dungCu) }}], {{ $dungCu->donGiaGoc }})'> --}}
+                                    <p  class="action__cart form-submit"  style="background: red; color: white; text-align: center" onclick='transferDataToPayInterface({{ json_encode($chiTietDonHang) }}, {{ $dungCu->donGiaGoc }})'>Mua ngay</p>
+
                                 </div>
                             </form>
                             {{-- @if(Auth::check())
@@ -607,7 +611,7 @@
             buttonSubmitSelector: ".form-submit",
             // Muốn submit không theo API mặc định của trình duyệt
             onSubmit: function (data) {
-                console.log(data)
+                // console.log(data)
                 addToCart(data)
             },
             formGroupSelector: ".form-group",
@@ -622,7 +626,7 @@
                     data = data.filter((giohang)=> {
                         return giohang.maNguoiDung == dataRow.maNguoiDung
                     })
-                    console.log(data)
+                    // console.log(data)
                     let isExistTool = data.every((giohang)=>{
                         return giohang.maDungCu !== dataRow.maDungCu 
                     })
@@ -642,6 +646,16 @@
                     else
                         toastr.error("Sản phẩm đã tồn tại trong giỏ hàng.");
                 })
+        }
+        function transferDataToPayInterface(donHangCTDHDataGlobal, price){
+            donHangCTDHDataGlobal['soLuong'] = parseInt(inputQuantityView.value)
+            donHangCTDHDataGlobal['tongTien'] = parseInt(inputQuantityView.value) * price
+            // let donHangs = []
+            // donHangs.push(donHangCTDHDataGlobal)
+            // console.log(donHangCTDHDataGlobal)
+            const donHangDataGlobalString = encodeURIComponent(JSON.stringify([donHangCTDHDataGlobal]));
+            const totalPrice = encodeURIComponent(donHangCTDHDataGlobal['tongTien'])
+            window.location.href = `/thanhtoan?data=${donHangDataGlobalString}&price=${totalPrice}`
         }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

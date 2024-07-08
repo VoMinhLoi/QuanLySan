@@ -80,6 +80,19 @@ class DungCuController extends Controller
     public function formToolDetail(string $id)
     {
         $dungCu = DungCu::where('maDungCu', $id)->first();
-        return view('Pages.toolDetail', compact('dungCu'));
+
+        if (!$dungCu) {
+            // Handle the case where the tool is not found
+            abort(404, 'Tool not found');
+        }
+
+        $chiTietDonHang = [];
+        $chiTietDonHang['maDungCu'] = $dungCu->maDungCu;
+        $chiTietDonHang['tenDungCu'] = $dungCu->tenDungCu;
+        $chiTietDonHang['hinhAnh1'] = $dungCu->hinhAnh1;
+        $chiTietDonHang['donGiaGoc'] = $dungCu->donGiaGoc;
+        $chiTietDonHang['soLuong'] = 1;
+        $chiTietDonHang['tongTien'] = $dungCu->donGiaGoc * $chiTietDonHang['soLuong'];
+        return view('Pages.toolDetail', compact('dungCu', 'chiTietDonHang'));
     }
 }
