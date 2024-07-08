@@ -11,9 +11,7 @@
             background: var(--primary-color);
             color: white;
             border-radius: 8px;
-        }
-        .coupon + .coupon {
-            margin-left: 8px;
+            margin: 4px 2px;
         }
         .coupon-logo {
             border-right: 1px dashed white;
@@ -38,8 +36,8 @@
                 </script>
                 <div class="row" style="margin-top: 12px">
                     @foreach ($khuyenMais as $item)
-                        <div class="col l-3 m-4 c-12 coupon">
-                            <div class="row" style="align-items: center">
+                        <div class="col l-3 m-4 c-12 ">
+                            <div class="row coupon" style="align-items: center">
                                 <div class="col l-3 m-3 c-3 coupon-logo">
                                     <img src="https://minhloiiot.id.vn/assets/img/Logo-Truong-Dai-hoc-The-duc-The-thao-Da-Nang.png" alt="logo">
                                     <p>Mall</p>
