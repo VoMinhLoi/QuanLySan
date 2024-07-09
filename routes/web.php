@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\ChiTietThueSanController;
+use App\Http\Controllers\DonHangController;
 use App\Http\Controllers\DungCuController;
 use App\Http\Controllers\GioHangController;
 use App\Http\Controllers\KhuyenMaiController;
@@ -68,6 +69,7 @@ Route::group(['middleware' => 'userLogin'], function () {
     Route::get('/giohang', [GioHangController::class, 'formCart']);
     Route::get('/dungcu/{dungcu}', [DungCuController::class, 'formToolDetail']);
     Route::get('/thanhtoan', [PayController::class, 'formPay']);
+    Route::get('/donhang', [DonHangController::class, 'formDonHang']);
 });
 
 Route::group(['middleware' => 'adminLogin'], function () {

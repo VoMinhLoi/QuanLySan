@@ -461,8 +461,10 @@
                     else{
                         dataDonHangGlobal['phuongThucThanhToan'] = 2
                         dataDonHangGlobal['daThanhToan'] = 0
-                        if(tongTienPhaiTraGlobal && dataCTDonHangGlobal && tongTienGlobal)
+                        if(tongTienPhaiTraGlobal && dataCTDonHangGlobal && tongTienGlobal){
                             createDonHang()
+                            setTimeout(forwardsPage(), 15000)
+                        }
                         else
                             toastr.error('Bạn đã tự nhập thông tin trái phép.')
                     }
@@ -478,7 +480,7 @@
             }
         }
         const token = document.querySelector("meta[name='csrf-token']").getAttribute('content')
-        function createDonHang(){
+        async function createDonHang(){
             // console.log(dataDonHangGlobal)
 
             fetch('http://127.0.0.1:8000/api/donhang',{
@@ -621,12 +623,15 @@
                     toastr.error(data.error)
                 else{
                     toastr.success(data.success)
-                    // window.location.href="/donhang"
+                    forwardsPage()
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
             });
+        }
+        async function forwardsPage(){
+            window.location.href="/donhang"
         }
 </script>
 

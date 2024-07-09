@@ -226,6 +226,7 @@
                     </p>
                     <ul class="sub-nav">
                         <li class="sub-nav__item"><a href="/hosocanhan" class="sub-nav__item-link">Hồ sơ cá nhân</a></li>
+                        <li class="sub-nav__item"><a href="/donhang" class="sub-nav__item-link">Đơn hàng</a></li>
                         <li class="sub-nav__item"><a href="/naptien" class="sub-nav__item-link">Ví</a></li>
                         @if(Auth::user()->maQuyen == 1)
                             <li class="sub-nav__item"><a href="/dashboard" class="sub-nav__item-link">Quản trị viên</a></li>
@@ -330,6 +331,7 @@
                     </p>
                     <ul class="menu-mobile-sub-nav">
                         <li class="menu-mobile-sub-nav__item"><a href="/hosocanhan" class="menu-mobile-sub-nav__item-link">Hồ sơ cá nhân</a></li>
+                        <li class="menu-mobile-sub-nav__item"><a href="/donhang" class="menu-mobile-sub-nav__item-link">Đơn hàng</a></li>
                         <li class="menu-mobile-sub-nav__item"><a href="/naptien" class="menu-mobile-sub-nav__item-link">Ví</a></li>
                         @if(Auth::user()->maQuyen == 1)
                             <li class="menu-mobile-sub-nav__item"><a href="/dashboard" class="menu-mobile-sub-nav__item-link">Quản trị viên</a></li>

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\DonHang;
 use App\Http\Controllers\Controller;
+use App\Models\ChiTietDonHang;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DonHangController extends Controller
 {
@@ -14,7 +16,11 @@ class DonHangController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            return DonHang::all();
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Tạo đơn hàng thất bại.', 'message' => $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -37,7 +43,19 @@ class DonHangController extends Controller
             return response()->json(['error' => 'Tạo đơn hàng thất bại.', 'message' => $e->getMessage()], 500);
         }
     }
-
+    public function formDonHang()
+    {
+        try {
+            $userId = Auth::user()->maNguoiDung;
+            // Lấy mã vé từ bảng Ve theo mã người dùng
+            // $maDonHangList = DonHang::where('maNguoiDung', $userId)->pluck('id');
+            // $chiTietDonHangs = ChiTietDonHang::whereIn('maDonHang', $maDonHangList)->orderBy('id', 'desc')->paginate(5);
+            $donHangList = DonHang::where('maNguoiDung', $userId)->orderBy('id', 'desc')->paginate(5);
+            return view('Pages.order', compact('donHangList'));
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Tạo đơn hàng thất bại.', 'message' => $e->getMessage()], 500);
+        }
+    }
     /**
      * Display the specified resource.
      */
