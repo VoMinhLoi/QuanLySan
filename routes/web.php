@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\ChiTietDonHangController;
 use App\Http\Controllers\ChiTietThueSanController;
 use App\Http\Controllers\DonHangController;
 use App\Http\Controllers\DungCuController;
@@ -70,6 +70,7 @@ Route::group(['middleware' => 'userLogin'], function () {
     Route::get('/dungcu/{dungcu}', [DungCuController::class, 'formToolDetail']);
     Route::get('/thanhtoan', [PayController::class, 'formPay']);
     Route::get('/donhang', [DonHangController::class, 'formDonHang']);
+    Route::get('/chitietdonhang/{donhang}', [ChiTietDonHangController::class, 'formChiTietDonHang']);
 });
 
 Route::group(['middleware' => 'adminLogin'], function () {
