@@ -196,18 +196,18 @@ class ChiTietThueSanController extends Controller
         // phpinfo();
         // Dữ liệu để chuyển vào mã QR
         $data = [
-            "ve_id" => $ve->id,
-            "ho_ten" => $ve->hoTen,
-            "sdt" => $ve->SDT,
-            "dia_chi" => $ve->diaChi,
-            "tong_tien" => number_format($ve->tongTien, 0, ',', '.') . '₫',
-            "san_bong_ten" => $sanBong->tenSan,
-            "hinh_anh" => $sanBong->hinhAnh,
-            "thoi_gian_nhan" => $chiTietThueSan->thoiGianBatDau,
-            "thoi_gian_tra" => $chiTietThueSan->thoiGianKetThuc,
+            "Mã vé" => $ve->id,
+            "Họ tên" => $ve->hoTen,
+            "Số điện thoại" => $ve->SDT,
+            "Địa chỉ" => $ve->diaChi,
+            "Tổng tiền" => number_format($ve->tongTien, 0, ',', '.') . '₫',
+            "Tên sân bóng" => $sanBong->tenSan,
+            "Hình ảnh" => $sanBong->hinhAnh,
+            "Thời gian vào sân" => $chiTietThueSan->thoiGianBatDau,
+            "Thời gian trả sân" => $chiTietThueSan->thoiGianKetThuc,
         ];
 
-        $json_data = json_encode($data);
+        $json_data = json_encode($data, JSON_UNESCAPED_UNICODE);
 
         // Tạo mã QR
         $qrCode = new QrCode($json_data);
